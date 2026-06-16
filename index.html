@@ -1830,7 +1830,8 @@
         gap: calc(12 * var(--px));
       }
 
-      .drug-search-input {
+      .drug-search-field {
+        position: relative;
         display: flex;
         flex: 1 1 auto;
         align-items: center;
@@ -1845,25 +1846,35 @@
         line-height: calc(22 * var(--px));
       }
 
-      button.drug-search-input {
-        appearance: none;
-        text-align: left;
-        font-family: inherit;
-        cursor: pointer;
-      }
-
-      .drug-search-input.is-filled {
+      .drug-search-input {
+        width: 100%;
+        height: 100%;
+        padding: 0 calc(22 * var(--px)) 0 0;
+        border: 0;
+        outline: 0;
+        background: transparent;
         color: rgba(0, 0, 0, 0.9);
+        font-size: calc(14 * var(--px));
+        line-height: calc(22 * var(--px));
       }
 
-      .drug-search-input::after {
-        content: "";
+      .drug-search-input::placeholder {
+        color: rgba(0, 0, 0, 0.4);
+      }
+
+      .drug-search-clear {
+        position: absolute;
+        right: calc(12 * var(--px));
+        top: calc(14 * var(--px));
         width: calc(12 * var(--px));
         height: calc(12 * var(--px));
-        opacity: 0.6;
+        border: 0;
+        padding: 0;
+        appearance: none;
         background:
           linear-gradient(45deg, transparent 43%, rgba(0, 0, 0, 0.4) 43%, rgba(0, 0, 0, 0.4) 57%, transparent 57%),
           linear-gradient(-45deg, transparent 43%, rgba(0, 0, 0, 0.4) 43%, rgba(0, 0, 0, 0.4) 57%, transparent 57%);
+        cursor: pointer;
       }
 
       .drug-search-submit {
@@ -1909,8 +1920,36 @@
         flex-direction: column;
       }
 
+      .drug-search-page.has-product-list .drug-product-list,
+      .drug-search-page.has-selected .drug-product-list {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .drug-search-page.has-no-results .drug-no-results {
+        display: flex;
+      }
+
+      .drug-search-page.has-product-list .drug-search-results,
+      .drug-search-page.has-selected .drug-search-results,
+      .drug-search-page.has-no-results .drug-search-results {
+        display: none;
+      }
+
+      .drug-search-page.has-product-list .drug-search-empty,
+      .drug-search-page.has-selected .drug-search-empty,
+      .drug-search-page.has-no-results .drug-search-empty,
       .drug-search-page.has-results .drug-search-empty {
         display: none;
+      }
+
+      button.drug-result-item {
+        appearance: none;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        font: inherit;
+        text-align: left;
       }
 
       .drug-result-item {
@@ -1925,6 +1964,187 @@
 
       .drug-result-item.secondary {
         color: #000;
+      }
+
+      .drug-product-list {
+        display: none;
+        width: 100%;
+        height: calc(434 * var(--px));
+        padding: calc(12 * var(--px)) calc(16 * var(--px));
+        gap: calc(10 * var(--px));
+        overflow: hidden;
+        background: #f8f8f9;
+      }
+
+      .drug-product-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        height: calc(74 * var(--px));
+        padding: 0 calc(22 * var(--px)) 0 0;
+        gap: calc(24 * var(--px));
+        border: calc(1 * var(--px)) solid #eceef0;
+        border-radius: calc(4 * var(--px));
+        background: #fff;
+      }
+
+      .drug-product-main {
+        display: flex;
+        align-items: center;
+        width: calc(275 * var(--px));
+        height: 100%;
+        gap: calc(20 * var(--px));
+      }
+
+      .drug-search-page.has-selected .drug-product-card:first-child .drug-product-main {
+        width: calc(179 * var(--px));
+      }
+
+      .drug-type-ribbon {
+        display: grid;
+        width: calc(22 * var(--px));
+        height: 100%;
+        place-items: center;
+        padding: calc(10 * var(--px)) calc(5 * var(--px));
+        background: #b8f0e1;
+        color: #04916c;
+        font-size: calc(12 * var(--px));
+        line-height: calc(20 * var(--px));
+        text-align: center;
+      }
+
+      .drug-product-info {
+        display: flex;
+        flex-direction: column;
+        width: calc(233 * var(--px));
+        gap: calc(8 * var(--px));
+      }
+
+      .drug-search-page.has-selected .drug-product-card:first-child .drug-product-info {
+        width: calc(162 * var(--px));
+      }
+
+      .drug-product-name {
+        color: rgba(0, 0, 0, 0.9);
+        font-size: calc(14 * var(--px));
+        line-height: calc(22 * var(--px));
+      }
+
+      .drug-product-spec {
+        color: rgba(0, 0, 0, 0.6);
+        font-size: calc(12 * var(--px));
+        line-height: calc(20 * var(--px));
+      }
+
+      .drug-add-button,
+      .drug-step-plus,
+      .drug-step-minus {
+        position: relative;
+        width: calc(24 * var(--px));
+        height: calc(24 * var(--px));
+        flex: 0 0 calc(24 * var(--px));
+        border-radius: 50%;
+      }
+
+      .drug-add-button,
+      .drug-step-plus {
+        border: 0;
+        background: #338bfa;
+      }
+
+      .drug-step-minus {
+        border: calc(1.2 * var(--px)) solid #338bfa;
+        background: #fff;
+      }
+
+      .drug-add-button::before,
+      .drug-add-button::after,
+      .drug-step-plus::before,
+      .drug-step-plus::after,
+      .drug-step-minus::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: calc(12 * var(--px));
+        height: calc(1.8 * var(--px));
+        border-radius: 999px;
+        background: #fff;
+        transform: translate(-50%, -50%);
+      }
+
+      .drug-step-minus::before {
+        background: #338bfa;
+      }
+
+      .drug-add-button::after,
+      .drug-step-plus::after {
+        transform: translate(-50%, -50%) rotate(90deg);
+      }
+
+      .drug-stepper {
+        display: none;
+        align-items: center;
+        gap: calc(8 * var(--px));
+        color: #000;
+        font-size: calc(14 * var(--px));
+        line-height: calc(22 * var(--px));
+      }
+
+      .drug-search-page.has-selected .drug-product-card:first-child .drug-add-button {
+        display: none;
+      }
+
+      .drug-search-page.has-selected .drug-product-card:first-child .drug-stepper {
+        display: flex;
+      }
+
+      .drug-no-results {
+        display: none;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        height: calc(300 * var(--px));
+        padding-top: calc(70 * var(--px));
+        color: rgba(0, 0, 0, 0.6);
+        font-size: calc(14 * var(--px));
+        line-height: calc(22 * var(--px));
+        text-align: center;
+      }
+
+      .drug-empty-illustration {
+        position: relative;
+        width: calc(146 * var(--px));
+        height: calc(147 * var(--px));
+        margin-bottom: 0;
+      }
+
+      .drug-empty-illustration::before {
+        content: "";
+        position: absolute;
+        left: calc(22 * var(--px));
+        top: calc(24 * var(--px));
+        width: calc(102 * var(--px));
+        height: calc(92 * var(--px));
+        border-radius: 45% 45% 50% 50%;
+        background: linear-gradient(180deg, #e7f1ff 0%, #b7d8ff 100%);
+      }
+
+      .drug-empty-illustration::after {
+        content: "?";
+        position: absolute;
+        left: calc(49 * var(--px));
+        top: calc(38 * var(--px));
+        display: grid;
+        width: calc(48 * var(--px));
+        height: calc(48 * var(--px));
+        place-items: center;
+        border-radius: 50%;
+        background: #fff;
+        color: #338bfa;
+        font-size: calc(30 * var(--px));
+        font-weight: 700;
       }
 
       .drug-search-section {
@@ -3119,7 +3339,10 @@
             <div class="drug-sheet-handle-wrap"><span class="drug-sheet-handle"></span></div>
             <div class="drug-search-head">
               <div class="drug-search-form">
-                <button class="drug-search-input" id="drugSearchInput" type="button">点击开始搜索药品</button>
+                <div class="drug-search-field">
+                  <input class="drug-search-input" id="drugSearchInput" type="text" placeholder="点击开始搜索药品" />
+                  <button class="drug-search-clear" id="drugSearchClear" type="button" aria-label="清空搜索"></button>
+                </div>
                 <button class="drug-search-submit" id="drugSearchSubmit" type="button">搜索</button>
               </div>
             </div>
@@ -3127,14 +3350,56 @@
               <div class="scan-line"><span class="scan-qr"></span><span>扫描药品信息</span></div>
             </button>
             <div class="drug-search-results" id="drugSearchResults">
-              <span class="drug-result-item">布洛芬片</span>
-              <span class="drug-result-item">布洛芬胶囊</span>
-              <span class="drug-result-item">布洛芬凝胶</span>
-              <span class="drug-result-item">布洛芬颗粒</span>
-              <span class="drug-result-item">布洛芬糖浆</span>
-              <span class="drug-result-item">布洛芬搽剂</span>
-              <span class="drug-result-item secondary">右布洛芬片</span>
-              <span class="drug-result-item">布洛芬乳膏</span>
+              <button class="drug-result-item" type="button">布洛芬片</button>
+              <button class="drug-result-item" type="button">布洛芬胶囊</button>
+              <button class="drug-result-item" type="button">布洛芬凝胶</button>
+              <button class="drug-result-item" type="button">布洛芬颗粒</button>
+              <button class="drug-result-item" type="button">布洛芬糖浆</button>
+              <button class="drug-result-item" type="button">布洛芬搽剂</button>
+              <button class="drug-result-item secondary" type="button">右布洛芬片</button>
+              <button class="drug-result-item" type="button">布洛芬乳膏</button>
+            </div>
+            <div class="drug-product-list" id="drugProductList">
+              <div class="drug-product-card">
+                <div class="drug-product-main">
+                  <span class="drug-type-ribbon">西药</span>
+                  <span class="drug-product-info"><span class="drug-product-name">复方感冒灵颗粒</span><span class="drug-product-spec">14g*10袋</span></span>
+                </div>
+                <button class="drug-add-button" id="firstDrugAdd" type="button" aria-label="加入药品"></button>
+                <span class="drug-stepper"><button class="drug-step-minus" type="button" aria-label="减少"></button><span>1</span><button class="drug-step-plus" type="button" aria-label="增加"></button></span>
+              </div>
+              <div class="drug-product-card">
+                <div class="drug-product-main">
+                  <span class="drug-type-ribbon">西药</span>
+                  <span class="drug-product-info"><span class="drug-product-name">复方感冒灵颗粒</span><span class="drug-product-spec">14g*10袋</span></span>
+                </div>
+                <button class="drug-add-button" type="button" aria-label="加入药品"></button>
+              </div>
+              <div class="drug-product-card">
+                <div class="drug-product-main">
+                  <span class="drug-type-ribbon">西药</span>
+                  <span class="drug-product-info"><span class="drug-product-name">复方感冒灵颗粒</span><span class="drug-product-spec">14g*10袋</span></span>
+                </div>
+                <button class="drug-add-button" type="button" aria-label="加入药品"></button>
+              </div>
+              <div class="drug-product-card">
+                <div class="drug-product-main">
+                  <span class="drug-type-ribbon">西药</span>
+                  <span class="drug-product-info"><span class="drug-product-name">复方感冒灵颗粒</span><span class="drug-product-spec">14g*10袋</span></span>
+                </div>
+                <button class="drug-add-button" type="button" aria-label="加入药品"></button>
+              </div>
+              <div class="drug-product-card">
+                <div class="drug-product-main">
+                  <span class="drug-type-ribbon">西药</span>
+                  <span class="drug-product-info"><span class="drug-product-name">复方感冒灵颗粒</span><span class="drug-product-spec">14g*10袋</span></span>
+                </div>
+                <button class="drug-add-button" type="button" aria-label="加入药品"></button>
+              </div>
+            </div>
+            <div class="drug-no-results" id="drugNoResults">
+              <span class="drug-empty-illustration"></span>
+              <span>没有搜索到结果</span>
             </div>
             <div class="drug-search-section drug-search-empty">
               <div class="drug-search-title"><strong>历史搜索</strong><span class="clear-history">清空</span></div>
@@ -3196,8 +3461,11 @@
       const drugSearchPage = document.getElementById("drugSearchPage");
       const drugSearchDim = document.getElementById("drugSearchDim");
       const drugSearchInput = document.getElementById("drugSearchInput");
+      const drugSearchClear = document.getElementById("drugSearchClear");
       const drugSearchSubmit = document.getElementById("drugSearchSubmit");
       const drugSheetConfirm = document.querySelector(".drug-sheet-confirm");
+      const drugResultItems = document.querySelectorAll(".drug-result-item");
+      const firstDrugAdd = document.getElementById("firstDrugAdd");
       const homeTab = document.getElementById("homeTab");
       const mineTab = document.getElementById("mineTab");
 
@@ -3217,9 +3485,8 @@
       };
 
       const resetDrugSearch = () => {
-        drugSearchPage?.classList.remove("has-results");
-        drugSearchInput?.classList.remove("is-filled");
-        if (drugSearchInput) drugSearchInput.textContent = "点击开始搜索药品";
+        drugSearchPage?.classList.remove("has-results", "has-product-list", "has-selected", "has-no-results");
+        if (drugSearchInput) drugSearchInput.value = "";
       };
 
       const showHome = () => {
@@ -3268,9 +3535,36 @@
       };
 
       const showIbuprofenResults = () => {
+        drugSearchPage?.classList.remove("has-product-list", "has-selected", "has-no-results");
         drugSearchPage?.classList.add("has-results");
-        drugSearchInput?.classList.add("is-filled");
-        if (drugSearchInput) drugSearchInput.textContent = "布洛芬";
+        if (drugSearchInput) drugSearchInput.value = "布洛芬";
+      };
+
+      const showDrugProductList = () => {
+        drugSearchPage?.classList.remove("has-results", "has-selected", "has-no-results");
+        drugSearchPage?.classList.add("has-product-list");
+        if (drugSearchInput) drugSearchInput.value = "布洛芬";
+      };
+
+      const showSelectedDrug = () => {
+        drugSearchPage?.classList.remove("has-results", "has-product-list", "has-no-results");
+        drugSearchPage?.classList.add("has-selected");
+        if (drugSearchInput) drugSearchInput.value = "布洛芬";
+      };
+
+      const showDrugNoResults = () => {
+        drugSearchPage?.classList.remove("has-results", "has-product-list", "has-selected");
+        drugSearchPage?.classList.add("has-no-results");
+      };
+
+      const handleDrugSearch = () => {
+        const keyword = drugSearchInput?.value.trim() || "布洛芬";
+        if (drugSearchInput) drugSearchInput.value = keyword;
+        if (keyword.includes("布洛芬")) {
+          showIbuprofenResults();
+        } else {
+          showDrugNoResults();
+        }
       };
 
       textInquiryEntry?.addEventListener("click", () => {
@@ -3289,8 +3583,16 @@
       drugScanTrigger?.addEventListener("click", () => showScan(drugScanPage));
       drugSearchScanTrigger?.addEventListener("click", () => showScan(drugScanPage));
       scanBackButtons.forEach((button) => button.addEventListener("click", closeScan));
-      drugSearchInput?.addEventListener("click", showIbuprofenResults);
-      drugSearchSubmit?.addEventListener("click", showIbuprofenResults);
+      drugSearchInput?.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") handleDrugSearch();
+      });
+      drugSearchInput?.addEventListener("input", () => {
+        drugSearchPage?.classList.remove("has-results", "has-product-list", "has-selected", "has-no-results");
+      });
+      drugSearchSubmit?.addEventListener("click", handleDrugSearch);
+      drugSearchClear?.addEventListener("click", resetDrugSearch);
+      drugResultItems.forEach((item) => item.addEventListener("click", showDrugProductList));
+      firstDrugAdd?.addEventListener("click", showSelectedDrug);
       drugSearchDim?.addEventListener("click", closeDrugSearch);
       drugSheetConfirm?.addEventListener("click", closeDrugSearch);
       fastBack?.addEventListener("click", showHome);
