@@ -964,11 +964,23 @@
 
       .phone-screen.view-fast .app-page,
       .phone-screen.view-fast .mine-page,
-      .phone-screen.view-fast .tabbar {
+      .phone-screen.view-fast .tabbar,
+      .phone-screen.view-fast .scan-page {
         display: none;
       }
 
       .phone-screen.view-fast .fast-page {
+        display: block;
+      }
+
+      .phone-screen.view-scan .app-page,
+      .phone-screen.view-scan .mine-page,
+      .phone-screen.view-scan .fast-page,
+      .phone-screen.view-scan .tabbar {
+        display: none;
+      }
+
+      .phone-screen.view-scan .scan-page.is-active {
         display: block;
       }
 
@@ -1079,6 +1091,15 @@
         border-radius: calc(8 * var(--px));
         background: #fff;
         box-shadow: 0 calc(1 * var(--px)) calc(2 * var(--px)) rgba(16, 42, 67, 0.04);
+      }
+
+      button.fast-scan,
+      button.scan-drug-row {
+        padding: 0;
+        border: 0;
+        appearance: none;
+        font: inherit;
+        cursor: pointer;
       }
 
       .scan-line {
@@ -1432,9 +1453,312 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        width: 100%;
         height: calc(50 * var(--px));
         border-top: calc(1 * var(--px)) solid #f2f3f4;
         background: #fff;
+      }
+
+      .scan-page {
+        display: none;
+        position: absolute;
+        inset: 0;
+        z-index: 6;
+        overflow: hidden;
+        background: #fff;
+        color: #fff;
+        font-family: "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      }
+
+      .scan-status {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        height: calc(44 * var(--px));
+        padding: calc(13 * var(--px)) calc(14 * var(--px)) 0 calc(20 * var(--px));
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(calc(20 * var(--px)));
+        font-family: "SF Pro Text", "Microsoft YaHei", Arial, sans-serif;
+        font-size: calc(15 * var(--px));
+        font-weight: 600;
+        line-height: calc(18 * var(--px));
+      }
+
+      .scan-status-icons {
+        color: #fff;
+        font-size: calc(14 * var(--px));
+        font-weight: 400;
+      }
+
+      .scan-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        height: calc(44 * var(--px));
+        padding: calc(10 * var(--px)) calc(16 * var(--px));
+        background: rgba(0, 0, 0, 0.6);
+      }
+
+      .scan-back,
+      .scan-nav-action {
+        position: relative;
+        width: calc(22 * var(--px));
+        height: calc(22 * var(--px));
+        padding: 0;
+        border: 0;
+        background: transparent;
+      }
+
+      .scan-back::before {
+        content: "";
+        position: absolute;
+        left: calc(8 * var(--px));
+        top: calc(5 * var(--px));
+        width: calc(9 * var(--px));
+        height: calc(9 * var(--px));
+        border-left: calc(1.83333 * var(--px)) solid #fff;
+        border-bottom: calc(1.83333 * var(--px)) solid #fff;
+        transform: rotate(45deg);
+      }
+
+      .scan-nav-action::before {
+        content: "";
+        position: absolute;
+        left: calc(3 * var(--px));
+        right: calc(3 * var(--px));
+        top: calc(4 * var(--px));
+        height: calc(14 * var(--px));
+        border: calc(1.6 * var(--px)) solid #fff;
+        border-radius: calc(2 * var(--px));
+      }
+
+      .scan-nav-title {
+        margin: 0;
+        color: #fff;
+        font-size: calc(16 * var(--px));
+        font-weight: 400;
+        line-height: calc(24 * var(--px));
+      }
+
+      .scan-viewport {
+        position: relative;
+        width: 100%;
+        height: calc(100% - calc(88 * var(--px)));
+        background: linear-gradient(180deg, rgba(10, 10, 10, 0.5) 0%, rgba(17, 17, 17, 0.5) 40%, rgba(13, 26, 26, 0.5) 100%);
+      }
+
+      .scan-box {
+        position: absolute;
+        left: calc(35 * var(--px));
+        top: calc(117 * var(--px));
+        width: calc(305 * var(--px));
+        height: calc(220 * var(--px));
+        border-radius: calc(2 * var(--px));
+        background: rgba(255, 255, 255, 0.21);
+      }
+
+      .scan-corner {
+        position: absolute;
+        width: calc(24 * var(--px));
+        height: calc(24 * var(--px));
+        border-color: #fff;
+        border-style: solid;
+      }
+
+      .scan-corner.tl {
+        left: calc(35 * var(--px));
+        top: calc(117 * var(--px));
+        border-width: calc(2.6 * var(--px)) 0 0 calc(2.6 * var(--px));
+        border-radius: calc(4 * var(--px)) 0 0 0;
+      }
+
+      .scan-corner.tr {
+        left: calc(316 * var(--px));
+        top: calc(117 * var(--px));
+        border-width: calc(2.6 * var(--px)) calc(2.6 * var(--px)) 0 0;
+        border-radius: 0 calc(4 * var(--px)) 0 0;
+      }
+
+      .scan-corner.bl {
+        left: calc(35 * var(--px));
+        top: calc(313 * var(--px));
+        border-width: 0 0 calc(2.6 * var(--px)) calc(2.6 * var(--px));
+        border-radius: 0 0 0 calc(4 * var(--px));
+      }
+
+      .scan-corner.br {
+        left: calc(316 * var(--px));
+        top: calc(313 * var(--px));
+        border-width: 0 calc(2.6 * var(--px)) calc(2.6 * var(--px)) 0;
+        border-radius: 0 0 calc(4 * var(--px)) 0;
+      }
+
+      .scan-line-light {
+        position: absolute;
+        left: 0;
+        top: calc(231 * var(--px));
+        width: 100%;
+        height: calc(2 * var(--px));
+        border-radius: 999px;
+        background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #fff 20%, #fff 50%, #fff 80%, rgba(255, 255, 255, 0) 100%);
+      }
+
+      .scan-line-light::before {
+        content: "";
+        position: absolute;
+        left: calc(8 * var(--px));
+        top: calc(-13 * var(--px));
+        width: calc(359 * var(--px));
+        height: calc(14 * var(--px));
+        border-radius: 999px 999px 0 0;
+        background: inherit;
+        opacity: 0.5;
+        filter: blur(calc(12.75 * var(--px)));
+      }
+
+      .scan-id-mark {
+        position: absolute;
+        left: calc(137 * var(--px));
+        top: calc(170 * var(--px));
+        width: calc(102 * var(--px));
+        height: calc(78 * var(--px));
+        border: calc(3 * var(--px)) solid rgba(255, 255, 255, 0.96);
+        border-radius: calc(8 * var(--px));
+      }
+
+      .scan-id-mark::before {
+        content: "";
+        position: absolute;
+        left: calc(11 * var(--px));
+        top: calc(14 * var(--px));
+        width: calc(26 * var(--px));
+        height: calc(26 * var(--px));
+        border: calc(3 * var(--px)) solid #fff;
+        border-radius: 50%;
+      }
+
+      .scan-id-mark::after {
+        content: "";
+        position: absolute;
+        left: calc(50 * var(--px));
+        top: calc(18 * var(--px));
+        width: calc(36 * var(--px));
+        height: calc(7 * var(--px));
+        border-radius: 999px;
+        background: #fff;
+        box-shadow: 0 calc(17 * var(--px)) 0 #fff, calc(-39 * var(--px)) calc(36 * var(--px)) 0 calc(2 * var(--px)) #fff;
+      }
+
+      .scan-bottom-tools {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: calc(136 * var(--px));
+        background: #27282d;
+      }
+
+      .scan-shutter {
+        position: absolute;
+        left: calc(153 * var(--px));
+        top: calc(34 * var(--px));
+        width: calc(70 * var(--px));
+        height: calc(70 * var(--px));
+        border: calc(3 * var(--px)) solid #338bfa;
+        border-radius: 50%;
+      }
+
+      .scan-shutter::before {
+        content: "";
+        position: absolute;
+        left: calc(7 * var(--px));
+        top: calc(7 * var(--px));
+        width: calc(56 * var(--px));
+        height: calc(56 * var(--px));
+        border-radius: 50%;
+        background: #fff;
+      }
+
+      .scan-import {
+        position: absolute;
+        left: calc(279 * var(--px));
+        top: calc(46 * var(--px));
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: calc(48 * var(--px));
+        gap: 0;
+        color: #fff;
+        font-size: calc(12 * var(--px));
+        line-height: calc(20 * var(--px));
+      }
+
+      .scan-import-icon {
+        position: relative;
+        width: calc(26 * var(--px));
+        height: calc(26 * var(--px));
+        margin-bottom: 0;
+        border: calc(2 * var(--px)) solid #fff;
+        border-radius: calc(3 * var(--px));
+      }
+
+      .scan-import-icon::before {
+        content: "";
+        position: absolute;
+        left: calc(4 * var(--px));
+        bottom: calc(4 * var(--px));
+        width: calc(16 * var(--px));
+        height: calc(9 * var(--px));
+        background: #fff;
+        clip-path: polygon(0 100%, 34% 38%, 52% 70%, 70% 22%, 100% 100%);
+      }
+
+      .scan-import-icon::after {
+        content: "";
+        position: absolute;
+        right: calc(4 * var(--px));
+        top: calc(4 * var(--px));
+        width: calc(4 * var(--px));
+        height: calc(4 * var(--px));
+        border-radius: 50%;
+        background: #fff;
+      }
+
+      .torch-tool {
+        position: absolute;
+        left: calc(151 * var(--px));
+        top: calc(425 * var(--px));
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: calc(74 * var(--px));
+        height: calc(94 * var(--px));
+        color: #fff;
+        font-size: calc(12 * var(--px));
+        line-height: calc(20 * var(--px));
+        text-align: center;
+      }
+
+      .torch-button {
+        position: relative;
+        width: calc(74 * var(--px));
+        height: calc(74 * var(--px));
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .torch-button::before {
+        content: "";
+        position: absolute;
+        left: calc(27 * var(--px));
+        top: calc(13 * var(--px));
+        width: calc(20 * var(--px));
+        height: calc(38 * var(--px));
+        border-radius: calc(4 * var(--px)) calc(4 * var(--px)) calc(9 * var(--px)) calc(9 * var(--px));
+        background: #fff;
+        clip-path: polygon(22% 0, 78% 0, 78% 38%, 65% 38%, 65% 100%, 35% 100%, 35% 38%, 22% 38%);
       }
 
       .bottom-submit {
@@ -2379,10 +2703,10 @@
           <section class="fast-warning">据国家互联网医药管理办法，仅为复诊用药人提供服务</section>
 
           <section class="fast-scan-wrap">
-            <div class="fast-scan">
+            <button class="fast-scan" id="certificateScanTrigger" type="button">
               <div class="scan-line"><span class="scan-qr"></span><span>证件扫描/快速上传证件</span></div>
               <div class="fast-scan-note">您可通过扫描证件或者上传证件照片快速填写信息</div>
-            </div>
+            </button>
           </section>
 
           <section class="fast-section-wrap">
@@ -2454,9 +2778,9 @@
                 <div class="fast-section-title">所需药品</div>
                 <span class="chevron">›</span>
               </div>
-              <div class="scan-drug-row">
+              <button class="scan-drug-row" id="drugScanTrigger" type="button">
                 <div class="scan-line"><span class="scan-qr"></span><span>扫描药品信息</span></div>
-              </div>
+              </button>
             </div>
           </section>
 
@@ -2465,6 +2789,50 @@
             <button class="primary-submit" type="button">提交</button>
           </section>
         </div>
+        <section class="scan-page" id="certificateScanPage" aria-label="扫描证件信息">
+          <div class="scan-status">
+            <span>9:41</span>
+            <span class="scan-status-icons">⌁  Wi-Fi  ▭</span>
+          </div>
+          <div class="scan-nav">
+            <button class="scan-back" type="button" aria-label="返回问诊表单"></button>
+            <h1 class="scan-nav-title">扫描证件信息</h1>
+            <button class="scan-nav-action" type="button" aria-label="扫码记录"></button>
+          </div>
+          <div class="scan-viewport">
+            <div class="scan-box"></div>
+            <span class="scan-corner tl"></span>
+            <span class="scan-corner tr"></span>
+            <span class="scan-corner bl"></span>
+            <span class="scan-corner br"></span>
+            <span class="scan-id-mark" aria-hidden="true"></span>
+            <span class="scan-line-light"></span>
+            <div class="scan-bottom-tools">
+              <span class="scan-shutter" aria-hidden="true"></span>
+              <span class="scan-import"><i class="scan-import-icon"></i><span>导入照片</span></span>
+            </div>
+          </div>
+        </section>
+        <section class="scan-page" id="drugScanPage" aria-label="扫描药品信息">
+          <div class="scan-status">
+            <span>9:41</span>
+            <span class="scan-status-icons">⌁  Wi-Fi  ▭</span>
+          </div>
+          <div class="scan-nav">
+            <button class="scan-back" type="button" aria-label="返回问诊表单"></button>
+            <h1 class="scan-nav-title">扫描药品信息</h1>
+            <button class="scan-nav-action" type="button" aria-label="扫码记录"></button>
+          </div>
+          <div class="scan-viewport">
+            <div class="scan-box"></div>
+            <span class="scan-corner tl"></span>
+            <span class="scan-corner tr"></span>
+            <span class="scan-corner bl"></span>
+            <span class="scan-corner br"></span>
+            <span class="scan-line-light"></span>
+            <span class="torch-tool"><i class="torch-button"></i><span>轻触点亮</span></span>
+          </div>
+        </section>
         <nav class="tabbar" aria-label="底部导航">
           <div class="tabbar-item active" id="homeTab" role="button" tabindex="0">
             <span class="tabbar-icon home"></span>
@@ -2486,6 +2854,11 @@
       const westernInquiry = document.getElementById("westernInquiry");
       const chineseInquiry = document.getElementById("chineseInquiry");
       const fastBack = document.getElementById("fastBack");
+      const certificateScanTrigger = document.getElementById("certificateScanTrigger");
+      const drugScanTrigger = document.getElementById("drugScanTrigger");
+      const certificateScanPage = document.getElementById("certificateScanPage");
+      const drugScanPage = document.getElementById("drugScanPage");
+      const scanBackButtons = document.querySelectorAll(".scan-back");
       const homeTab = document.getElementById("homeTab");
       const mineTab = document.getElementById("mineTab");
 
@@ -2494,8 +2867,15 @@
         phoneScreen?.classList.remove("has-subpage");
       };
 
+      const closeScan = () => {
+        phoneScreen?.classList.remove("view-scan");
+        certificateScanPage?.classList.remove("is-active");
+        drugScanPage?.classList.remove("is-active");
+      };
+
       const showHome = () => {
         closeDrugType();
+        closeScan();
         phoneScreen?.classList.remove("view-mine", "view-fast", "child-inquiry");
         homeTab?.classList.add("active");
         mineTab?.classList.remove("active");
@@ -2503,6 +2883,7 @@
 
       const showMine = () => {
         closeDrugType();
+        closeScan();
         phoneScreen?.classList.remove("view-fast", "child-inquiry");
         phoneScreen?.classList.add("view-mine");
         mineTab?.classList.add("active");
@@ -2511,11 +2892,19 @@
 
       const showFastInquiry = (isChild = false) => {
         closeDrugType();
+        closeScan();
         phoneScreen?.classList.remove("view-mine");
         phoneScreen?.classList.add("view-fast");
         phoneScreen?.classList.toggle("child-inquiry", isChild);
         homeTab?.classList.remove("active");
         mineTab?.classList.remove("active");
+      };
+
+      const showScan = (page) => {
+        closeDrugType();
+        closeScan();
+        phoneScreen?.classList.add("view-fast", "view-scan");
+        page?.classList.add("is-active");
       };
 
       textInquiryEntry?.addEventListener("click", () => {
@@ -2529,6 +2918,9 @@
       drugTypeClose?.addEventListener("click", closeDrugType);
       westernInquiry?.addEventListener("click", () => showFastInquiry(false));
       chineseInquiry?.addEventListener("click", () => showFastInquiry(true));
+      certificateScanTrigger?.addEventListener("click", () => showScan(certificateScanPage));
+      drugScanTrigger?.addEventListener("click", () => showScan(drugScanPage));
+      scanBackButtons.forEach((button) => button.addEventListener("click", closeScan));
       fastBack?.addEventListener("click", showHome);
     </script>
   </body>
