@@ -1845,6 +1845,17 @@
         line-height: calc(22 * var(--px));
       }
 
+      button.drug-search-input {
+        appearance: none;
+        text-align: left;
+        font-family: inherit;
+        cursor: pointer;
+      }
+
+      .drug-search-input.is-filled {
+        color: rgba(0, 0, 0, 0.9);
+      }
+
       .drug-search-input::after {
         content: "";
         width: calc(12 * var(--px));
@@ -1882,6 +1893,38 @@
       button.drug-search-scan {
         appearance: none;
         font: inherit;
+      }
+
+      .drug-search-results {
+        display: none;
+        width: 100%;
+        height: calc(300 * var(--px));
+        padding: calc(12 * var(--px)) calc(24 * var(--px)) 0;
+        gap: calc(16 * var(--px));
+        background: #f8f8f9;
+      }
+
+      .drug-search-page.has-results .drug-search-results {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .drug-search-page.has-results .drug-search-empty {
+        display: none;
+      }
+
+      .drug-result-item {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        min-height: calc(22 * var(--px));
+        color: #338bfa;
+        font-size: calc(14 * var(--px));
+        line-height: calc(22 * var(--px));
+      }
+
+      .drug-result-item.secondary {
+        color: #000;
       }
 
       .drug-search-section {
@@ -3076,14 +3119,24 @@
             <div class="drug-sheet-handle-wrap"><span class="drug-sheet-handle"></span></div>
             <div class="drug-search-head">
               <div class="drug-search-form">
-                <div class="drug-search-input">点击开始搜索药品</div>
-                <button class="drug-search-submit" type="button">搜索</button>
+                <button class="drug-search-input" id="drugSearchInput" type="button">点击开始搜索药品</button>
+                <button class="drug-search-submit" id="drugSearchSubmit" type="button">搜索</button>
               </div>
             </div>
             <button class="drug-search-scan" id="drugSearchScanTrigger" type="button">
               <div class="scan-line"><span class="scan-qr"></span><span>扫描药品信息</span></div>
             </button>
-            <div class="drug-search-section">
+            <div class="drug-search-results" id="drugSearchResults">
+              <span class="drug-result-item">布洛芬片</span>
+              <span class="drug-result-item">布洛芬胶囊</span>
+              <span class="drug-result-item">布洛芬凝胶</span>
+              <span class="drug-result-item">布洛芬颗粒</span>
+              <span class="drug-result-item">布洛芬糖浆</span>
+              <span class="drug-result-item">布洛芬搽剂</span>
+              <span class="drug-result-item secondary">右布洛芬片</span>
+              <span class="drug-result-item">布洛芬乳膏</span>
+            </div>
+            <div class="drug-search-section drug-search-empty">
               <div class="drug-search-title"><strong>历史搜索</strong><span class="clear-history">清空</span></div>
               <div class="drug-tags">
                 <span class="drug-tag">感冒药</span>
@@ -3095,7 +3148,7 @@
                 <span class="drug-tag more">⌄</span>
               </div>
             </div>
-            <div class="drug-search-section">
+            <div class="drug-search-section drug-search-empty">
               <div class="drug-search-title"><strong>热门搜索</strong></div>
               <div class="drug-tags">
                 <span class="drug-tag">感冒药</span>
@@ -3142,6 +3195,8 @@
       const scanBackButtons = document.querySelectorAll(".scan-back");
       const drugSearchPage = document.getElementById("drugSearchPage");
       const drugSearchDim = document.getElementById("drugSearchDim");
+      const drugSearchInput = document.getElementById("drugSearchInput");
+      const drugSearchSubmit = document.getElementById("drugSearchSubmit");
       const drugSheetConfirm = document.querySelector(".drug-sheet-confirm");
       const homeTab = document.getElementById("homeTab");
       const mineTab = document.getElementById("mineTab");
@@ -3159,6 +3214,12 @@
 
       const closeDrugSearch = () => {
         phoneScreen?.classList.remove("view-drug-search");
+      };
+
+      const resetDrugSearch = () => {
+        drugSearchPage?.classList.remove("has-results");
+        drugSearchInput?.classList.remove("is-filled");
+        if (drugSearchInput) drugSearchInput.textContent = "点击开始搜索药品";
       };
 
       const showHome = () => {
@@ -3202,7 +3263,14 @@
       const showDrugSearch = () => {
         closeDrugType();
         closeScan();
+        resetDrugSearch();
         phoneScreen?.classList.add("view-fast", "view-drug-search");
+      };
+
+      const showIbuprofenResults = () => {
+        drugSearchPage?.classList.add("has-results");
+        drugSearchInput?.classList.add("is-filled");
+        if (drugSearchInput) drugSearchInput.textContent = "布洛芬";
       };
 
       textInquiryEntry?.addEventListener("click", () => {
@@ -3221,6 +3289,8 @@
       drugScanTrigger?.addEventListener("click", () => showScan(drugScanPage));
       drugSearchScanTrigger?.addEventListener("click", () => showScan(drugScanPage));
       scanBackButtons.forEach((button) => button.addEventListener("click", closeScan));
+      drugSearchInput?.addEventListener("click", showIbuprofenResults);
+      drugSearchSubmit?.addEventListener("click", showIbuprofenResults);
       drugSearchDim?.addEventListener("click", closeDrugSearch);
       drugSheetConfirm?.addEventListener("click", closeDrugSearch);
       fastBack?.addEventListener("click", showHome);
