@@ -1457,6 +1457,18 @@
         border-radius: calc(8 * var(--px));
       }
 
+      .fast-drug.is-selected .fast-line-card {
+        border-radius: calc(8 * var(--px)) calc(8 * var(--px)) 0 0;
+      }
+
+      .fast-drug.is-selected .scan-drug-row {
+        display: none;
+      }
+
+      .fast-drug.is-selected .fast-selected-drug-list {
+        display: flex;
+      }
+
       .scan-drug-row {
         display: flex;
         align-items: center;
@@ -1465,6 +1477,39 @@
         height: calc(50 * var(--px));
         border-top: calc(1 * var(--px)) solid #f2f3f4;
         background: #fff;
+      }
+
+      .fast-selected-drug-list {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        min-height: calc(164 * var(--px));
+        padding: 0 calc(12 * var(--px)) calc(8 * var(--px));
+        gap: calc(8 * var(--px));
+        border-radius: 0 0 calc(8 * var(--px)) calc(8 * var(--px));
+        background: #fff;
+      }
+
+      .fast-selected-drug-list .drug-product-card {
+        width: 100%;
+      }
+
+      .fast-selected-drug-list .drug-product-main {
+        width: calc(179 * var(--px));
+      }
+
+      .fast-selected-drug-list .drug-product-info {
+        width: calc(162 * var(--px));
+      }
+
+      .fast-selected-drug-list .drug-stepper {
+        display: flex;
+      }
+
+      .drug-type-ribbon.tcm {
+        background: #ffe1b3;
+        color: #e68500;
+        line-height: calc(16 * var(--px));
       }
 
       .scan-page {
@@ -3273,7 +3318,7 @@
           </section>
 
           <section class="fast-section-wrap">
-            <div class="fast-card fast-drug">
+            <div class="fast-card fast-drug" id="fastDrugCard">
               <button class="fast-line-card" id="requiredDrugTrigger" type="button">
                 <div class="fast-section-title">所需药品</div>
                 <span class="chevron">›</span>
@@ -3281,6 +3326,22 @@
               <button class="scan-drug-row" id="drugScanTrigger" type="button">
                 <div class="scan-line"><span class="scan-qr"></span><span>扫描药品信息</span></div>
               </button>
+              <div class="fast-selected-drug-list" id="fastSelectedDrugList">
+                <div class="drug-product-card">
+                  <div class="drug-product-main">
+                    <span class="drug-type-ribbon">西药</span>
+                    <span class="drug-product-info"><span class="drug-product-name">复方感冒灵颗粒</span><span class="drug-product-spec">14g*10袋</span></span>
+                  </div>
+                  <span class="drug-stepper"><button class="drug-step-minus" type="button" aria-label="减少"></button><span>1</span><button class="drug-step-plus" type="button" aria-label="增加"></button></span>
+                </div>
+                <div class="drug-product-card">
+                  <div class="drug-product-main">
+                    <span class="drug-type-ribbon tcm">中成药</span>
+                    <span class="drug-product-info"><span class="drug-product-name">复方感冒灵颗粒</span><span class="drug-product-spec">14g*10袋</span></span>
+                  </div>
+                  <span class="drug-stepper"><button class="drug-step-minus" type="button" aria-label="减少"></button><span>1</span><button class="drug-step-plus" type="button" aria-label="增加"></button></span>
+                </div>
+              </div>
             </div>
           </section>
 
@@ -3452,6 +3513,7 @@
       const chineseInquiry = document.getElementById("chineseInquiry");
       const fastBack = document.getElementById("fastBack");
       const requiredDrugTrigger = document.getElementById("requiredDrugTrigger");
+      const fastDrugCard = document.getElementById("fastDrugCard");
       const certificateScanTrigger = document.getElementById("certificateScanTrigger");
       const drugScanTrigger = document.getElementById("drugScanTrigger");
       const drugSearchScanTrigger = document.getElementById("drugSearchScanTrigger");
@@ -3552,6 +3614,20 @@
         if (drugSearchInput) drugSearchInput.value = "布洛芬";
       };
 
+      const applySelectedDrugToForm = () => {
+        fastDrugCard?.classList.add("is-selected");
+        closeDrugSearch();
+        fastDrugCard?.scrollIntoView({ block: "center", behavior: "smooth" });
+      };
+
+      const handleDrugSheetConfirm = () => {
+        if (drugSearchPage?.classList.contains("has-selected")) {
+          applySelectedDrugToForm();
+          return;
+        }
+        closeDrugSearch();
+      };
+
       const showDrugNoResults = () => {
         drugSearchPage?.classList.remove("has-results", "has-product-list", "has-selected");
         drugSearchPage?.classList.add("has-no-results");
@@ -3594,7 +3670,7 @@
       drugResultItems.forEach((item) => item.addEventListener("click", showDrugProductList));
       firstDrugAdd?.addEventListener("click", showSelectedDrug);
       drugSearchDim?.addEventListener("click", closeDrugSearch);
-      drugSheetConfirm?.addEventListener("click", closeDrugSearch);
+      drugSheetConfirm?.addEventListener("click", handleDrugSheetConfirm);
       fastBack?.addEventListener("click", showHome);
     </script>
   </body>
