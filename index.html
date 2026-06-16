@@ -1,0 +1,1901 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>嘉虹健康手机页面展示</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background: #f4f7fb;
+        color: #1f2329;
+        font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      }
+
+      body {
+        display: grid;
+        min-height: 100vh;
+        place-items: center;
+        padding: 24px;
+      }
+
+      .phone-stage {
+        position: relative;
+        width: min(482px, 94vw, calc((100vh - 48px) * 482 / 954));
+        aspect-ratio: 482 / 954;
+      }
+
+      .phone-screen {
+        --px: calc(100cqw / 375);
+        container-type: inline-size;
+        position: absolute;
+        left: 8.299%;
+        top: 4.193%;
+        z-index: 1;
+        width: 83.402%;
+        height: 91.614%;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        background: #f7faff;
+        border-radius: 13.5% / 6.2%;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .app-page::-webkit-scrollbar {
+        display: none;
+      }
+
+      .phone-frame {
+        position: absolute;
+        inset: 0;
+        z-index: 3;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      .app-page {
+        width: 100%;
+        height: 100%;
+        min-height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        padding-bottom: calc(56 * var(--px));
+        background: linear-gradient(180deg, #d6eaff 0%, #eef5ff 6.53%, #f4f8ff 14.52%, #f7faff 100%);
+        font-size: calc(12 * var(--px));
+        line-height: 1;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .status-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        height: calc(31.5 * var(--px));
+        padding: calc(12 * var(--px)) calc(20 * var(--px)) 0;
+        font-size: calc(13 * var(--px));
+        font-weight: 700;
+        line-height: calc(20 * var(--px));
+      }
+
+      .status-icons {
+        display: flex;
+        align-items: center;
+        gap: calc(4 * var(--px));
+        width: calc(54 * var(--px));
+        height: calc(14 * var(--px));
+      }
+
+      .signal,
+      .wifi,
+      .battery {
+        position: relative;
+        height: calc(14 * var(--px));
+      }
+
+      .signal {
+        width: calc(14 * var(--px));
+      }
+
+      .signal span {
+        position: absolute;
+        bottom: calc(2 * var(--px));
+        width: calc(1.2 * var(--px));
+        border-radius: calc(1 * var(--px));
+        background: #1f2329;
+      }
+
+      .signal span:nth-child(1) {
+        left: calc(1 * var(--px));
+        height: calc(2 * var(--px));
+      }
+
+      .signal span:nth-child(2) {
+        left: calc(4 * var(--px));
+        height: calc(4 * var(--px));
+      }
+
+      .signal span:nth-child(3) {
+        left: calc(7 * var(--px));
+        height: calc(6 * var(--px));
+      }
+
+      .signal span:nth-child(4) {
+        left: calc(10 * var(--px));
+        height: calc(8 * var(--px));
+      }
+
+      .wifi {
+        width: calc(14 * var(--px));
+      }
+
+      .wifi::before,
+      .wifi::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        border: calc(1.2 * var(--px)) solid #1f2329;
+        border-bottom: 0;
+        border-left-color: transparent;
+        border-right-color: transparent;
+        border-radius: 50% 50% 0 0;
+        transform: translateX(-50%);
+      }
+
+      .wifi::before {
+        top: calc(3 * var(--px));
+        width: calc(12 * var(--px));
+        height: calc(7 * var(--px));
+      }
+
+      .wifi::after {
+        top: calc(7 * var(--px));
+        width: calc(6 * var(--px));
+        height: calc(4 * var(--px));
+      }
+
+      .battery {
+        width: calc(18 * var(--px));
+        border: calc(1.2 * var(--px)) solid #1f2329;
+        border-radius: calc(3 * var(--px));
+      }
+
+      .battery::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: calc(-3.5 * var(--px));
+        width: calc(2 * var(--px));
+        height: calc(5 * var(--px));
+        background: #1f2329;
+        border-radius: calc(1 * var(--px));
+        transform: translateY(-50%);
+      }
+
+      .battery::after {
+        content: "";
+        position: absolute;
+        inset: calc(2 * var(--px)) calc(4 * var(--px)) calc(2 * var(--px)) calc(2 * var(--px));
+        background: #1f2329;
+        border-radius: calc(1.5 * var(--px));
+      }
+
+      .hero {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        height: calc(84 * var(--px));
+        padding: calc(12 * var(--px)) calc(16 * var(--px)) calc(20 * var(--px));
+      }
+
+      .hero-title {
+        margin: 0;
+        font-size: calc(20 * var(--px));
+        font-weight: 700;
+        line-height: calc(28 * var(--px));
+      }
+
+      .hero-tags {
+        display: flex;
+        gap: calc(12 * var(--px));
+        padding-top: calc(4 * var(--px));
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: calc(4 * var(--px));
+        color: #8a919c;
+        font-size: calc(12 * var(--px));
+        line-height: calc(20 * var(--px));
+      }
+
+      .tag::before {
+        content: "";
+        width: calc(13 * var(--px));
+        height: calc(13 * var(--px));
+        background: #2a9df8;
+        border-radius: 50%;
+        box-shadow: inset 0 0 0 calc(4 * var(--px)) #2a9df8;
+      }
+
+      .tag::after {
+        content: "";
+        position: absolute;
+      }
+
+      .quick-actions {
+        display: flex;
+        gap: calc(8 * var(--px));
+        padding-top: calc(4 * var(--px));
+      }
+
+      .quick {
+        display: grid;
+        width: calc(32 * var(--px));
+        height: calc(32 * var(--px));
+        place-items: center;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 50%;
+      }
+
+      .line-icon {
+        position: relative;
+        width: calc(15 * var(--px));
+        height: calc(15 * var(--px));
+      }
+
+      .line-icon::before,
+      .line-icon::after {
+        content: "";
+        position: absolute;
+        border: calc(1.25 * var(--px)) solid #2a9df8;
+        border-radius: calc(3 * var(--px));
+      }
+
+      .line-icon.scan::before {
+        inset: 0;
+        border-right-color: transparent;
+        border-bottom-color: transparent;
+      }
+
+      .line-icon.scan::after {
+        inset: calc(4 * var(--px));
+      }
+
+      .line-icon.people::before {
+        left: calc(2 * var(--px));
+        top: calc(2 * var(--px));
+        width: calc(5 * var(--px));
+        height: calc(5 * var(--px));
+        border-radius: 50%;
+      }
+
+      .line-icon.people::after {
+        left: calc(1 * var(--px));
+        bottom: calc(1 * var(--px));
+        width: calc(12 * var(--px));
+        height: calc(6 * var(--px));
+        border-top-left-radius: calc(8 * var(--px));
+        border-top-right-radius: calc(8 * var(--px));
+      }
+
+      .line-icon.grid::before {
+        inset: 0;
+        border-style: solid;
+      }
+
+      .line-icon.grid::after {
+        inset: calc(5 * var(--px));
+        background: #2a9df8;
+        border: 0;
+        box-shadow:
+          calc(-6 * var(--px)) 0 #2a9df8,
+          calc(6 * var(--px)) 0 #2a9df8,
+          0 calc(-6 * var(--px)) #2a9df8,
+          0 calc(6 * var(--px)) #2a9df8;
+      }
+
+      .notice-section {
+        width: 100%;
+        height: calc(49 * var(--px));
+        padding: 0 calc(16 * var(--px)) calc(16 * var(--px));
+      }
+
+      .notice {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: calc(33 * var(--px));
+        padding: calc(10 * var(--px)) calc(12 * var(--px));
+        gap: calc(8 * var(--px));
+        background: #fff8ee;
+        border: calc(0.8 * var(--px)) solid #ffe0b2;
+        border-radius: calc(10 * var(--px));
+        color: #ff9a16;
+      }
+
+      .notice-mark {
+        display: grid;
+        width: calc(22 * var(--px));
+        height: calc(22 * var(--px));
+        place-items: center;
+        flex: 0 0 auto;
+        background: #ff9a16;
+        border-radius: 50%;
+        color: #fff;
+        font-size: calc(15 * var(--px));
+        line-height: 1;
+      }
+
+      .notice-text {
+        flex: 1 1 auto;
+        font-size: calc(12 * var(--px));
+        line-height: calc(20 * var(--px));
+      }
+
+      .notice-btn {
+        width: calc(48 * var(--px));
+        height: calc(24 * var(--px));
+        border: 0;
+        border-radius: calc(8 * var(--px));
+        background: #ff9a16;
+        color: #fff;
+        font-size: calc(12 * var(--px));
+      }
+
+      .notice-close {
+        width: calc(15 * var(--px));
+        color: #c0c5cc;
+        text-align: center;
+      }
+
+      .entry-section {
+        display: flex;
+        gap: calc(12 * var(--px));
+        width: 100%;
+        height: calc(130 * var(--px));
+        padding: 0 calc(16 * var(--px)) calc(24 * var(--px));
+      }
+
+      .entry-card {
+        position: relative;
+        flex: 1 1 0;
+        height: calc(106 * var(--px));
+        overflow: hidden;
+        padding: calc(16 * var(--px)) calc(14 * var(--px));
+        border-radius: calc(12 * var(--px));
+        color: #fff;
+      }
+
+      button.entry-card {
+        border: 0;
+        font: inherit;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .entry-card.video {
+        background: linear-gradient(135deg, #3a51f5 0%, #475bf8 100%);
+      }
+
+      .entry-card.text {
+        background: linear-gradient(135deg, #02d5a4 0%, #04a87e 100%);
+      }
+
+      .entry-title {
+        font-size: calc(20 * var(--px));
+        font-weight: 700;
+        line-height: calc(24 * var(--px));
+        letter-spacing: calc(2 * var(--px));
+      }
+
+      .entry-subtitle {
+        padding-top: calc(2 * var(--px));
+        color: rgba(255, 255, 255, 0.82);
+        font-size: calc(12 * var(--px));
+        line-height: calc(20 * var(--px));
+      }
+
+      .entry-illu {
+        position: absolute;
+        right: calc(-6 * var(--px));
+        bottom: calc(-11 * var(--px));
+        width: calc(80 * var(--px));
+        height: calc(80 * var(--px));
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 50%;
+        box-shadow: 0 calc(4 * var(--px)) calc(4 * var(--px)) rgba(0, 0, 0, 0.11);
+      }
+
+      .entry-illu::before,
+      .entry-illu::after {
+        content: "";
+        position: absolute;
+      }
+
+      .video .entry-illu::before {
+        left: calc(24 * var(--px));
+        top: calc(23 * var(--px));
+        width: calc(37 * var(--px));
+        height: calc(32 * var(--px));
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: calc(4 * var(--px));
+      }
+
+      .video .entry-illu::after {
+        left: calc(34 * var(--px));
+        top: calc(31 * var(--px));
+        border-top: calc(9 * var(--px)) solid transparent;
+        border-bottom: calc(9 * var(--px)) solid transparent;
+        border-left: calc(15 * var(--px)) solid #4257f7;
+      }
+
+      .text .entry-illu::before {
+        left: calc(18 * var(--px));
+        top: calc(20 * var(--px));
+        width: calc(42 * var(--px));
+        height: calc(34 * var(--px));
+        background: #f5ffff;
+        border-radius: calc(10 * var(--px)) calc(10 * var(--px)) calc(10 * var(--px)) calc(2 * var(--px));
+        transform: rotate(4deg);
+      }
+
+      .text .entry-illu::after {
+        left: calc(31 * var(--px));
+        top: calc(34 * var(--px));
+        width: calc(13 * var(--px));
+        height: calc(13 * var(--px));
+        background: #04c78f;
+        border-radius: 50%;
+      }
+
+      .section-wrap {
+        width: 100%;
+        padding-inline: calc(16 * var(--px));
+      }
+
+      .specialty-wrap {
+        height: calc(334 * var(--px));
+      }
+
+      .card {
+        width: 100%;
+        background: #fff;
+        border-radius: calc(16 * var(--px));
+        box-shadow: 0 calc(2 * var(--px)) calc(12 * var(--px)) rgba(42, 100, 200, 0.07);
+      }
+
+      .specialty-card {
+        height: calc(334 * var(--px));
+        padding: calc(16 * var(--px));
+      }
+
+      .section-title-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: calc(24 * var(--px));
+      }
+
+      .section-title {
+        margin: 0;
+        font-size: calc(16 * var(--px));
+        font-weight: 700;
+        line-height: calc(24 * var(--px));
+      }
+
+      .more {
+        color: #8a919c;
+        font-size: calc(12 * var(--px));
+        line-height: calc(18 * var(--px));
+      }
+
+      .specialty-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: calc(12 * var(--px));
+        height: calc(102 * var(--px));
+        padding-top: calc(14 * var(--px));
+      }
+
+      .specialty-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: calc(88 * var(--px));
+        padding: calc(12 * var(--px)) 0;
+        gap: calc(6 * var(--px));
+        border-radius: calc(6 * var(--px));
+        color: #1f2329;
+        font-size: calc(12 * var(--px));
+        line-height: calc(20 * var(--px));
+      }
+
+      .specialty-item:nth-child(1) {
+        background: #fdf2f8;
+      }
+
+      .specialty-item:nth-child(2) {
+        background: #eff6ff;
+      }
+
+      .specialty-item:nth-child(3) {
+        background: #f0fdf4;
+      }
+
+      .specialty-item:nth-child(4) {
+        background: #fff5f5;
+      }
+
+      .round-icon {
+        position: relative;
+        display: grid;
+        width: calc(38 * var(--px));
+        height: calc(38 * var(--px));
+        place-items: center;
+        border-radius: 50%;
+      }
+
+      .round-icon::before,
+      .round-icon::after {
+        content: "";
+        position: absolute;
+        border: calc(2 * var(--px)) solid #fff;
+      }
+
+      .round-icon.gynecology {
+        background: linear-gradient(296deg, #fe6637 39.81%, #ff8660 89.08%);
+      }
+
+      .round-icon.gynecology::before {
+        left: calc(11 * var(--px));
+        top: calc(8 * var(--px));
+        width: calc(16 * var(--px));
+        height: calc(20 * var(--px));
+        border-radius: 50% 50% calc(8 * var(--px)) calc(8 * var(--px));
+      }
+
+      .round-icon.pediatrics {
+        background: linear-gradient(195deg, #5ab0fb 13.51%, #0079e3 89.22%);
+      }
+
+      .round-icon.pediatrics::before {
+        left: calc(8 * var(--px));
+        top: calc(9 * var(--px));
+        width: calc(22 * var(--px));
+        height: calc(20 * var(--px));
+        border-radius: 50%;
+      }
+
+      .round-icon.chinese {
+        background: linear-gradient(180deg, #4de5ae 0%, #05c680 100%);
+      }
+
+      .round-icon.chinese::before {
+        left: calc(7 * var(--px));
+        top: calc(12 * var(--px));
+        width: calc(25 * var(--px));
+        height: calc(16 * var(--px));
+        border-radius: calc(2 * var(--px));
+      }
+
+      .round-icon.surgery {
+        background: linear-gradient(180deg, #9c66ff 0%, #6b24eb 100%);
+      }
+
+      .round-icon.surgery::before {
+        left: calc(8 * var(--px));
+        top: calc(8 * var(--px));
+        width: calc(22 * var(--px));
+        height: calc(22 * var(--px));
+        border-radius: calc(3 * var(--px));
+      }
+
+      .feature-list {
+        display: grid;
+        gap: calc(8 * var(--px));
+        padding-top: calc(16 * var(--px));
+      }
+
+      .feature-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: calc(76 * var(--px));
+        padding: 0 calc(16 * var(--px));
+        border: calc(0.8 * var(--px)) solid var(--line);
+        border-radius: calc(10 * var(--px));
+        background: var(--bg);
+      }
+
+      .feature-title {
+        margin-bottom: calc(7 * var(--px));
+        font-size: calc(16 * var(--px));
+        line-height: calc(22 * var(--px));
+      }
+
+      .feature-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: calc(64 * var(--px));
+        height: calc(24 * var(--px));
+        border-radius: calc(10 * var(--px));
+        background: var(--accent);
+        color: #fff;
+        font-size: calc(12 * var(--px));
+      }
+
+      .feature-btn::after {
+        content: "›";
+        padding-left: calc(4 * var(--px));
+        font-size: calc(16 * var(--px));
+        line-height: 1;
+      }
+
+      .illu {
+        position: relative;
+        width: calc(80 * var(--px));
+        height: calc(68 * var(--px));
+      }
+
+      .illu::before,
+      .illu::after {
+        content: "";
+        position: absolute;
+      }
+
+      .illu.doctor::before {
+        left: calc(30 * var(--px));
+        top: calc(12 * var(--px));
+        width: calc(24 * var(--px));
+        height: calc(24 * var(--px));
+        background: #ffd5a8;
+        border-radius: 50%;
+        box-shadow: 0 calc(22 * var(--px)) 0 calc(8 * var(--px)) rgba(255, 179, 71, 0.9);
+      }
+
+      .illu.doctor::after {
+        left: calc(13 * var(--px));
+        top: calc(23 * var(--px));
+        width: calc(14 * var(--px));
+        height: calc(14 * var(--px));
+        background: rgba(255, 228, 178, 0.6);
+        border-radius: 50%;
+        box-shadow: calc(48 * var(--px)) calc(24 * var(--px)) 0 rgba(255, 179, 71, 0.3);
+      }
+
+      .illu.prescription::before,
+      .illu.dispatch::before {
+        left: calc(16 * var(--px));
+        top: calc(10 * var(--px));
+        width: calc(36 * var(--px));
+        height: calc(48 * var(--px));
+        background: #bfe0ff;
+        border-radius: calc(5 * var(--px));
+      }
+
+      .illu.prescription::after {
+        right: calc(6 * var(--px));
+        top: calc(10 * var(--px));
+        width: calc(24 * var(--px));
+        height: calc(24 * var(--px));
+        content: "Rx";
+        color: #2a9df8;
+        font-family: Inter, Arial, sans-serif;
+        font-size: calc(16 * var(--px));
+        font-weight: 700;
+      }
+
+      .illu.dispatch::before {
+        background: #b2f0d8;
+      }
+
+      .illu.dispatch::after {
+        right: calc(8 * var(--px));
+        top: calc(10 * var(--px));
+        width: calc(25 * var(--px));
+        height: calc(25 * var(--px));
+        background: #06c895;
+        border-radius: calc(5 * var(--px));
+        box-shadow: inset calc(6 * var(--px)) calc(8 * var(--px)) 0 calc(-4 * var(--px)) #fff;
+      }
+
+      .dispatch-wrap {
+        height: calc(96 * var(--px));
+        padding: calc(10 * var(--px));
+      }
+
+      .dispatch-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: calc(76 * var(--px));
+        padding: 0 calc(16 * var(--px));
+        border: calc(0.8 * var(--px)) solid #6df9b1;
+        border-radius: calc(10 * var(--px));
+        background: #f0fdf9;
+      }
+
+      .doctors-wrap {
+        height: calc(262.6 * var(--px));
+        padding-top: calc(16 * var(--px));
+      }
+
+      .doctor-card {
+        height: calc(246.6 * var(--px));
+        padding: calc(16 * var(--px)) calc(16 * var(--px)) calc(12 * var(--px));
+      }
+
+      .tabs {
+        display: flex;
+        gap: calc(14 * var(--px));
+        height: calc(34 * var(--px));
+        padding-top: calc(10 * var(--px));
+      }
+
+      .tab {
+        display: grid;
+        min-width: calc(44 * var(--px));
+        height: calc(24 * var(--px));
+        place-items: center;
+        padding: 0 calc(10 * var(--px));
+        border-radius: calc(8 * var(--px));
+        background: #f3f5f7;
+        color: #8a919c;
+        font-size: calc(12 * var(--px));
+        line-height: calc(18 * var(--px));
+      }
+
+      .tab.active {
+        background: #eaf6ff;
+        color: #2a9df8;
+        font-weight: 700;
+      }
+
+      .doctor-list {
+        display: flex;
+        gap: calc(10 * var(--px));
+        height: calc(160.6 * var(--px));
+        padding-top: calc(12 * var(--px));
+        overflow: hidden;
+      }
+
+      .doctor-item {
+        display: flex;
+        flex: 0 0 calc(74 * var(--px));
+        flex-direction: column;
+        align-items: center;
+        height: calc(144.6 * var(--px));
+        padding: calc(12 * var(--px)) calc(10 * var(--px));
+        background: #f7faff;
+        border: calc(0.8 * var(--px)) solid #e9edf3;
+        border-radius: calc(12 * var(--px));
+        text-align: center;
+      }
+
+      .avatar {
+        position: relative;
+        flex: 0 0 auto;
+        width: calc(42 * var(--px));
+        height: calc(42 * var(--px));
+        overflow: hidden;
+        border-radius: 50%;
+        background: var(--avatar-bg);
+      }
+
+      .avatar.large {
+        width: calc(50 * var(--px));
+        height: calc(50 * var(--px));
+      }
+
+      .avatar::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 22%;
+        width: 38%;
+        height: 38%;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.86);
+        transform: translateX(-50%);
+      }
+
+      .avatar::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -12%;
+        width: 74%;
+        height: 52%;
+        border-radius: 50% 50% 0 0;
+        background: rgba(255, 255, 255, 0.72);
+        transform: translateX(-50%);
+      }
+
+      .online {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        width: calc(10 * var(--px));
+        height: calc(10 * var(--px));
+        background: #06c895;
+        border: calc(0.8 * var(--px)) solid #fff;
+        border-radius: 50%;
+      }
+
+      .person-name {
+        padding-top: calc(6 * var(--px));
+        color: #1f2329;
+        font-size: calc(13 * var(--px));
+        line-height: calc(20 * var(--px));
+        white-space: nowrap;
+      }
+
+      .person-role,
+      .person-year {
+        color: #8a919c;
+        font-size: calc(11 * var(--px));
+        line-height: calc(17 * var(--px));
+      }
+
+      .pharmacists-wrap {
+        height: calc(203.6 * var(--px));
+        padding-top: calc(16 * var(--px));
+      }
+
+      .pharmacist-card {
+        height: calc(187.6 * var(--px));
+        padding: calc(16 * var(--px));
+      }
+
+      .pharmacist-list {
+        display: flex;
+        gap: calc(12 * var(--px));
+        height: calc(131.6 * var(--px));
+        padding-top: calc(12 * var(--px));
+      }
+
+      .pharmacist-item {
+        display: flex;
+        flex: 1 1 0;
+        flex-direction: column;
+        align-items: center;
+        height: calc(119.6 * var(--px));
+        padding: calc(12 * var(--px)) 0;
+        background: #f7faff;
+        border: calc(0.8 * var(--px)) solid #e9edf3;
+        border-radius: calc(12 * var(--px));
+      }
+
+      .stats-wrap {
+        height: calc(130 * var(--px));
+        padding: calc(16 * var(--px));
+      }
+
+      .stats {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: calc(98 * var(--px));
+        background: #eef7ff;
+        border-radius: calc(10 * var(--px));
+        color: #8a919c;
+        font-size: calc(12 * var(--px));
+        line-height: calc(20 * var(--px));
+      }
+
+      .copyright {
+        padding-top: calc(8 * var(--px));
+        color: #c0c5cc;
+        font-size: calc(10 * var(--px));
+        line-height: calc(16 * var(--px));
+      }
+
+      .tabbar {
+        display: flex;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 5;
+        width: 100%;
+        height: calc(56 * var(--px));
+        background: #fff;
+        border-top: calc(0.8 * var(--px)) solid #e9edf3;
+        box-shadow: 0 calc(-2 * var(--px)) calc(12 * var(--px)) rgba(42, 100, 200, 0.06);
+      }
+
+      .tabbar-item {
+        display: flex;
+        flex: 1 1 0;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: calc(3 * var(--px));
+        color: #8a919c;
+        font-size: calc(11 * var(--px));
+        line-height: calc(16 * var(--px));
+        outline: none;
+        user-select: none;
+        cursor: pointer;
+      }
+
+      .tabbar-item.active {
+        color: #2a9df8;
+        font-weight: 700;
+      }
+
+      .mine-page {
+        display: none;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        padding-bottom: calc(56 * var(--px));
+        background: linear-gradient(180deg, #d6eaff 0%, #eef5ff 8.68%, #f4f8ff 19.3%, #f7faff 100%);
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .mine-page::-webkit-scrollbar {
+        display: none;
+      }
+
+      .phone-screen.view-mine .app-page {
+        display: none;
+      }
+
+      .phone-screen.view-mine .mine-page {
+        display: block;
+      }
+
+      .mine-main {
+        min-height: calc(949 * var(--px));
+        background: linear-gradient(180deg, #d6eaff 0%, #f4f8ff 100%);
+      }
+
+      .mine-profile {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        height: calc(87 * var(--px));
+        padding: calc(14 * var(--px)) calc(16 * var(--px)) calc(20 * var(--px));
+        gap: calc(12 * var(--px));
+      }
+
+      .mine-user {
+        display: flex;
+        align-items: center;
+        gap: calc(12 * var(--px));
+        width: calc(235.31 * var(--px));
+        height: calc(53 * var(--px));
+      }
+
+      .mine-avatar {
+        position: relative;
+        flex: 0 0 auto;
+        width: calc(52 * var(--px));
+        height: calc(52 * var(--px));
+        overflow: hidden;
+        border: calc(1.6 * var(--px)) solid #fff;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #93c5fd 0%, #a5f3fc 100%);
+        box-shadow: 0 calc(2 * var(--px)) calc(8 * var(--px)) rgba(42, 100, 200, 0.15);
+      }
+
+      .mine-avatar::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 20%;
+        width: 38%;
+        height: 38%;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.9);
+        transform: translateX(-50%);
+      }
+
+      .mine-avatar::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -8%;
+        width: 72%;
+        height: 50%;
+        border-radius: 50% 50% 0 0;
+        background: rgba(255, 255, 255, 0.72);
+        transform: translateX(-50%);
+      }
+
+      .mine-name {
+        margin: 0 0 calc(5 * var(--px));
+        color: #1f2329;
+        font-size: calc(20 * var(--px));
+        font-weight: 400;
+        line-height: calc(28 * var(--px));
+      }
+
+      .mine-meta {
+        display: flex;
+        align-items: center;
+        gap: calc(8 * var(--px));
+        height: calc(20 * var(--px));
+      }
+
+      .account-badge {
+        display: inline-grid;
+        width: calc(52 * var(--px));
+        height: calc(20 * var(--px));
+        place-items: center;
+        border-radius: calc(999 * var(--px));
+        background: #2a9df8;
+        color: #fff;
+        font-size: calc(12 * var(--px));
+        line-height: calc(18 * var(--px));
+      }
+
+      .login-name {
+        color: #8a919c;
+        font-size: calc(13 * var(--px));
+        line-height: calc(20 * var(--px));
+        white-space: nowrap;
+      }
+
+      .mine-actions {
+        display: flex;
+        align-items: center;
+        gap: calc(18 * var(--px));
+        width: calc(99 * var(--px));
+        height: calc(24 * var(--px));
+        padding-top: calc(3 * var(--px));
+      }
+
+      .mine-action {
+        position: relative;
+        width: calc(21 * var(--px));
+        height: calc(21 * var(--px));
+      }
+
+      .mine-action::before,
+      .mine-action::after {
+        content: "";
+        position: absolute;
+        border: calc(1.75 * var(--px)) solid #3d4652;
+      }
+
+      .mine-action.bell::before {
+        left: calc(4 * var(--px));
+        top: calc(3 * var(--px));
+        width: calc(13 * var(--px));
+        height: calc(13 * var(--px));
+        border-radius: calc(8 * var(--px)) calc(8 * var(--px)) calc(4 * var(--px)) calc(4 * var(--px));
+      }
+
+      .mine-action.message::before {
+        inset: calc(3 * var(--px));
+        border-radius: calc(4 * var(--px));
+      }
+
+      .mine-action.settings::before {
+        inset: calc(2 * var(--px));
+        border-radius: 50%;
+      }
+
+      .mine-action.settings::after {
+        left: calc(8 * var(--px));
+        top: calc(8 * var(--px));
+        width: calc(5 * var(--px));
+        height: calc(5 * var(--px));
+        border-radius: 50%;
+      }
+
+      .mine-content {
+        width: 100%;
+        min-height: calc(862 * var(--px));
+        padding: 0 calc(16 * var(--px)) calc(24 * var(--px));
+      }
+
+      .mine-card {
+        width: 100%;
+        border-radius: calc(12 * var(--px));
+        background: #fcfcfd;
+        box-shadow: 0 calc(2 * var(--px)) calc(12 * var(--px)) rgba(42, 100, 200, 0.07);
+      }
+
+      .mine-card-title {
+        margin: 0;
+        color: #1f2329;
+        font-size: calc(16 * var(--px));
+        font-weight: 700;
+        line-height: calc(24 * var(--px));
+      }
+
+      .service-card {
+        height: calc(280 * var(--px));
+        padding: calc(16 * var(--px));
+      }
+
+      .service-grid {
+        display: grid;
+        grid-template-columns: repeat(3, calc(93 * var(--px)));
+        gap: calc(16 * var(--px)) calc(16 * var(--px));
+        padding-top: calc(16 * var(--px));
+      }
+
+      .service-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: calc(93 * var(--px));
+        height: calc(96 * var(--px));
+        padding: calc(12 * var(--px)) calc(8 * var(--px));
+        gap: calc(8 * var(--px));
+        border: 0;
+        border-radius: calc(8 * var(--px));
+        background: var(--service-bg);
+        color: #1f2329;
+        font: inherit;
+      }
+
+      .service-icon {
+        position: relative;
+        display: grid;
+        width: calc(44 * var(--px));
+        height: calc(44 * var(--px));
+        place-items: center;
+        border-radius: calc(10 * var(--px));
+        background: #fff;
+        box-shadow: 0 calc(2 * var(--px)) calc(8 * var(--px)) var(--icon-shadow);
+      }
+
+      .service-icon::before,
+      .service-icon::after {
+        content: "";
+        position: absolute;
+      }
+
+      .service-icon.record::before {
+        left: calc(12 * var(--px));
+        top: calc(8 * var(--px));
+        width: calc(23 * var(--px));
+        height: calc(28 * var(--px));
+        border-radius: calc(3 * var(--px)) calc(8 * var(--px)) calc(3 * var(--px)) calc(3 * var(--px));
+        background: linear-gradient(180deg, #28d5a8 0%, #08a379 100%);
+      }
+
+      .service-icon.print::before {
+        left: calc(8 * var(--px));
+        top: calc(11 * var(--px));
+        width: calc(28 * var(--px));
+        height: calc(24 * var(--px));
+        border-radius: calc(6 * var(--px));
+        background: #fea736;
+      }
+
+      .service-icon.chat::before {
+        left: calc(9 * var(--px));
+        top: calc(9 * var(--px));
+        width: calc(28 * var(--px));
+        height: calc(24 * var(--px));
+        border-radius: calc(10 * var(--px)) calc(10 * var(--px)) calc(10 * var(--px)) calc(3 * var(--px));
+        background: linear-gradient(180deg, #3eb8f8 0%, #335cf2 100%);
+      }
+
+      .service-icon.alert::before {
+        left: calc(8 * var(--px));
+        top: calc(15 * var(--px));
+        width: calc(30 * var(--px));
+        height: calc(18 * var(--px));
+        border-radius: calc(12 * var(--px)) calc(12 * var(--px)) calc(5 * var(--px)) calc(5 * var(--px));
+        background: linear-gradient(180deg, #fc6c49 0%, #ff4a35 100%);
+      }
+
+      .service-icon.pharmacist::before {
+        left: calc(9 * var(--px));
+        top: calc(8 * var(--px));
+        width: calc(26 * var(--px));
+        height: calc(28 * var(--px));
+        border-radius: calc(14 * var(--px));
+        background: linear-gradient(180deg, #3db6f4 0%, #264fe2 100%);
+      }
+
+      .service-icon.new::before {
+        left: calc(7 * var(--px));
+        top: calc(13 * var(--px));
+        width: calc(31 * var(--px));
+        height: calc(20 * var(--px));
+        border-radius: calc(12 * var(--px));
+        background: linear-gradient(180deg, #1dd8ad 0%, #00b484 100%);
+      }
+
+      .service-icon::after {
+        right: calc(6 * var(--px));
+        bottom: calc(8 * var(--px));
+        width: calc(16 * var(--px));
+        height: calc(16 * var(--px));
+        border-radius: 50%;
+        background: rgba(217, 217, 217, 0.2);
+        box-shadow: inset calc(4 * var(--px)) calc(-5 * var(--px)) 0 calc(-3 * var(--px)) #fff;
+      }
+
+      .service-label {
+        font-size: calc(12 * var(--px));
+        line-height: calc(20 * var(--px));
+      }
+
+      .more-card-wrap {
+        height: calc(542 * var(--px));
+        padding-top: calc(16 * var(--px));
+      }
+
+      .more-card {
+        height: calc(526 * var(--px));
+        padding: calc(16 * var(--px));
+        border-radius: calc(16 * var(--px));
+        background: #fff;
+        box-shadow: 0 calc(2 * var(--px)) calc(16 * var(--px)) rgba(42, 100, 200, 0.07);
+      }
+
+      .more-list {
+        padding-top: calc(16 * var(--px));
+      }
+
+      .more-row {
+        display: flex;
+        align-items: center;
+        width: calc(311 * var(--px));
+        height: calc(64 * var(--px));
+        padding: calc(13 * var(--px)) 0;
+        gap: calc(14 * var(--px));
+        border: 0;
+        background: transparent;
+        color: #1f2329;
+        font: inherit;
+        text-align: left;
+      }
+
+      .more-row + .more-row {
+        border-top: calc(1 * var(--px)) solid #eef6ff;
+      }
+
+      .more-icon {
+        position: relative;
+        display: grid;
+        width: calc(38 * var(--px));
+        height: calc(38 * var(--px));
+        place-items: center;
+        flex: 0 0 auto;
+        border-radius: calc(10 * var(--px));
+        background: #eef6ff;
+      }
+
+      .more-icon::before,
+      .more-icon::after {
+        content: "";
+        position: absolute;
+        border: calc(1.58 * var(--px)) solid #2a9df8;
+      }
+
+      .more-icon.order::before {
+        left: calc(8 * var(--px));
+        top: calc(8 * var(--px));
+        width: calc(22 * var(--px));
+        height: calc(18 * var(--px));
+        border-radius: calc(3 * var(--px));
+      }
+
+      .more-icon.setting::before {
+        inset: calc(10 * var(--px));
+        border-radius: 50%;
+      }
+
+      .more-icon.info::before {
+        inset: calc(8 * var(--px));
+        border-radius: 50%;
+      }
+
+      .more-icon.register::before {
+        inset: calc(8 * var(--px));
+        border-radius: calc(5 * var(--px));
+      }
+
+      .more-icon.service::before {
+        left: calc(8 * var(--px));
+        top: calc(9 * var(--px));
+        width: calc(22 * var(--px));
+        height: calc(18 * var(--px));
+        border-radius: calc(10 * var(--px)) calc(10 * var(--px)) calc(5 * var(--px)) calc(5 * var(--px));
+      }
+
+      .more-icon.flow::before {
+        left: calc(8 * var(--px));
+        top: calc(8 * var(--px));
+        width: calc(22 * var(--px));
+        height: calc(18 * var(--px));
+        border-radius: calc(3 * var(--px));
+      }
+
+      .more-icon.erp::before,
+      .more-icon.erp::after {
+        top: calc(13 * var(--px));
+        width: calc(11 * var(--px));
+        height: calc(11 * var(--px));
+        border-radius: calc(3 * var(--px));
+      }
+
+      .more-icon.erp::before {
+        left: calc(6 * var(--px));
+      }
+
+      .more-icon.erp::after {
+        right: calc(6 * var(--px));
+      }
+
+      .more-text {
+        flex: 1 1 auto;
+        font-size: calc(14 * var(--px));
+        line-height: calc(22 * var(--px));
+      }
+
+      .chevron {
+        width: calc(16 * var(--px));
+        color: #c0c5cc;
+        font-size: calc(18 * var(--px));
+        text-align: right;
+      }
+
+      .tabbar-icon {
+        position: relative;
+        width: calc(22 * var(--px));
+        height: calc(22 * var(--px));
+      }
+
+      .tabbar-icon::before,
+      .tabbar-icon::after {
+        content: "";
+        position: absolute;
+        border: calc(1.8 * var(--px)) solid currentColor;
+      }
+
+      .tabbar-icon.home::before {
+        left: calc(4 * var(--px));
+        top: calc(4 * var(--px));
+        width: calc(14 * var(--px));
+        height: calc(15 * var(--px));
+        border-radius: calc(2 * var(--px));
+      }
+
+      .tabbar-icon.home::after {
+        left: calc(7 * var(--px));
+        top: calc(1 * var(--px));
+        width: calc(8 * var(--px));
+        height: calc(8 * var(--px));
+        border-right: 0;
+        border-bottom: 0;
+        transform: rotate(45deg);
+      }
+
+      .tabbar-icon.me::before {
+        left: calc(7 * var(--px));
+        top: calc(3 * var(--px));
+        width: calc(8 * var(--px));
+        height: calc(8 * var(--px));
+        border-radius: 50%;
+      }
+
+      .tabbar-icon.me::after {
+        left: calc(4 * var(--px));
+        bottom: calc(2 * var(--px));
+        width: calc(14 * var(--px));
+        height: calc(8 * var(--px));
+        border-top-left-radius: calc(10 * var(--px));
+        border-top-right-radius: calc(10 * var(--px));
+      }
+
+      .drug-type-page {
+        position: absolute;
+        inset: 0;
+        z-index: 6;
+        display: none;
+        background: rgba(0, 0, 0, 0.45);
+      }
+
+      .drug-type-page.is-active {
+        display: block;
+      }
+
+      .drug-type-panel {
+        position: absolute;
+        left: calc(49 * var(--px));
+        top: calc(257 * var(--px));
+        width: calc(278 * var(--px));
+        height: calc(295 * var(--px));
+        background: #f2f7fd;
+        border-radius: calc(9 * var(--px));
+      }
+
+      .drug-type-title {
+        position: absolute;
+        left: calc(62 * var(--px));
+        top: calc(27 * var(--px));
+        width: calc(144 * var(--px));
+        height: calc(22 * var(--px));
+        margin: 0;
+        color: #1f2329;
+        font-size: calc(16 * var(--px));
+        font-weight: 400;
+        line-height: calc(22 * var(--px));
+      }
+
+      .drug-type-card {
+        position: absolute;
+        left: calc(18 * var(--px));
+        width: calc(243 * var(--px));
+        height: calc(89 * var(--px));
+        overflow: hidden;
+        border: calc(1 * var(--px)) solid rgba(156, 192, 201, 0.54);
+        border-radius: calc(4 * var(--px));
+        background: #fff;
+        color: #1f2329;
+        text-align: left;
+      }
+
+      .drug-type-card.western {
+        top: calc(71 * var(--px));
+        box-shadow: 0 0 calc(4 * var(--px)) rgba(0, 0, 0, 0.07);
+      }
+
+      .drug-type-card.chinese {
+        top: calc(179 * var(--px));
+        box-shadow: 0 calc(1 * var(--px)) calc(4 * var(--px)) rgba(0, 0, 0, 0.11);
+      }
+
+      .drug-type-name {
+        position: absolute;
+        left: calc(18 * var(--px));
+        top: calc(16 * var(--px));
+        font-size: calc(16 * var(--px));
+        font-weight: 700;
+        line-height: calc(22 * var(--px));
+      }
+
+      .drug-type-desc {
+        position: absolute;
+        left: calc(18 * var(--px));
+        top: calc(40 * var(--px));
+        color: #969696;
+        font-size: calc(12 * var(--px));
+        line-height: calc(22 * var(--px));
+      }
+
+      .drug-type-sub {
+        position: absolute;
+        left: calc(19 * var(--px));
+        top: calc(55 * var(--px));
+        color: #969696;
+        font-size: calc(12 * var(--px));
+        line-height: calc(22 * var(--px));
+      }
+
+      .drug-illu {
+        position: absolute;
+        right: calc(12 * var(--px));
+        top: calc(20 * var(--px));
+        width: calc(74 * var(--px));
+        height: calc(50 * var(--px));
+      }
+
+      .drug-illu::before,
+      .drug-illu::after {
+        content: "";
+        position: absolute;
+      }
+
+      .drug-illu.western::before {
+        left: calc(6 * var(--px));
+        top: calc(2 * var(--px));
+        width: calc(61 * var(--px));
+        height: calc(25 * var(--px));
+        background: linear-gradient(180deg, #b7e7fc 0%, #148ffe 100%);
+        border-radius: calc(18 * var(--px));
+        transform: rotate(9deg);
+      }
+
+      .drug-illu.western::after {
+        right: calc(9 * var(--px));
+        bottom: calc(4 * var(--px));
+        width: calc(6 * var(--px));
+        height: calc(6 * var(--px));
+        background: #fff;
+        border-radius: 50%;
+        box-shadow: calc(-14 * var(--px)) calc(-11 * var(--px)) 0 rgba(89, 170, 255, 0.22);
+      }
+
+      .drug-illu.chinese::before {
+        right: calc(8 * var(--px));
+        top: calc(5 * var(--px));
+        width: calc(58 * var(--px));
+        height: calc(20 * var(--px));
+        background: linear-gradient(180deg, rgba(199, 254, 231, 0.85) 0%, rgba(24, 204, 113, 0.85) 100%);
+        border-radius: calc(16 * var(--px));
+        transform: rotate(-7deg);
+      }
+
+      .drug-illu.chinese::after {
+        right: calc(8 * var(--px));
+        bottom: calc(0 * var(--px));
+        width: calc(22 * var(--px));
+        height: calc(22 * var(--px));
+        background: rgba(217, 217, 217, 0.2);
+        border-radius: 50%;
+        box-shadow: inset calc(4 * var(--px)) calc(-5 * var(--px)) 0 calc(-3 * var(--px)) #fff;
+      }
+
+      .drug-type-close {
+        position: absolute;
+        left: calc(172 * var(--px));
+        top: calc(565 * var(--px));
+        width: calc(32 * var(--px));
+        height: calc(32 * var(--px));
+        padding: 0;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+      }
+
+      .drug-type-close::before,
+      .drug-type-close::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: calc(24 * var(--px));
+        height: calc(2 * var(--px));
+        background: #fff;
+        border-radius: calc(2 * var(--px));
+        transform-origin: center;
+      }
+
+      .drug-type-close::before {
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+
+      .drug-type-close::after {
+        transform: translate(-50%, -50%) rotate(-45deg);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="phone-stage" aria-label="嘉虹健康手机页面展示">
+      <div class="phone-screen">
+        <div class="app-page">
+          <section class="status-bar">
+            <div>9:41</div>
+            <div class="status-icons" aria-hidden="true">
+              <div class="signal"><span></span><span></span><span></span><span></span></div>
+              <div class="wifi"></div>
+              <div class="battery"></div>
+            </div>
+          </section>
+
+          <section class="hero">
+            <div>
+              <h1 class="hero-title">便民问诊</h1>
+              <div class="hero-tags">
+                <span class="tag">安全便捷</span>
+                <span class="tag">快速开方</span>
+                <span class="tag">售后无忧</span>
+              </div>
+            </div>
+            <div class="quick-actions" aria-hidden="true">
+              <div class="quick"><span class="line-icon scan"></span></div>
+              <div class="quick"><span class="line-icon people"></span></div>
+              <div class="quick"><span class="line-icon grid"></span></div>
+            </div>
+          </section>
+
+          <section class="notice-section">
+            <div class="notice">
+              <span class="notice-mark">!</span>
+              <span class="notice-text">您有待开方的订单，请前往处理</span>
+              <button class="notice-btn" type="button">查看</button>
+              <span class="notice-close">×</span>
+            </div>
+          </section>
+
+          <section class="entry-section">
+            <button class="entry-card video" type="button">
+              <div class="entry-title">视频问诊</div>
+              <div class="entry-subtitle">精准匹配接诊</div>
+              <span class="entry-illu"></span>
+            </button>
+            <button class="entry-card text" id="textInquiryEntry" type="button" aria-controls="drugTypePage">
+              <div class="entry-title">图文问诊</div>
+              <div class="entry-subtitle">海量医生在线</div>
+              <span class="entry-illu"></span>
+            </button>
+          </section>
+
+          <section class="section-wrap specialty-wrap">
+            <div class="card specialty-card">
+              <div class="section-title-row">
+                <h2 class="section-title">专科视频问诊</h2>
+                <span class="more">›</span>
+              </div>
+              <div class="specialty-grid">
+                <div class="specialty-item"><span class="round-icon gynecology"></span><span>妇科</span></div>
+                <div class="specialty-item"><span class="round-icon pediatrics"></span><span>儿科</span></div>
+                <div class="specialty-item"><span class="round-icon chinese"></span><span>中医科</span></div>
+                <div class="specialty-item"><span class="round-icon surgery"></span><span>外科</span></div>
+              </div>
+              <div class="feature-list">
+                <div class="feature-row" style="--bg: #fffbf0; --line: #fde68a; --accent: #ff9a16">
+                  <div>
+                    <div class="feature-title">优医专区问诊</div>
+                    <span class="feature-btn">去问诊</span>
+                  </div>
+                  <span class="illu doctor"></span>
+                </div>
+                <div class="feature-row" style="--bg: #eef7ff; --line: #bfdbfe; --accent: #2a9df8">
+                  <div>
+                    <div class="feature-title">上传纸制处方</div>
+                    <span class="feature-btn">去上传</span>
+                  </div>
+                  <span class="illu prescription"></span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="dispatch-wrap">
+            <div class="dispatch-row">
+              <div>
+                <div class="feature-title">调配核发签名</div>
+                <span class="feature-btn" style="--accent: #06c895">去调配</span>
+              </div>
+              <span class="illu dispatch"></span>
+            </div>
+          </section>
+
+          <section class="section-wrap doctors-wrap">
+            <div class="card doctor-card">
+              <div class="section-title-row">
+                <h2 class="section-title">问诊医生</h2>
+                <span class="more">更多 &gt;</span>
+              </div>
+              <div class="tabs">
+                <span class="tab active">全部</span>
+                <span class="tab">内科</span>
+                <span class="tab">外科</span>
+                <span class="tab">中医科</span>
+                <span class="tab">口腔科</span>
+              </div>
+              <div class="doctor-list">
+                <article class="doctor-item">
+                  <span class="avatar" style="--avatar-bg: #60a5fa"><i class="online"></i></span>
+                  <strong class="person-name">张医生</strong>
+                  <span class="person-role">主治医师</span>
+                  <span class="person-year">12年</span>
+                </article>
+                <article class="doctor-item">
+                  <span class="avatar" style="--avatar-bg: #34d399"><i class="online"></i></span>
+                  <strong class="person-name">李医生</strong>
+                  <span class="person-role">副主任医师</span>
+                  <span class="person-year">18年</span>
+                </article>
+                <article class="doctor-item">
+                  <span class="avatar" style="--avatar-bg: #f97316"></span>
+                  <strong class="person-name">王医生</strong>
+                  <span class="person-role">主任医师</span>
+                  <span class="person-year">25年</span>
+                </article>
+                <article class="doctor-item">
+                  <span class="avatar" style="--avatar-bg: #a78bfa"><i class="online"></i></span>
+                  <strong class="person-name">陈医生</strong>
+                  <span class="person-role">主治医师</span>
+                  <span class="person-year">8年</span>
+                </article>
+                <article class="doctor-item">
+                  <span class="avatar" style="--avatar-bg: #fb7185"><i class="online"></i></span>
+                  <strong class="person-name">刘医生</strong>
+                  <span class="person-role">副主任医师</span>
+                  <span class="person-year">15年</span>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <section class="section-wrap pharmacists-wrap">
+            <div class="card pharmacist-card">
+              <div class="section-title-row">
+                <h2 class="section-title">审方药师</h2>
+                <span class="more">更多 &gt;</span>
+              </div>
+              <div class="pharmacist-list">
+                <article class="pharmacist-item">
+                  <span class="avatar large" style="--avatar-bg: #2a9df8"></span>
+                  <strong class="person-name">赵药师</strong>
+                  <span class="person-role">执业药师</span>
+                </article>
+                <article class="pharmacist-item">
+                  <span class="avatar large" style="--avatar-bg: #06c895"></span>
+                  <strong class="person-name">孙药师</strong>
+                  <span class="person-role">主管药师</span>
+                </article>
+                <article class="pharmacist-item">
+                  <span class="avatar large" style="--avatar-bg: #ff9a16"></span>
+                  <strong class="person-name">周药师</strong>
+                  <span class="person-role">执业药师</span>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <section class="stats-wrap">
+            <div class="stats">
+              <div>累计开具 317,942,739 张处方</div>
+              <div>总共服务 317,819,395 位患者</div>
+              <div class="copyright">嘉虹健康 copyright © 2018-2026 鄂ICP备2024037712号-2A</div>
+            </div>
+          </section>
+        </div>
+        <div class="mine-page" id="minePage">
+          <section class="status-bar">
+            <div>9:41</div>
+            <div class="status-icons" aria-hidden="true">
+              <div class="signal"><span></span><span></span><span></span><span></span></div>
+              <div class="wifi"></div>
+              <div class="battery"></div>
+            </div>
+          </section>
+
+          <main class="mine-main">
+            <section class="mine-profile">
+              <div class="mine-user">
+                <span class="mine-avatar"></span>
+                <div>
+                  <h1 class="mine-name">大王测试药店01</h1>
+                  <div class="mine-meta">
+                    <span class="account-badge">主账号</span>
+                    <span class="login-name">登陆账号：wcxtest</span>
+                  </div>
+                </div>
+              </div>
+              <div class="mine-actions" aria-hidden="true">
+                <span class="mine-action bell"></span>
+                <span class="mine-action message"></span>
+                <span class="mine-action settings"></span>
+              </div>
+            </section>
+
+            <section class="mine-content">
+              <div class="mine-card service-card">
+                <h2 class="mine-card-title">问诊服务</h2>
+                <div class="service-grid">
+                  <button class="service-item" type="button" style="--service-bg: #edfaf6; --icon-shadow: rgba(42, 157, 248, 0.133)">
+                    <span class="service-icon record"></span>
+                    <span class="service-label">处方记录</span>
+                  </button>
+                  <button class="service-item" type="button" style="--service-bg: #fffbf2; --icon-shadow: rgba(6, 200, 149, 0.133)">
+                    <span class="service-icon print"></span>
+                    <span class="service-label">打印处方</span>
+                  </button>
+                  <button class="service-item" type="button" style="--service-bg: #f7f6fb; --icon-shadow: rgba(139, 92, 246, 0.133)">
+                    <span class="service-icon chat"></span>
+                    <span class="service-label">问诊记录</span>
+                  </button>
+                  <button class="service-item" type="button" style="--service-bg: #fef8f8; --icon-shadow: rgba(255, 154, 22, 0.133)">
+                    <span class="service-icon alert"></span>
+                    <span class="service-label">审方通知</span>
+                  </button>
+                  <button class="service-item" type="button" style="--service-bg: #f5f5fd; --icon-shadow: rgba(13, 148, 136, 0.133)">
+                    <span class="service-icon pharmacist"></span>
+                    <span class="service-label">药师管理</span>
+                  </button>
+                  <button class="service-item" type="button" style="--service-bg: #f1fdf9; --icon-shadow: rgba(236, 72, 153, 0.133)">
+                    <span class="service-icon new"></span>
+                    <span class="service-label">新品登记</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="more-card-wrap">
+                <div class="more-card">
+                  <h2 class="mine-card-title">更多功能</h2>
+                  <div class="more-list">
+                    <button class="more-row" type="button"><span class="more-icon order"></span><span class="more-text">预开方订单</span><span class="chevron">›</span></button>
+                    <button class="more-row" type="button"><span class="more-icon setting"></span><span class="more-text">审方设置</span><span class="chevron">›</span></button>
+                    <button class="more-row" type="button"><span class="more-icon info"></span><span class="more-text">信息</span><span class="chevron">›</span></button>
+                    <button class="more-row" type="button"><span class="more-icon register"></span><span class="more-text">处方药登记</span><span class="chevron">›</span></button>
+                    <button class="more-row" type="button"><span class="more-icon service"></span><span class="more-text">联系客服</span><span class="chevron">›</span></button>
+                    <button class="more-row" type="button"><span class="more-icon flow"></span><span class="more-text">远程医疗操作流程</span><span class="chevron">›</span></button>
+                    <button class="more-row" type="button"><span class="more-icon erp"></span><span class="more-text">ERP账号绑定</span><span class="chevron">›</span></button>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </main>
+        </div>
+        <section class="drug-type-page" id="drugTypePage" aria-label="请选择问诊药品类型">
+          <div class="drug-type-panel">
+            <h2 class="drug-type-title">请选择问诊药品类型</h2>
+            <button class="drug-type-card western" type="button">
+              <span class="drug-type-name">西药问诊</span>
+              <span class="drug-type-desc">为您匹配专业西医</span>
+              <span class="drug-type-sub">开具中西成药</span>
+              <span class="drug-illu western" aria-hidden="true"></span>
+            </button>
+            <button class="drug-type-card chinese" type="button">
+              <span class="drug-type-name">中药问诊</span>
+              <span class="drug-type-desc">为您匹配专业中医</span>
+              <span class="drug-type-sub">开具中药饮片</span>
+              <span class="drug-illu chinese" aria-hidden="true"></span>
+            </button>
+          </div>
+          <button class="drug-type-close" id="drugTypeClose" type="button" aria-label="关闭"></button>
+        </section>
+        <nav class="tabbar" aria-label="底部导航">
+          <div class="tabbar-item active" id="homeTab" role="button" tabindex="0">
+            <span class="tabbar-icon home"></span>
+            <span>问诊开方</span>
+          </div>
+          <div class="tabbar-item" id="mineTab" role="button" tabindex="0">
+            <span class="tabbar-icon me"></span>
+            <span>我的</span>
+          </div>
+        </nav>
+      </div>
+      <img class="phone-frame" src="./Picsew_20260616133535_transparent.png" alt="" />
+    </main>
+    <script>
+      const textInquiryEntry = document.getElementById("textInquiryEntry");
+      const drugTypePage = document.getElementById("drugTypePage");
+      const phoneScreen = document.querySelector(".phone-screen");
+      const drugTypeClose = document.getElementById("drugTypeClose");
+      const homeTab = document.getElementById("homeTab");
+      const mineTab = document.getElementById("mineTab");
+
+      const closeDrugType = () => {
+        drugTypePage?.classList.remove("is-active");
+        phoneScreen?.classList.remove("has-subpage");
+      };
+
+      const showHome = () => {
+        closeDrugType();
+        phoneScreen?.classList.remove("view-mine");
+        homeTab?.classList.add("active");
+        mineTab?.classList.remove("active");
+      };
+
+      const showMine = () => {
+        closeDrugType();
+        phoneScreen?.classList.add("view-mine");
+        mineTab?.classList.add("active");
+        homeTab?.classList.remove("active");
+      };
+
+      textInquiryEntry?.addEventListener("click", () => {
+        drugTypePage?.classList.add("is-active");
+        phoneScreen?.classList.add("has-subpage");
+      });
+
+      homeTab?.addEventListener("click", showHome);
+      mineTab?.addEventListener("click", showMine);
+
+      drugTypeClose?.addEventListener("click", closeDrugType);
+    </script>
+  </body>
+</html>
