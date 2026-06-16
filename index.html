@@ -988,6 +988,19 @@
         display: block;
       }
 
+      .phone-screen.view-disease .app-page,
+      .phone-screen.view-disease .mine-page,
+      .phone-screen.view-disease .fast-page,
+      .phone-screen.view-disease .scan-page,
+      .phone-screen.view-disease .drug-search-page,
+      .phone-screen.view-disease .tabbar {
+        display: none;
+      }
+
+      .phone-screen.view-disease .disease-page {
+        display: block;
+      }
+
       .phone-screen.child-inquiry .guardian-wrap {
         display: block;
       }
@@ -2306,6 +2319,215 @@
         line-height: calc(24 * var(--px));
       }
 
+      .disease-page {
+        display: none;
+        position: absolute;
+        inset: 0;
+        z-index: 6;
+        overflow-x: hidden;
+        overflow-y: auto;
+        background: #fff;
+        color: rgba(0, 0, 0, 0.9);
+        font-family: "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .disease-page::-webkit-scrollbar {
+        display: none;
+      }
+
+      .disease-ios {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        height: calc(44 * var(--px));
+        padding: calc(13 * var(--px)) calc(14 * var(--px)) 0 calc(20 * var(--px));
+        background: #fff;
+        color: #1f2024;
+        font-family: "SF Pro Text", "Microsoft YaHei", Arial, sans-serif;
+        font-size: calc(15 * var(--px));
+        font-weight: 600;
+        line-height: calc(18 * var(--px));
+      }
+
+      .disease-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        height: calc(44 * var(--px));
+        padding: calc(10 * var(--px)) calc(16 * var(--px));
+        background: #fff;
+      }
+
+      .disease-back {
+        position: relative;
+        width: calc(22 * var(--px));
+        height: calc(22 * var(--px));
+        padding: 0;
+        border: 0;
+        background: transparent;
+      }
+
+      .disease-back::before {
+        content: "";
+        position: absolute;
+        left: calc(8 * var(--px));
+        top: calc(5 * var(--px));
+        width: calc(9 * var(--px));
+        height: calc(9 * var(--px));
+        border-left: calc(1.83333 * var(--px)) solid #333;
+        border-bottom: calc(1.83333 * var(--px)) solid #333;
+        transform: rotate(45deg);
+      }
+
+      .disease-title {
+        margin: 0;
+        font-size: calc(16 * var(--px));
+        font-weight: 400;
+        line-height: calc(24 * var(--px));
+      }
+
+      .disease-nav-spacer {
+        width: calc(22 * var(--px));
+        height: calc(22 * var(--px));
+      }
+
+      .disease-search-head {
+        width: 100%;
+        height: calc(64 * var(--px));
+        padding: calc(12 * var(--px)) calc(16 * var(--px));
+        background: #fff;
+        box-shadow: 0 calc(1 * var(--px)) calc(2 * var(--px)) rgba(16, 42, 67, 0.04);
+      }
+
+      .disease-search-form {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: calc(40 * var(--px));
+        gap: calc(12 * var(--px));
+      }
+
+      .disease-search-field {
+        position: relative;
+        flex: 1 1 auto;
+        height: calc(40 * var(--px));
+        padding: calc(9 * var(--px)) calc(12 * var(--px));
+        border: calc(1 * var(--px)) solid #e5e8eb;
+        border-radius: calc(6 * var(--px));
+        background: #fff;
+      }
+
+      .disease-search-input {
+        width: 100%;
+        height: 100%;
+        padding: 0 calc(22 * var(--px)) 0 0;
+        border: 0;
+        outline: 0;
+        background: transparent;
+        color: rgba(0, 0, 0, 0.9);
+        font-size: calc(14 * var(--px));
+        line-height: calc(22 * var(--px));
+      }
+
+      .disease-search-input::placeholder {
+        color: rgba(0, 0, 0, 0.6);
+      }
+
+      .disease-search-clear {
+        position: absolute;
+        right: calc(12 * var(--px));
+        top: calc(14 * var(--px));
+        width: calc(12 * var(--px));
+        height: calc(12 * var(--px));
+        padding: 0;
+        border: 0;
+        background:
+          linear-gradient(45deg, transparent 43%, rgba(0, 0, 0, 0.4) 43%, rgba(0, 0, 0, 0.4) 57%, transparent 57%),
+          linear-gradient(-45deg, transparent 43%, rgba(0, 0, 0, 0.4) 43%, rgba(0, 0, 0, 0.4) 57%, transparent 57%);
+      }
+
+      .disease-search-submit {
+        width: calc(32 * var(--px));
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: #338bfa;
+        font-size: calc(16 * var(--px));
+        line-height: calc(24 * var(--px));
+      }
+
+      .disease-section {
+        width: 100%;
+        min-height: calc(134 * var(--px));
+        padding: calc(16 * var(--px)) calc(20 * var(--px)) 0;
+        background: #fff;
+      }
+
+      .disease-section-title {
+        display: flex;
+        align-items: center;
+        gap: calc(10 * var(--px));
+        height: calc(22 * var(--px));
+        margin-bottom: calc(8 * var(--px));
+        color: rgba(0, 0, 0, 0.9);
+        font-size: calc(14 * var(--px));
+        line-height: calc(22 * var(--px));
+      }
+
+      .disease-section-title::before {
+        content: "";
+        width: calc(3 * var(--px));
+        height: calc(16 * var(--px));
+        border-radius: calc(2 * var(--px));
+        background: #006ef9;
+      }
+
+      .disease-title-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .disease-clear-text {
+        color: rgba(0, 0, 0, 0.6);
+        font-size: calc(12 * var(--px));
+        line-height: calc(20 * var(--px));
+      }
+
+      .disease-chip-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: calc(16 * var(--px)) calc(6 * var(--px));
+        padding-top: calc(8 * var(--px));
+      }
+
+      .disease-chip {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: calc(28 * var(--px));
+        padding: calc(4 * var(--px)) calc(16 * var(--px));
+        border: 0;
+        border-radius: 999px;
+        background: #f4f5f6;
+        color: rgba(0, 0, 0, 0.8);
+        font-size: calc(12 * var(--px));
+        line-height: calc(20 * var(--px));
+      }
+
+      .disease-chip.selected {
+        background: #2a9df8;
+        color: #fff;
+      }
+
+      .disease-chip.emphasis {
+        background: #bec5cd;
+      }
+
       .bottom-submit {
         width: 100%;
         height: calc(118.17 * var(--px));
@@ -3311,10 +3533,10 @@
           </section>
 
           <section class="fast-section-wrap">
-            <div class="fast-card fast-line-card">
+            <button class="fast-card fast-line-card" id="diseaseSearchTrigger" type="button">
               <div class="fast-section-title">线下已确诊疾病</div>
               <span class="chevron">›</span>
-            </div>
+            </button>
           </section>
 
           <section class="fast-section-wrap">
@@ -3491,6 +3713,76 @@
             </div>
           </div>
         </section>
+        <section class="disease-page" id="diseasePage" aria-label="线下已确诊疾病">
+          <div class="disease-ios">
+            <span>9:41</span>
+            <span>⌁ Wi-Fi ▭</span>
+          </div>
+          <div class="disease-nav">
+            <button class="disease-back" id="diseaseBack" type="button" aria-label="返回问诊表单"></button>
+            <h1 class="disease-title">线下已确诊疾病</h1>
+            <span class="disease-nav-spacer"></span>
+          </div>
+          <div class="disease-search-head">
+            <div class="disease-search-form">
+              <div class="disease-search-field">
+                <input class="disease-search-input" id="diseaseSearchInput" type="text" placeholder="请输入线下已确诊疾病名称" />
+                <button class="disease-search-clear" id="diseaseSearchClear" type="button" aria-label="清空疾病搜索"></button>
+              </div>
+              <button class="disease-search-submit" id="diseaseSearchSubmit" type="button">搜索</button>
+            </div>
+          </div>
+          <section class="disease-section">
+            <div class="disease-section-title">已选疾病</div>
+            <div class="disease-chip-list">
+              <button class="disease-chip selected" type="button">急性上呼吸道感染</button>
+              <button class="disease-chip selected" type="button">静脉曲张</button>
+              <button class="disease-chip selected" type="button">甲状腺结节</button>
+              <button class="disease-chip selected" type="button">类风湿关节炎</button>
+              <button class="disease-chip selected" type="button">低血糖症</button>
+              <button class="disease-chip selected" type="button">扁桃体炎</button>
+            </div>
+          </section>
+          <section class="disease-section">
+            <div class="disease-section-title">推荐疾病</div>
+            <div class="disease-chip-list">
+              <button class="disease-chip emphasis" type="button">扁桃体炎</button>
+              <button class="disease-chip" type="button">口腔溃疡</button>
+              <button class="disease-chip" type="button">咽炎</button>
+              <button class="disease-chip" type="button">腮腺炎</button>
+              <button class="disease-chip" type="button">口角炎</button>
+              <button class="disease-chip" type="button">牙龈炎</button>
+              <button class="disease-chip" type="button">疖肿</button>
+            </div>
+          </section>
+          <section class="disease-section">
+            <div class="disease-title-row">
+              <div class="disease-section-title">历史疾病</div>
+              <span class="disease-clear-text">清空</span>
+            </div>
+            <div class="disease-chip-list">
+              <button class="disease-chip" type="button">急性上呼吸道感染</button>
+              <button class="disease-chip" type="button">静脉曲张</button>
+              <button class="disease-chip" type="button">甲状腺结节</button>
+              <button class="disease-chip" type="button">类风湿关节炎</button>
+              <button class="disease-chip" type="button">低血糖症</button>
+              <button class="disease-chip" type="button">扁桃体炎</button>
+            </div>
+          </section>
+          <section class="disease-section">
+            <div class="disease-section-title">当季常见疾病</div>
+            <div class="disease-chip-list">
+              <button class="disease-chip" type="button">手足口病</button>
+              <button class="disease-chip" type="button">低血糖症</button>
+              <button class="disease-chip" type="button">肠胃炎</button>
+              <button class="disease-chip" type="button">腹泻</button>
+              <button class="disease-chip" type="button">呼吸道疾病</button>
+              <button class="disease-chip" type="button">慢性咳嗽</button>
+              <button class="disease-chip" type="button">湿疹</button>
+              <button class="disease-chip" type="button">腱鞘炎</button>
+            </div>
+          </section>
+        </section>
         <nav class="tabbar" aria-label="底部导航">
           <div class="tabbar-item active" id="homeTab" role="button" tabindex="0">
             <span class="tabbar-icon home"></span>
@@ -3512,6 +3804,11 @@
       const westernInquiry = document.getElementById("westernInquiry");
       const chineseInquiry = document.getElementById("chineseInquiry");
       const fastBack = document.getElementById("fastBack");
+      const diseaseSearchTrigger = document.getElementById("diseaseSearchTrigger");
+      const diseaseBack = document.getElementById("diseaseBack");
+      const diseaseSearchInput = document.getElementById("diseaseSearchInput");
+      const diseaseSearchClear = document.getElementById("diseaseSearchClear");
+      const diseaseSearchSubmit = document.getElementById("diseaseSearchSubmit");
       const requiredDrugTrigger = document.getElementById("requiredDrugTrigger");
       const fastDrugCard = document.getElementById("fastDrugCard");
       const certificateScanTrigger = document.getElementById("certificateScanTrigger");
@@ -3546,6 +3843,10 @@
         phoneScreen?.classList.remove("view-drug-search");
       };
 
+      const closeDiseaseSearch = () => {
+        phoneScreen?.classList.remove("view-disease");
+      };
+
       const resetDrugSearch = () => {
         drugSearchPage?.classList.remove("has-results", "has-product-list", "has-selected", "has-no-results");
         if (drugSearchInput) drugSearchInput.value = "";
@@ -3555,6 +3856,7 @@
         closeDrugType();
         closeScan();
         closeDrugSearch();
+        closeDiseaseSearch();
         phoneScreen?.classList.remove("view-mine", "view-fast", "child-inquiry");
         homeTab?.classList.add("active");
         mineTab?.classList.remove("active");
@@ -3564,6 +3866,7 @@
         closeDrugType();
         closeScan();
         closeDrugSearch();
+        closeDiseaseSearch();
         phoneScreen?.classList.remove("view-fast", "child-inquiry");
         phoneScreen?.classList.add("view-mine");
         mineTab?.classList.add("active");
@@ -3574,6 +3877,7 @@
         closeDrugType();
         closeScan();
         closeDrugSearch();
+        closeDiseaseSearch();
         phoneScreen?.classList.remove("view-mine");
         phoneScreen?.classList.add("view-fast");
         phoneScreen?.classList.toggle("child-inquiry", isChild);
@@ -3585,6 +3889,7 @@
         closeDrugType();
         closeScan();
         closeDrugSearch();
+        closeDiseaseSearch();
         phoneScreen?.classList.add("view-fast", "view-scan");
         page?.classList.add("is-active");
       };
@@ -3592,8 +3897,16 @@
       const showDrugSearch = () => {
         closeDrugType();
         closeScan();
+        closeDiseaseSearch();
         resetDrugSearch();
         phoneScreen?.classList.add("view-fast", "view-drug-search");
+      };
+
+      const showDiseaseSearch = () => {
+        closeDrugType();
+        closeScan();
+        closeDrugSearch();
+        phoneScreen?.classList.add("view-fast", "view-disease");
       };
 
       const showIbuprofenResults = () => {
@@ -3655,6 +3968,20 @@
       westernInquiry?.addEventListener("click", () => showFastInquiry(false));
       chineseInquiry?.addEventListener("click", () => showFastInquiry(true));
       requiredDrugTrigger?.addEventListener("click", showDrugSearch);
+      diseaseSearchTrigger?.addEventListener("click", showDiseaseSearch);
+      diseaseBack?.addEventListener("click", closeDiseaseSearch);
+      diseaseSearchSubmit?.addEventListener("click", () => {
+        const keyword = diseaseSearchInput?.value.trim();
+        if (!keyword) return;
+        const firstChip = document.querySelector(".disease-section .disease-chip");
+        if (firstChip) firstChip.textContent = keyword;
+      });
+      diseaseSearchInput?.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") diseaseSearchSubmit?.click();
+      });
+      diseaseSearchClear?.addEventListener("click", () => {
+        if (diseaseSearchInput) diseaseSearchInput.value = "";
+      });
       certificateScanTrigger?.addEventListener("click", () => showScan(certificateScanPage));
       drugScanTrigger?.addEventListener("click", () => showScan(drugScanPage));
       drugSearchScanTrigger?.addEventListener("click", () => showScan(drugScanPage));
