@@ -984,6 +984,10 @@
         display: block;
       }
 
+      .phone-screen.view-drug-search .drug-search-page {
+        display: block;
+      }
+
       .phone-screen.child-inquiry .guardian-wrap {
         display: block;
       }
@@ -1094,7 +1098,8 @@
       }
 
       button.fast-scan,
-      button.scan-drug-row {
+      button.scan-drug-row,
+      button.fast-line-card {
         padding: 0;
         border: 0;
         appearance: none;
@@ -1440,8 +1445,11 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        width: 100%;
         height: calc(50 * var(--px));
         padding: 0 calc(16 * var(--px));
+        border: 0;
+        background: #fff;
       }
 
       .fast-drug {
@@ -1759,6 +1767,235 @@
         border-radius: calc(4 * var(--px)) calc(4 * var(--px)) calc(9 * var(--px)) calc(9 * var(--px));
         background: #fff;
         clip-path: polygon(22% 0, 78% 0, 78% 38%, 65% 38%, 65% 100%, 35% 100%, 35% 38%, 22% 38%);
+      }
+
+      .drug-search-page {
+        display: none;
+        position: absolute;
+        inset: 0;
+        z-index: 7;
+        overflow: hidden;
+        background: rgba(83, 90, 103, 0.6);
+        font-family: "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      }
+
+      .drug-search-dim {
+        position: absolute;
+        inset: 0;
+        border: 0;
+        background: transparent;
+      }
+
+      .drug-search-sheet {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: calc(700 * var(--px));
+        overflow: hidden;
+        border-radius: calc(12 * var(--px)) calc(12 * var(--px)) 0 0;
+        background: #f8f8f9;
+      }
+
+      .drug-sheet-handle-wrap {
+        display: grid;
+        width: 100%;
+        height: calc(30 * var(--px));
+        place-items: start center;
+        padding-top: calc(10 * var(--px));
+      }
+
+      .drug-sheet-handle {
+        width: calc(72 * var(--px));
+        height: 0;
+        border-top: calc(4 * var(--px)) solid #697383;
+        border-radius: 999px;
+      }
+
+      .drug-search-head {
+        width: 100%;
+        height: calc(64 * var(--px));
+        padding: calc(12 * var(--px)) calc(16 * var(--px));
+        background: #fff;
+        box-shadow: 0 calc(1 * var(--px)) calc(2 * var(--px)) rgba(16, 42, 67, 0.04);
+      }
+
+      .drug-search-form {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: calc(40 * var(--px));
+        gap: calc(12 * var(--px));
+      }
+
+      .drug-search-input {
+        display: flex;
+        flex: 1 1 auto;
+        align-items: center;
+        justify-content: space-between;
+        height: calc(40 * var(--px));
+        padding: calc(9 * var(--px)) calc(12 * var(--px));
+        border: calc(1 * var(--px)) solid #e5e8eb;
+        border-radius: calc(6 * var(--px));
+        background: #fff;
+        color: rgba(0, 0, 0, 0.4);
+        font-size: calc(14 * var(--px));
+        line-height: calc(22 * var(--px));
+      }
+
+      .drug-search-input::after {
+        content: "";
+        width: calc(12 * var(--px));
+        height: calc(12 * var(--px));
+        opacity: 0.6;
+        background:
+          linear-gradient(45deg, transparent 43%, rgba(0, 0, 0, 0.4) 43%, rgba(0, 0, 0, 0.4) 57%, transparent 57%),
+          linear-gradient(-45deg, transparent 43%, rgba(0, 0, 0, 0.4) 43%, rgba(0, 0, 0, 0.4) 57%, transparent 57%);
+      }
+
+      .drug-search-submit {
+        width: calc(32 * var(--px));
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: #338bfa;
+        font-size: calc(16 * var(--px));
+        line-height: calc(24 * var(--px));
+        text-align: center;
+      }
+
+      .drug-search-scan {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: calc(50 * var(--px));
+        padding: 0 calc(16 * var(--px));
+        border: calc(1 * var(--px)) solid #f2f3f4;
+        border-left: 0;
+        border-right: 0;
+        background: #fff;
+      }
+
+      button.drug-search-scan {
+        appearance: none;
+        font: inherit;
+      }
+
+      .drug-search-section {
+        width: 100%;
+        height: calc(126.5 * var(--px));
+        margin-top: calc(12 * var(--px));
+        background: #fff;
+      }
+
+      .drug-search-section:first-of-type {
+        margin-top: 0;
+      }
+
+      .drug-search-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: calc(46.5 * var(--px));
+        padding: calc(12 * var(--px)) calc(16 * var(--px));
+        color: #222;
+        font-size: calc(14 * var(--px));
+        line-height: calc(22 * var(--px));
+      }
+
+      .drug-search-title strong {
+        position: relative;
+        padding-left: calc(11 * var(--px));
+        font-weight: 400;
+      }
+
+      .drug-search-title strong::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: calc(3 * var(--px));
+        width: calc(3 * var(--px));
+        height: calc(16 * var(--px));
+        border-radius: calc(1 * var(--px));
+        background: #1890ff;
+      }
+
+      .clear-history {
+        color: rgba(0, 0, 0, 0.6);
+        font-size: calc(12 * var(--px));
+        line-height: calc(20 * var(--px));
+      }
+
+      .drug-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: calc(12 * var(--px));
+        padding: 0 calc(16 * var(--px)) calc(12 * var(--px));
+      }
+
+      .drug-tag {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: calc(66 * var(--px));
+        height: calc(28 * var(--px));
+        padding: calc(5 * var(--px)) calc(12 * var(--px));
+        border-radius: 999px;
+        background: #f4f5f6;
+        color: rgba(0, 0, 0, 0.6);
+        font-size: calc(14 * var(--px));
+        line-height: calc(22 * var(--px));
+      }
+
+      .drug-tag.wide {
+        min-width: calc(80 * var(--px));
+      }
+
+      .drug-tag.more {
+        min-width: 0;
+        width: calc(28 * var(--px));
+        padding: 0;
+        color: #333;
+      }
+
+      .drug-sheet-bottom {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: calc(72 * var(--px));
+        background: #fff;
+        box-shadow: 0 calc(16 * var(--px)) calc(40 * var(--px)) calc(-16 * var(--px)) rgba(16, 42, 67, 0.14), 0 calc(4 * var(--px)) calc(8 * var(--px)) calc(-2 * var(--px)) rgba(16, 42, 67, 0.08);
+      }
+
+      .drug-sheet-tip {
+        position: absolute;
+        left: calc(105 * var(--px));
+        top: calc(15 * var(--px));
+        width: calc(104 * var(--px));
+        color: #3c4449;
+        font-size: calc(12 * var(--px));
+        line-height: calc(20 * var(--px));
+      }
+
+      .drug-sheet-confirm {
+        position: absolute;
+        right: calc(17 * var(--px));
+        top: calc(11 * var(--px));
+        display: grid;
+        width: calc(132 * var(--px));
+        height: calc(40 * var(--px));
+        place-items: center;
+        border: 0;
+        border-radius: calc(8 * var(--px));
+        background: linear-gradient(270deg, #3b92ff 0%, #006ef9 100%);
+        color: #fff;
+        font-size: calc(16 * var(--px));
+        font-weight: 700;
+        line-height: calc(24 * var(--px));
       }
 
       .bottom-submit {
@@ -2774,10 +3011,10 @@
 
           <section class="fast-section-wrap">
             <div class="fast-card fast-drug">
-              <div class="fast-line-card">
+              <button class="fast-line-card" id="requiredDrugTrigger" type="button">
                 <div class="fast-section-title">所需药品</div>
                 <span class="chevron">›</span>
-              </div>
+              </button>
               <button class="scan-drug-row" id="drugScanTrigger" type="button">
                 <div class="scan-line"><span class="scan-qr"></span><span>扫描药品信息</span></div>
               </button>
@@ -2833,6 +3070,48 @@
             <span class="torch-tool"><i class="torch-button"></i><span>轻触点亮</span></span>
           </div>
         </section>
+        <section class="drug-search-page" id="drugSearchPage" aria-label="搜索所需药品">
+          <button class="drug-search-dim" id="drugSearchDim" type="button" aria-label="关闭药品搜索"></button>
+          <div class="drug-search-sheet" role="dialog" aria-modal="true" aria-label="搜索所需药品">
+            <div class="drug-sheet-handle-wrap"><span class="drug-sheet-handle"></span></div>
+            <div class="drug-search-head">
+              <div class="drug-search-form">
+                <div class="drug-search-input">点击开始搜索药品</div>
+                <button class="drug-search-submit" type="button">搜索</button>
+              </div>
+            </div>
+            <button class="drug-search-scan" id="drugSearchScanTrigger" type="button">
+              <div class="scan-line"><span class="scan-qr"></span><span>扫描药品信息</span></div>
+            </button>
+            <div class="drug-search-section">
+              <div class="drug-search-title"><strong>历史搜索</strong><span class="clear-history">清空</span></div>
+              <div class="drug-tags">
+                <span class="drug-tag">感冒药</span>
+                <span class="drug-tag">退烧药</span>
+                <span class="drug-tag wide">消炎药</span>
+                <span class="drug-tag wide">止咳糖浆</span>
+                <span class="drug-tag wide">维生素C</span>
+                <span class="drug-tag wide">胃药</span>
+                <span class="drug-tag more">⌄</span>
+              </div>
+            </div>
+            <div class="drug-search-section">
+              <div class="drug-search-title"><strong>热门搜索</strong></div>
+              <div class="drug-tags">
+                <span class="drug-tag">感冒药</span>
+                <span class="drug-tag">退烧药</span>
+                <span class="drug-tag wide">消炎药</span>
+                <span class="drug-tag wide">止咳糖浆</span>
+                <span class="drug-tag wide">维生素C</span>
+                <span class="drug-tag wide">胃药</span>
+              </div>
+            </div>
+            <div class="drug-sheet-bottom">
+              <span class="drug-sheet-tip">请先搜索并选择药品</span>
+              <button class="drug-sheet-confirm" type="button">确认</button>
+            </div>
+          </div>
+        </section>
         <nav class="tabbar" aria-label="底部导航">
           <div class="tabbar-item active" id="homeTab" role="button" tabindex="0">
             <span class="tabbar-icon home"></span>
@@ -2854,11 +3133,16 @@
       const westernInquiry = document.getElementById("westernInquiry");
       const chineseInquiry = document.getElementById("chineseInquiry");
       const fastBack = document.getElementById("fastBack");
+      const requiredDrugTrigger = document.getElementById("requiredDrugTrigger");
       const certificateScanTrigger = document.getElementById("certificateScanTrigger");
       const drugScanTrigger = document.getElementById("drugScanTrigger");
+      const drugSearchScanTrigger = document.getElementById("drugSearchScanTrigger");
       const certificateScanPage = document.getElementById("certificateScanPage");
       const drugScanPage = document.getElementById("drugScanPage");
       const scanBackButtons = document.querySelectorAll(".scan-back");
+      const drugSearchPage = document.getElementById("drugSearchPage");
+      const drugSearchDim = document.getElementById("drugSearchDim");
+      const drugSheetConfirm = document.querySelector(".drug-sheet-confirm");
       const homeTab = document.getElementById("homeTab");
       const mineTab = document.getElementById("mineTab");
 
@@ -2873,9 +3157,14 @@
         drugScanPage?.classList.remove("is-active");
       };
 
+      const closeDrugSearch = () => {
+        phoneScreen?.classList.remove("view-drug-search");
+      };
+
       const showHome = () => {
         closeDrugType();
         closeScan();
+        closeDrugSearch();
         phoneScreen?.classList.remove("view-mine", "view-fast", "child-inquiry");
         homeTab?.classList.add("active");
         mineTab?.classList.remove("active");
@@ -2884,6 +3173,7 @@
       const showMine = () => {
         closeDrugType();
         closeScan();
+        closeDrugSearch();
         phoneScreen?.classList.remove("view-fast", "child-inquiry");
         phoneScreen?.classList.add("view-mine");
         mineTab?.classList.add("active");
@@ -2893,6 +3183,7 @@
       const showFastInquiry = (isChild = false) => {
         closeDrugType();
         closeScan();
+        closeDrugSearch();
         phoneScreen?.classList.remove("view-mine");
         phoneScreen?.classList.add("view-fast");
         phoneScreen?.classList.toggle("child-inquiry", isChild);
@@ -2903,8 +3194,15 @@
       const showScan = (page) => {
         closeDrugType();
         closeScan();
+        closeDrugSearch();
         phoneScreen?.classList.add("view-fast", "view-scan");
         page?.classList.add("is-active");
+      };
+
+      const showDrugSearch = () => {
+        closeDrugType();
+        closeScan();
+        phoneScreen?.classList.add("view-fast", "view-drug-search");
       };
 
       textInquiryEntry?.addEventListener("click", () => {
@@ -2918,9 +3216,13 @@
       drugTypeClose?.addEventListener("click", closeDrugType);
       westernInquiry?.addEventListener("click", () => showFastInquiry(false));
       chineseInquiry?.addEventListener("click", () => showFastInquiry(true));
+      requiredDrugTrigger?.addEventListener("click", showDrugSearch);
       certificateScanTrigger?.addEventListener("click", () => showScan(certificateScanPage));
       drugScanTrigger?.addEventListener("click", () => showScan(drugScanPage));
+      drugSearchScanTrigger?.addEventListener("click", () => showScan(drugScanPage));
       scanBackButtons.forEach((button) => button.addEventListener("click", closeScan));
+      drugSearchDim?.addEventListener("click", closeDrugSearch);
+      drugSheetConfirm?.addEventListener("click", closeDrugSearch);
       fastBack?.addEventListener("click", showHome);
     </script>
   </body>
