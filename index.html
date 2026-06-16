@@ -972,6 +972,10 @@
         display: block;
       }
 
+      .phone-screen.child-inquiry .guardian-wrap {
+        display: block;
+      }
+
       .fast-page {
         display: none;
         width: 100%;
@@ -1118,6 +1122,68 @@
 
       .fast-section-wrap {
         padding: calc(12 * var(--px)) calc(12 * var(--px)) 0;
+      }
+
+      .guardian-wrap {
+        display: none;
+        height: calc(252 * var(--px));
+        padding: calc(12 * var(--px)) calc(12 * var(--px)) 0;
+      }
+
+      .guardian-card {
+        overflow: hidden;
+        width: calc(347 * var(--px));
+        height: calc(240 * var(--px));
+        border-radius: calc(8 * var(--px));
+        background: #fff;
+        box-shadow: 0 calc(1 * var(--px)) calc(2 * var(--px)) rgba(16, 42, 67, 0.04);
+      }
+
+      .guardian-title {
+        position: relative;
+        display: flex;
+        align-items: center;
+        height: calc(40 * var(--px));
+        padding: 0 calc(16 * var(--px));
+        gap: calc(8 * var(--px));
+        border-bottom: calc(1 * var(--px)) solid #eceef0;
+        background: linear-gradient(0deg, rgba(255, 255, 255, 0) 18.75%, rgba(178, 212, 253, 0.5) 100%);
+        color: rgba(0, 0, 0, 0.4);
+        font-size: calc(10 * var(--px));
+        line-height: calc(20 * var(--px));
+      }
+
+      .guardian-title::before {
+        content: "";
+        width: calc(3 * var(--px));
+        height: calc(16 * var(--px));
+        border-radius: calc(1 * var(--px));
+        background: #338bfa;
+      }
+
+      .guardian-title::after {
+        content: "";
+        position: absolute;
+        right: calc(16 * var(--px));
+        top: calc(10 * var(--px));
+        width: calc(18 * var(--px));
+        height: calc(18 * var(--px));
+        border-radius: 45% 45% 50% 50%;
+        background: linear-gradient(180deg, #338bfa 0%, #b2d4fd 100%);
+        clip-path: polygon(50% 0, 88% 16%, 82% 68%, 50% 100%, 18% 68%, 12% 16%);
+      }
+
+      .guardian-card .form-row {
+        min-height: calc(50 * var(--px));
+      }
+
+      .guardian-card .form-label {
+        flex-basis: calc(70 * var(--px));
+        white-space: nowrap;
+      }
+
+      .guardian-card .form-value {
+        font-size: calc(14 * var(--px));
       }
 
       .fast-card {
@@ -2291,7 +2357,7 @@
               <span class="drug-type-sub">开具中西成药</span>
               <span class="drug-illu western" aria-hidden="true"></span>
             </button>
-            <button class="drug-type-card chinese" type="button">
+            <button class="drug-type-card chinese" id="chineseInquiry" type="button">
               <span class="drug-type-name">中药问诊</span>
               <span class="drug-type-desc">为您匹配专业中医</span>
               <span class="drug-type-sub">开具中药饮片</span>
@@ -2341,6 +2407,16 @@
                   <span class="radio-item"><i class="radio-dot"></i>视频</span>
                 </span>
               </div>
+            </div>
+          </section>
+
+          <section class="guardian-wrap">
+            <div class="guardian-card">
+              <div class="guardian-title">为保证用药安全，请登记监护人信息并确保在监护下用药</div>
+              <div class="form-row"><span class="form-label">监护人姓名</span><span class="form-value">请输入姓名或手机号搜索用药人</span></div>
+              <div class="form-row"><span class="form-label">证件类型</span><span class="form-value select-value">身份证 ›</span></div>
+              <div class="form-row"><span class="form-label">身份证号</span><span class="form-value">请输入用药人身份证号</span></div>
+              <div class="form-row"><span class="form-label">病例信息</span><span class="form-value select-value">上传相关图片 ›</span></div>
             </div>
           </section>
 
@@ -2408,6 +2484,7 @@
       const phoneScreen = document.querySelector(".phone-screen");
       const drugTypeClose = document.getElementById("drugTypeClose");
       const westernInquiry = document.getElementById("westernInquiry");
+      const chineseInquiry = document.getElementById("chineseInquiry");
       const fastBack = document.getElementById("fastBack");
       const homeTab = document.getElementById("homeTab");
       const mineTab = document.getElementById("mineTab");
@@ -2419,23 +2496,24 @@
 
       const showHome = () => {
         closeDrugType();
-        phoneScreen?.classList.remove("view-mine", "view-fast");
+        phoneScreen?.classList.remove("view-mine", "view-fast", "child-inquiry");
         homeTab?.classList.add("active");
         mineTab?.classList.remove("active");
       };
 
       const showMine = () => {
         closeDrugType();
-        phoneScreen?.classList.remove("view-fast");
+        phoneScreen?.classList.remove("view-fast", "child-inquiry");
         phoneScreen?.classList.add("view-mine");
         mineTab?.classList.add("active");
         homeTab?.classList.remove("active");
       };
 
-      const showFastInquiry = () => {
+      const showFastInquiry = (isChild = false) => {
         closeDrugType();
         phoneScreen?.classList.remove("view-mine");
         phoneScreen?.classList.add("view-fast");
+        phoneScreen?.classList.toggle("child-inquiry", isChild);
         homeTab?.classList.remove("active");
         mineTab?.classList.remove("active");
       };
@@ -2449,7 +2527,8 @@
       mineTab?.addEventListener("click", showMine);
 
       drugTypeClose?.addEventListener("click", closeDrugType);
-      westernInquiry?.addEventListener("click", showFastInquiry);
+      westernInquiry?.addEventListener("click", () => showFastInquiry(false));
+      chineseInquiry?.addEventListener("click", () => showFastInquiry(true));
       fastBack?.addEventListener("click", showHome);
     </script>
   </body>
