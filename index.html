@@ -2594,6 +2594,11 @@
         color: rgba(0, 0, 0, 0.6);
       }
 
+      .disease-search-field:focus-within {
+        border-color: #338bfa;
+        box-shadow: 0 0 0 calc(1 * var(--px)) rgba(51, 139, 250, 0.12);
+      }
+
       .disease-search-clear {
         position: absolute;
         right: calc(12 * var(--px));
@@ -2605,6 +2610,13 @@
         background:
           linear-gradient(45deg, transparent 43%, rgba(0, 0, 0, 0.4) 43%, rgba(0, 0, 0, 0.4) 57%, transparent 57%),
           linear-gradient(-45deg, transparent 43%, rgba(0, 0, 0, 0.4) 43%, rgba(0, 0, 0, 0.4) 57%, transparent 57%);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .disease-search-field.has-value .disease-search-clear {
+        opacity: 1;
+        pointer-events: auto;
       }
 
       .disease-search-submit {
@@ -2622,6 +2634,10 @@
         min-height: calc(134 * var(--px));
         padding: calc(16 * var(--px)) calc(20 * var(--px)) 0;
         background: #fff;
+      }
+
+      .disease-section:last-child {
+        padding-bottom: calc(16 * var(--px));
       }
 
       .disease-section-title {
@@ -2650,6 +2666,9 @@
       }
 
       .disease-clear-text {
+        padding: 0;
+        border: 0;
+        background: transparent;
         color: rgba(0, 0, 0, 0.6);
         font-size: calc(12 * var(--px));
         line-height: calc(20 * var(--px));
@@ -2659,7 +2678,6 @@
         display: flex;
         flex-wrap: wrap;
         gap: calc(16 * var(--px)) calc(6 * var(--px));
-        padding-top: calc(8 * var(--px));
       }
 
       .disease-chip {
@@ -2679,6 +2697,29 @@
       .disease-chip.selected {
         background: #2a9df8;
         color: #fff;
+      }
+
+      .disease-chip:focus-visible,
+      .disease-clear-text:focus-visible,
+      .disease-search-submit:focus-visible,
+      .disease-back:focus-visible {
+        outline: calc(2 * var(--px)) solid rgba(51, 139, 250, 0.5);
+        outline-offset: calc(2 * var(--px));
+      }
+
+      .disease-chip.is-match {
+        box-shadow: 0 0 0 calc(1.5 * var(--px)) #338bfa;
+      }
+
+      .disease-empty {
+        display: none;
+        color: rgba(0, 0, 0, 0.45);
+        font-size: calc(12 * var(--px));
+        line-height: calc(28 * var(--px));
+      }
+
+      .disease-chip-list:empty + .disease-empty {
+        display: block;
       }
 
       .disease-chip.emphasis {
@@ -2808,7 +2849,10 @@
         justify-content: center;
         width: 100%;
         height: calc(24 * var(--px));
+        padding: 0;
+        border: 0;
         gap: calc(4 * var(--px));
+        background: #fff;
         color: rgba(0, 0, 0, 0.6);
         font-size: calc(12 * var(--px));
         line-height: calc(20 * var(--px));
@@ -2986,14 +3030,17 @@
         display: none;
       }
 
+      .consult-page.is-replied .consult-body,
       .consult-page.is-complete .consult-body {
         padding-bottom: calc(120 * var(--px));
       }
 
+      .consult-page.is-replied .consult-choice,
       .consult-page.is-complete .consult-choice {
         display: none;
       }
 
+      .consult-page.is-replied .patient-message,
       .consult-page.is-complete .patient-message {
         display: flex;
       }
@@ -3002,8 +3049,12 @@
         display: flex;
       }
 
-      .consult-page.is-complete .consult-finish-card,
+      .consult-page.is-replied .consult-input-box,
       .consult-page.is-complete .consult-input-box {
+        display: flex;
+      }
+
+      .consult-page.is-complete .consult-finish-card {
         display: flex;
       }
 
@@ -3075,21 +3126,36 @@
         top: calc(15 * var(--px));
         width: calc(51 * var(--px));
         height: calc(53 * var(--px));
-        border-radius: calc(14 * var(--px));
-        background: linear-gradient(180deg, #dff0ff 0%, #fff 55%, #e7f2ff 100%);
-        box-shadow: inset 0 0 0 calc(1 * var(--px)) rgba(0, 110, 249, 0.18);
       }
 
       .consult-finish-icon::before {
         content: "";
         position: absolute;
-        left: calc(12 * var(--px));
-        top: calc(15 * var(--px));
-        width: calc(27 * var(--px));
-        height: calc(20 * var(--px));
-        border-left: calc(5 * var(--px)) solid #006ef9;
-        border-bottom: calc(5 * var(--px)) solid #006ef9;
-        transform: rotate(-45deg);
+        left: calc(11 * var(--px));
+        top: calc(19 * var(--px));
+        width: calc(30 * var(--px));
+        height: calc(22 * var(--px));
+        border-radius: calc(3 * var(--px));
+        background: linear-gradient(155deg, #58c4ff 0 28%, #1f89f6 29% 100%);
+        box-shadow: inset 0 calc(3 * var(--px)) 0 rgba(255, 255, 255, 0.5);
+        transform: rotate(9deg);
+      }
+
+      .consult-finish-icon::after {
+        content: "Rx";
+        position: absolute;
+        left: calc(17 * var(--px));
+        top: calc(7 * var(--px));
+        display: grid;
+        width: calc(25 * var(--px));
+        height: calc(22 * var(--px));
+        place-items: center;
+        border-top: calc(3 * var(--px)) solid #2cc5d9;
+        background: #fff;
+        color: #338bfa;
+        font-size: calc(8 * var(--px));
+        font-weight: 700;
+        transform: rotate(9deg);
       }
 
       .consult-input-box {
@@ -3118,10 +3184,12 @@
         display: grid;
         height: calc(24 * var(--px));
         place-items: center;
+        padding: 0;
         border-radius: calc(6 * var(--px));
         font-size: calc(12 * var(--px));
         font-weight: 700;
         line-height: calc(20 * var(--px));
+        white-space: nowrap;
       }
 
       .consult-outline-action {
@@ -3144,6 +3212,152 @@
         color: rgba(0, 0, 0, 0.26);
         font-size: calc(12 * var(--px));
         line-height: calc(20 * var(--px));
+      }
+
+      .medication-guide-overlay {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: calc(148 * var(--px));
+        bottom: 0;
+        z-index: 5;
+        align-items: flex-start;
+        background: rgba(52, 64, 84, 0.42);
+      }
+
+      .consult-page.is-guide-open .medication-guide-overlay {
+        display: flex;
+      }
+
+      .medication-guide-panel {
+        position: relative;
+        width: 100%;
+        min-height: calc(598 * var(--px));
+        padding: calc(20 * var(--px)) calc(24 * var(--px)) calc(52 * var(--px));
+        border-radius: 0 0 calc(12 * var(--px)) calc(12 * var(--px));
+        background: #fff;
+        box-shadow: 0 calc(8 * var(--px)) calc(18 * var(--px)) rgba(16, 42, 67, 0.1);
+      }
+
+      .medication-guide-title-row {
+        display: flex;
+        align-items: center;
+        gap: calc(12 * var(--px));
+      }
+
+      .medication-guide-title {
+        margin: 0;
+        color: rgba(0, 0, 0, 0.9);
+        font-size: calc(16 * var(--px));
+        font-weight: 400;
+        line-height: calc(24 * var(--px));
+      }
+
+      .medication-risk-tag {
+        display: inline-grid;
+        height: calc(24 * var(--px));
+        place-items: center;
+        padding: 0 calc(10 * var(--px));
+        border-radius: calc(4 * var(--px));
+        background: #fde2e2;
+        color: #f04438;
+        font-size: calc(12 * var(--px));
+        line-height: calc(20 * var(--px));
+      }
+
+      .medication-guide-summary {
+        margin: calc(8 * var(--px)) 0 calc(18 * var(--px));
+        color: rgba(0, 0, 0, 0.4);
+        font-size: calc(14 * var(--px));
+        line-height: calc(24 * var(--px));
+      }
+
+      .medication-guide-heading {
+        margin: calc(14 * var(--px)) 0 calc(8 * var(--px));
+        font-size: calc(14 * var(--px));
+        font-weight: 700;
+        line-height: calc(22 * var(--px));
+      }
+
+      .medication-guide-heading.warning {
+        color: #e86800;
+      }
+
+      .medication-guide-heading.safe {
+        color: #12a36d;
+      }
+
+      .medication-guide-list {
+        display: flex;
+        flex-direction: column;
+        gap: calc(10 * var(--px));
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .medication-guide-list li {
+        position: relative;
+        padding-left: calc(24 * var(--px));
+        color: rgba(0, 0, 0, 0.6);
+        font-size: calc(14 * var(--px));
+        line-height: calc(22 * var(--px));
+      }
+
+      .medication-guide-list li::before {
+        content: "!";
+        position: absolute;
+        left: 0;
+        top: calc(3 * var(--px));
+        display: grid;
+        width: calc(14 * var(--px));
+        height: calc(14 * var(--px));
+        place-items: center;
+        border-radius: 50%;
+        background: #e86800;
+        color: #fff;
+        font-size: calc(10 * var(--px));
+        font-weight: 700;
+        line-height: 1;
+      }
+
+      .medication-guide-list.safe li::before {
+        content: "✓";
+        background: #2eb386;
+        font-size: calc(9 * var(--px));
+      }
+
+      .medication-guide-close {
+        position: absolute;
+        left: 50%;
+        bottom: calc(12 * var(--px));
+        width: calc(32 * var(--px));
+        height: calc(24 * var(--px));
+        padding: 0;
+        border: 0;
+        background: transparent;
+        transform: translateX(-50%);
+      }
+
+      .medication-guide-close::before,
+      .medication-guide-close::after {
+        content: "";
+        position: absolute;
+        left: calc(9 * var(--px));
+        width: calc(11 * var(--px));
+        height: calc(11 * var(--px));
+        border-left: calc(2 * var(--px)) solid #338bfa;
+        border-top: calc(2 * var(--px)) solid #338bfa;
+        transform: rotate(45deg);
+      }
+
+      .medication-guide-close::before {
+        top: calc(8 * var(--px));
+      }
+
+      .medication-guide-close::after {
+        top: calc(13 * var(--px));
       }
 
       .bottom-submit {
@@ -4336,7 +4550,11 @@
         <section class="disease-page" id="diseasePage" aria-label="线下已确诊疾病">
           <div class="disease-ios">
             <span>9:41</span>
-            <span>⌁ Wi-Fi ▭</span>
+            <span class="status-icons" aria-hidden="true">
+              <span class="signal"><span></span><span></span><span></span><span></span></span>
+              <span class="wifi"></span>
+              <span class="battery"></span>
+            </span>
           </div>
           <div class="disease-nav">
             <button class="disease-back" id="diseaseBack" type="button" aria-label="返回问诊表单"></button>
@@ -4354,52 +4572,47 @@
           </div>
           <section class="disease-section">
             <div class="disease-section-title">已选疾病</div>
+            <div class="disease-chip-list" id="selectedDiseaseList" aria-live="polite"></div>
+            <span class="disease-empty">暂未选择疾病</span>
+          </section>
+          <section class="disease-section" data-disease-group="available">
+            <div class="disease-section-title">可选疾病</div>
             <div class="disease-chip-list">
-              <button class="disease-chip selected" type="button">急性上呼吸道感染</button>
-              <button class="disease-chip selected" type="button">静脉曲张</button>
-              <button class="disease-chip selected" type="button">甲状腺结节</button>
-              <button class="disease-chip selected" type="button">类风湿关节炎</button>
-              <button class="disease-chip selected" type="button">低血糖症</button>
-              <button class="disease-chip selected" type="button">扁桃体炎</button>
+              <button class="disease-chip emphasis" type="button" data-disease="扁桃体炎">扁桃体炎</button>
+              <button class="disease-chip" type="button" data-disease="口腔溃疡">口腔溃疡</button>
+              <button class="disease-chip" type="button" data-disease="咽炎">咽炎</button>
+              <button class="disease-chip" type="button" data-disease="腮腺炎">腮腺炎</button>
+              <button class="disease-chip" type="button" data-disease="口角炎">口角炎</button>
+              <button class="disease-chip" type="button" data-disease="牙龈炎">牙龈炎</button>
+              <button class="disease-chip" type="button" data-disease="疖肿">疖肿</button>
             </div>
           </section>
-          <section class="disease-section">
-            <div class="disease-section-title">推荐疾病</div>
-            <div class="disease-chip-list">
-              <button class="disease-chip emphasis" type="button">扁桃体炎</button>
-              <button class="disease-chip" type="button">口腔溃疡</button>
-              <button class="disease-chip" type="button">咽炎</button>
-              <button class="disease-chip" type="button">腮腺炎</button>
-              <button class="disease-chip" type="button">口角炎</button>
-              <button class="disease-chip" type="button">牙龈炎</button>
-              <button class="disease-chip" type="button">疖肿</button>
-            </div>
-          </section>
-          <section class="disease-section">
+          <section class="disease-section" data-disease-group="history">
             <div class="disease-title-row">
               <div class="disease-section-title">历史疾病</div>
-              <span class="disease-clear-text">清空</span>
+              <button class="disease-clear-text" id="diseaseHistoryClear" type="button">清空</button>
             </div>
-            <div class="disease-chip-list">
-              <button class="disease-chip" type="button">急性上呼吸道感染</button>
-              <button class="disease-chip" type="button">静脉曲张</button>
-              <button class="disease-chip" type="button">甲状腺结节</button>
-              <button class="disease-chip" type="button">类风湿关节炎</button>
-              <button class="disease-chip" type="button">低血糖症</button>
-              <button class="disease-chip" type="button">扁桃体炎</button>
+            <div class="disease-chip-list" id="diseaseHistoryList">
+              <button class="disease-chip" type="button" data-disease="急性上呼吸道感染">急性上呼吸道感染</button>
+              <button class="disease-chip" type="button" data-disease="静脉曲张">静脉曲张</button>
+              <button class="disease-chip" type="button" data-disease="甲状腺结节">甲状腺结节</button>
+              <button class="disease-chip" type="button" data-disease="类风湿关节炎">类风湿关节炎</button>
+              <button class="disease-chip" type="button" data-disease="低血糖症">低血糖症</button>
+              <button class="disease-chip" type="button" data-disease="扁桃体炎">扁桃体炎</button>
             </div>
+            <span class="disease-empty">暂无历史疾病</span>
           </section>
-          <section class="disease-section">
+          <section class="disease-section" data-disease-group="seasonal">
             <div class="disease-section-title">当季常见疾病</div>
             <div class="disease-chip-list">
-              <button class="disease-chip" type="button">手足口病</button>
-              <button class="disease-chip" type="button">低血糖症</button>
-              <button class="disease-chip" type="button">肠胃炎</button>
-              <button class="disease-chip" type="button">腹泻</button>
-              <button class="disease-chip" type="button">呼吸道疾病</button>
-              <button class="disease-chip" type="button">慢性咳嗽</button>
-              <button class="disease-chip" type="button">湿疹</button>
-              <button class="disease-chip" type="button">腱鞘炎</button>
+              <button class="disease-chip" type="button" data-disease="手足口病">手足口病</button>
+              <button class="disease-chip" type="button" data-disease="低血糖症">低血糖症</button>
+              <button class="disease-chip" type="button" data-disease="肠胃炎">肠胃炎</button>
+              <button class="disease-chip" type="button" data-disease="腹泻">腹泻</button>
+              <button class="disease-chip" type="button" data-disease="呼吸道疾病">呼吸道疾病</button>
+              <button class="disease-chip" type="button" data-disease="慢性咳嗽">慢性咳嗽</button>
+              <button class="disease-chip" type="button" data-disease="湿疹">湿疹</button>
+              <button class="disease-chip" type="button" data-disease="腱鞘炎">腱鞘炎</button>
             </div>
           </section>
         </section>
@@ -4407,7 +4620,11 @@
           <header class="consult-header">
             <div class="consult-ios">
               <span>9:41</span>
-              <span>⌁ Wi-Fi ▭</span>
+              <span class="status-icons" aria-hidden="true">
+                <span class="signal"><span></span><span></span><span></span><span></span></span>
+                <span class="wifi"></span>
+                <span class="battery"></span>
+              </span>
             </div>
             <div class="consult-nav">
               <button class="consult-back" id="consultBack" type="button" aria-label="返回"></button>
@@ -4415,10 +4632,10 @@
               <button class="consult-cancel" id="consultCancel" type="button">取消问诊</button>
             </div>
             <div class="consult-source">
-              <span class="consult-source-badge">处方来源</span>
+              <span class="consult-source-badge">快速问诊</span>
               <span class="consult-source-name">武汉好药师大药房南岸店</span>
             </div>
-            <div class="consult-guide">下拉查看用药指导</div>
+            <button class="consult-guide" id="consultGuideToggle" type="button" aria-expanded="false">下拉查看用药指导</button>
           </header>
           <main class="consult-body">
             <section class="doctor-message">
@@ -4445,8 +4662,8 @@
             </section>
             <section class="consult-choice">
               <div class="consult-divider">请选择</div>
-              <button class="consult-action secondary" type="button">有信息需要补充</button>
-              <button class="consult-action primary" id="consultNoSupplement" type="button">无信息需要补充</button>
+              <button class="consult-action secondary" id="consultCancelPrescription" type="button">信息有误，取消开方</button>
+              <button class="consult-action primary" id="consultNoSupplement" type="button">无需补充，立即开方</button>
             </section>
             <section class="patient-message" aria-label="用户回复">
               <div class="patient-bubble">无需补充，立即开方</div>
@@ -4472,6 +4689,27 @@
               <div class="consult-input-placeholder">输入回复内容，或点击上方AI推荐快速填充...</div>
             </section>
           </main>
+          <div class="medication-guide-overlay" id="medicationGuideOverlay">
+            <section class="medication-guide-panel" aria-label="草酸艾司西酞普兰片用药指导">
+              <div class="medication-guide-title-row">
+                <h2 class="medication-guide-title">草酸艾司西酞普兰片</h2>
+                <span class="medication-risk-tag">高风险</span>
+              </div>
+              <p class="medication-guide-summary">该药为精神心理相关处方药，通常用于抑郁、惊恐等相关疾病的治疗。</p>
+              <h3 class="medication-guide-heading warning">以下情况请告知医生</h3>
+              <ul class="medication-guide-list">
+                <li>近期出现情绪明显低落、焦虑加重、惊恐发作、失眠或异常兴奋</li>
+                <li>曾出现自伤、自杀想法，或近期情绪、行为有明显异常变化</li>
+                <li>正在服用其他抗抑郁药、抗焦虑药、安眠药、止痛药或其他精神类药物</li>
+              </ul>
+              <h3 class="medication-guide-heading safe">安全提醒</h3>
+              <ul class="medication-guide-list safe">
+                <li>请勿自行开始服用、加量、减量或突然停药</li>
+                <li>用药期间如出现情绪明显恶化、异常兴奋、严重失眠、心悸、晕厥、发热出汗、震颤、意识混乱、自伤想法或其他明显不适，请及时联系医生或就医</li>
+              </ul>
+              <button class="medication-guide-close" id="medicationGuideClose" type="button" aria-label="收起用药指导"></button>
+            </section>
+          </div>
         </section>
         <nav class="tabbar" aria-label="底部导航">
           <div class="tabbar-item active" id="homeTab" role="button" tabindex="0">
@@ -4504,11 +4742,18 @@
       const diseaseSearchInput = document.getElementById("diseaseSearchInput");
       const diseaseSearchClear = document.getElementById("diseaseSearchClear");
       const diseaseSearchSubmit = document.getElementById("diseaseSearchSubmit");
+      const selectedDiseaseList = document.getElementById("selectedDiseaseList");
+      const diseaseHistoryList = document.getElementById("diseaseHistoryList");
+      const diseaseHistoryClear = document.getElementById("diseaseHistoryClear");
       const fastSubmit = document.getElementById("fastSubmit");
       const consultPage = document.getElementById("consultPage");
       const consultBack = document.getElementById("consultBack");
       const consultCancel = document.getElementById("consultCancel");
       const consultNoSupplement = document.getElementById("consultNoSupplement");
+      const consultCancelPrescription = document.getElementById("consultCancelPrescription");
+      const consultGuideToggle = document.getElementById("consultGuideToggle");
+      const medicationGuideOverlay = document.getElementById("medicationGuideOverlay");
+      const medicationGuideClose = document.getElementById("medicationGuideClose");
       const requiredDrugTrigger = document.getElementById("requiredDrugTrigger");
       const fastDrugCard = document.getElementById("fastDrugCard");
       const certificateScanTrigger = document.getElementById("certificateScanTrigger");
@@ -4533,6 +4778,28 @@
       const homeTab = document.getElementById("homeTab");
       const mineTab = document.getElementById("mineTab");
       const selectedProducts = new Map();
+      const selectedDiseases = new Set([
+        "急性上呼吸道感染",
+        "静脉曲张",
+        "甲状腺结节",
+        "类风湿关节炎",
+        "低血糖症",
+        "扁桃体炎",
+      ]);
+      const consultProgressTimers = new Set();
+
+      const clearConsultProgress = () => {
+        consultProgressTimers.forEach((timer) => window.clearTimeout(timer));
+        consultProgressTimers.clear();
+      };
+
+      const scheduleConsultProgress = (callback, delay) => {
+        const timer = window.setTimeout(() => {
+          consultProgressTimers.delete(timer);
+          callback();
+        }, delay);
+        consultProgressTimers.add(timer);
+      };
 
       const closeDrugType = () => {
         drugTypePage?.classList.remove("is-active");
@@ -4554,8 +4821,10 @@
       };
 
       const closeConsult = () => {
+        clearConsultProgress();
         phoneScreen?.classList.remove("view-consult");
-        consultPage?.classList.remove("is-complete");
+        consultPage?.classList.remove("is-replied", "is-complete", "is-guide-open");
+        consultGuideToggle?.setAttribute("aria-expanded", "false");
       };
 
       const resetDrugSearch = () => {
@@ -4634,6 +4903,59 @@
         closeDrugSearch();
         closeConsult();
         phoneScreen?.classList.add("view-fast", "view-disease");
+        renderDiseaseSelection();
+      };
+
+      const createDiseaseChip = (name, selected = false) => {
+        const chip = document.createElement("button");
+        chip.className = `disease-chip${selected ? " selected" : ""}`;
+        chip.type = "button";
+        chip.dataset.disease = name;
+        chip.textContent = name;
+        chip.setAttribute("aria-pressed", String(selected));
+        chip.setAttribute("aria-label", selected ? `取消选择${name}` : `选择${name}`);
+        return chip;
+      };
+
+      const renderDiseaseSelection = () => {
+        if (selectedDiseaseList) {
+          selectedDiseaseList.replaceChildren(...Array.from(selectedDiseases, (name) => createDiseaseChip(name, true)));
+        }
+        document.querySelectorAll("[data-disease-group] [data-disease]").forEach((chip) => {
+          const selected = selectedDiseases.has(chip.dataset.disease);
+          chip.setAttribute("aria-pressed", "false");
+          chip.setAttribute("aria-label", selected ? `${chip.dataset.disease}已在已选疾病中` : `选择${chip.dataset.disease}`);
+        });
+        if (diseaseSearchTrigger) {
+          const names = Array.from(selectedDiseases);
+          diseaseSearchTrigger.setAttribute("aria-label", names.length ? `线下已确诊疾病，已选${names.join("、")}` : "线下已确诊疾病，暂未选择");
+        }
+      };
+
+      const toggleDisease = (name) => {
+        if (!name) return;
+        if (selectedDiseases.has(name)) selectedDiseases.delete(name);
+        else selectedDiseases.add(name);
+        renderDiseaseSelection();
+      };
+
+      const updateDiseaseSearchControl = () => {
+        const field = diseaseSearchInput?.closest(".disease-search-field");
+        field?.classList.toggle("has-value", Boolean(diseaseSearchInput?.value.trim()));
+      };
+
+      const handleDiseaseSearch = () => {
+        const keyword = diseaseSearchInput?.value.trim();
+        if (!keyword) {
+          diseaseSearchInput?.focus();
+          return;
+        }
+        selectedDiseases.add(keyword);
+        renderDiseaseSelection();
+        document.querySelectorAll("[data-disease-group] [data-disease]").forEach((chip) => {
+          chip.classList.toggle("is-match", chip.dataset.disease.includes(keyword));
+        });
+        selectedDiseaseList?.querySelector(`[data-disease="${CSS.escape(keyword)}"]`)?.scrollIntoView({ block: "nearest", behavior: "smooth" });
       };
 
       const showConsult = () => {
@@ -4641,15 +4963,35 @@
         closeScan();
         closeDrugSearch();
         closeDiseaseSearch();
-        consultPage?.classList.remove("is-complete");
+        clearConsultProgress();
+        consultPage?.classList.remove("is-replied", "is-complete", "is-guide-open");
+        consultGuideToggle?.setAttribute("aria-expanded", "false");
         const consultBody = consultPage?.querySelector(".consult-body");
         if (consultBody) consultBody.scrollTop = 0;
         phoneScreen?.classList.remove("view-mine");
         phoneScreen?.classList.add("view-fast", "view-consult");
       };
 
-      const showConsultComplete = () => {
-        consultPage?.classList.add("is-complete");
+      const scrollConsultToLatest = (behavior = "smooth") => {
+        const consultBody = consultPage?.querySelector(".consult-body");
+        if (consultBody) consultBody.scrollTo({ top: consultBody.scrollHeight, behavior });
+      };
+
+      const showConsultReply = () => {
+        if (consultPage?.classList.contains("is-replied")) return;
+        clearConsultProgress();
+        consultPage?.classList.add("is-replied");
+        scheduleConsultProgress(() => {
+          consultPage?.classList.add("is-complete");
+          scrollConsultToLatest();
+        }, 2200);
+      };
+
+      const toggleMedicationGuide = (forceOpen) => {
+        if (!consultPage) return;
+        const shouldOpen = typeof forceOpen === "boolean" ? forceOpen : !consultPage.classList.contains("is-guide-open");
+        consultPage.classList.toggle("is-guide-open", shouldOpen);
+        consultGuideToggle?.setAttribute("aria-expanded", String(shouldOpen));
       };
 
       const showIbuprofenResults = () => {
@@ -4778,23 +5120,41 @@
       requiredDrugTrigger?.addEventListener("click", showDrugSearch);
       diseaseSearchTrigger?.addEventListener("click", showDiseaseSearch);
       diseaseBack?.addEventListener("click", closeDiseaseSearch);
-      diseaseSearchSubmit?.addEventListener("click", () => {
-        const keyword = diseaseSearchInput?.value.trim();
-        if (!keyword) return;
-        const firstChip = document.querySelector(".disease-section .disease-chip");
-        if (firstChip) firstChip.textContent = keyword;
-      });
+      diseaseSearchSubmit?.addEventListener("click", handleDiseaseSearch);
       diseaseSearchInput?.addEventListener("keydown", (event) => {
         if (event.key === "Enter") diseaseSearchSubmit?.click();
       });
+      diseaseSearchInput?.addEventListener("input", () => {
+        updateDiseaseSearchControl();
+        document.querySelectorAll("[data-disease-group] [data-disease]").forEach((chip) => chip.classList.remove("is-match"));
+      });
       diseaseSearchClear?.addEventListener("click", () => {
         if (diseaseSearchInput) diseaseSearchInput.value = "";
+        updateDiseaseSearchControl();
+        diseaseSearchInput?.focus();
       });
+      diseasePage?.addEventListener("click", (event) => {
+        const chip = event.target.closest(".disease-chip[data-disease]");
+        if (!chip || !diseasePage.contains(chip)) return;
+        if (selectedDiseaseList?.contains(chip)) {
+          toggleDisease(chip.dataset.disease);
+          return;
+        }
+        selectedDiseases.add(chip.dataset.disease);
+        renderDiseaseSelection();
+      });
+      diseaseHistoryClear?.addEventListener("click", () => diseaseHistoryList?.replaceChildren());
+      renderDiseaseSelection();
       fastSubmit?.addEventListener("click", showConsult);
-      consultNoSupplement?.addEventListener("click", showConsultComplete);
+      consultNoSupplement?.addEventListener("click", showConsultReply);
+      consultCancelPrescription?.addEventListener("click", closeConsult);
+      consultGuideToggle?.addEventListener("click", () => toggleMedicationGuide());
+      medicationGuideClose?.addEventListener("click", () => toggleMedicationGuide(false));
+      medicationGuideOverlay?.addEventListener("click", (event) => {
+        if (event.target === medicationGuideOverlay) toggleMedicationGuide(false);
+      });
       consultBack?.addEventListener("click", () => {
-        phoneScreen?.classList.remove("view-consult");
-        consultPage?.classList.remove("is-complete");
+        closeConsult();
       });
       consultCancel?.addEventListener("click", showHome);
       certificateScanTrigger?.addEventListener("click", () => showScan(certificateScanPage));
