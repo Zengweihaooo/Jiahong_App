@@ -1295,25 +1295,39 @@
         text-align: right;
       }
 
-      .age-input {
+      .form-input,
+      .form-select {
         min-width: 0;
         padding: 0;
         border: 0;
         outline: 0;
         background: transparent;
-        appearance: textfield;
-        font: inherit;
+        font-family: inherit;
+        font-size: calc(14 * var(--px));
+        line-height: calc(22 * var(--px));
+        color: rgba(0, 0, 0, 0.9);
       }
 
-      .age-input::-webkit-inner-spin-button,
-      .age-input::-webkit-outer-spin-button {
+      .form-input {
+        appearance: textfield;
+      }
+
+      .form-input::-webkit-inner-spin-button,
+      .form-input::-webkit-outer-spin-button {
         margin: 0;
         appearance: none;
       }
 
-      .age-input::placeholder {
+      .form-input::placeholder {
         color: rgba(0, 0, 0, 0.26);
         opacity: 1;
+      }
+
+      .form-select {
+        appearance: auto;
+        color: rgba(0, 0, 0, 0.6);
+        cursor: pointer;
+        text-align-last: right;
       }
 
       .select-value {
@@ -1333,9 +1347,14 @@
         display: inline-flex;
         align-items: center;
         gap: calc(8 * var(--px));
+        padding: 0;
+        border: 0;
+        background: transparent;
         color: rgba(0, 0, 0, 0.6);
         font-size: calc(14 * var(--px));
         line-height: calc(22 * var(--px));
+        font-family: inherit;
+        cursor: pointer;
       }
 
       .radio-dot {
@@ -1361,6 +1380,7 @@
         border-radius: calc(4 * var(--px));
         color: rgba(0, 0, 0, 0.6);
         font-size: calc(14 * var(--px));
+        font-family: inherit;
       }
 
       .fast-history {
@@ -1392,6 +1412,15 @@
         border: calc(1.2 * var(--px)) dashed #99a4b1;
         border-radius: calc(2.66667 * var(--px));
         background: rgba(248, 248, 249, 0.8);
+        cursor: pointer;
+      }
+
+      .upload-box input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        pointer-events: none;
       }
 
       .upload-box::before,
@@ -1427,6 +1456,8 @@
         background: #fff;
         color: rgba(0, 0, 0, 0.4);
         font-size: calc(14 * var(--px));
+        font-family: inherit;
+        cursor: pointer;
       }
 
       .small-pill.active {
@@ -1473,12 +1504,27 @@
       .textarea-box {
         position: relative;
         height: calc(80 * var(--px));
-        padding: calc(8 * var(--px)) calc(10 * var(--px));
         border: calc(0.66667 * var(--px)) solid #eceef0;
         border-radius: calc(4 * var(--px));
-        color: rgba(51, 51, 51, 0.5);
+      }
+
+      .remark-input {
+        width: 100%;
+        height: 100%;
+        padding: calc(8 * var(--px)) calc(10 * var(--px)) calc(24 * var(--px));
+        border: 0;
+        outline: 0;
+        resize: none;
+        background: transparent;
+        color: #333;
+        font: inherit;
         font-size: calc(14 * var(--px));
         line-height: calc(22 * var(--px));
+      }
+
+      .remark-input::placeholder {
+        color: rgba(51, 51, 51, 0.5);
+        opacity: 1;
       }
 
       .counter {
@@ -4051,27 +4097,27 @@
           <section class="fast-section-wrap">
             <div class="fast-card">
               <div class="fast-section-title">基础信息</div>
-              <div class="form-row"><span class="form-label">姓名</span><span class="form-value">请输入姓名或手机号搜索用药人</span></div>
-              <div class="form-row"><span class="form-label">手机号</span><span class="form-value">请输入用药人手机号</span></div>
+              <label class="form-row" for="patientName"><span class="form-label">姓名</span><input class="form-value form-input" id="patientName" type="text" autocomplete="name" placeholder="请输入姓名或手机号搜索用药人" /></label>
+              <label class="form-row" for="patientPhone"><span class="form-label">手机号</span><input class="form-value form-input" id="patientPhone" type="tel" inputmode="tel" autocomplete="tel" maxlength="11" placeholder="请输入用药人手机号" /></label>
               <div class="form-row">
                 <span class="form-label">性别</span>
-                <span class="radio-group">
-                  <span class="radio-item"><i class="radio-dot"></i>女</span>
-                  <span class="radio-item"><i class="radio-dot"></i>男</span>
+                <span class="radio-group" role="radiogroup" aria-label="性别">
+                  <button class="radio-item" type="button" role="radio" aria-checked="false"><i class="radio-dot"></i>女</button>
+                  <button class="radio-item" type="button" role="radio" aria-checked="false"><i class="radio-dot"></i>男</button>
                 </span>
               </div>
               <label class="form-row" for="patientAge">
                 <span class="form-label">年龄</span>
-                <input class="form-value age-input" id="patientAge" type="number" min="0" max="120" inputmode="decimal" placeholder="请输入用药人年龄" aria-describedby="guardianAgeRule" />
-                <span class="unit-select">岁⌄</span>
+                <input class="form-value form-input" id="patientAge" type="number" min="0" max="120" inputmode="decimal" placeholder="请输入用药人年龄" aria-describedby="guardianAgeRule" />
+                <select class="unit-select" id="patientAgeUnit" aria-label="年龄单位"><option value="year">岁</option><option value="month">月</option></select>
               </label>
-              <div class="form-row"><span class="form-label">证件类型</span><span class="form-value select-value">身份证 ›</span></div>
-              <div class="form-row"><span class="form-label">身份证号</span><span class="form-value">请输入用药人身份证号</span></div>
+              <label class="form-row" for="patientDocumentType"><span class="form-label">证件类型</span><select class="form-value form-select" id="patientDocumentType"><option>身份证</option><option>护照</option><option>港澳居民居住证</option><option>台湾居民居住证</option></select></label>
+              <label class="form-row" for="patientDocumentNumber"><span class="form-label">证件号码</span><input class="form-value form-input" id="patientDocumentNumber" type="text" inputmode="text" autocomplete="off" maxlength="18" placeholder="请输入用药人证件号码" /></label>
               <div class="form-row">
                 <span class="form-label">就诊方式</span>
-                <span class="radio-group">
-                  <span class="radio-item active"><i class="radio-dot"></i>图文</span>
-                  <span class="radio-item"><i class="radio-dot"></i>视频</span>
+                <span class="radio-group" role="radiogroup" aria-label="就诊方式">
+                  <button class="radio-item active" type="button" role="radio" aria-checked="true"><i class="radio-dot"></i>图文</button>
+                  <button class="radio-item" type="button" role="radio" aria-checked="false"><i class="radio-dot"></i>视频</button>
                 </span>
               </div>
             </div>
@@ -4080,9 +4126,9 @@
           <section class="guardian-wrap" id="guardianSection" aria-hidden="true">
             <div class="guardian-card">
               <div class="guardian-title" id="guardianAgeRule">为保证用药安全，请登记监护人信息并确保在监护下用药</div>
-              <div class="form-row"><span class="form-label">监护人姓名</span><span class="form-value">请输入姓名或手机号搜索用药人</span></div>
-              <div class="form-row"><span class="form-label">证件类型</span><span class="form-value select-value">身份证 ›</span></div>
-              <div class="form-row"><span class="form-label">身份证号</span><span class="form-value">请输入用药人身份证号</span></div>
+              <label class="form-row" for="guardianName"><span class="form-label">监护人姓名</span><input class="form-value form-input" id="guardianName" type="text" autocomplete="name" placeholder="请输入监护人姓名" /></label>
+              <label class="form-row" for="guardianDocumentType"><span class="form-label">证件类型</span><select class="form-value form-select" id="guardianDocumentType"><option>身份证</option><option>护照</option><option>港澳居民居住证</option><option>台湾居民居住证</option></select></label>
+              <label class="form-row" for="guardianDocumentNumber"><span class="form-label">证件号码</span><input class="form-value form-input" id="guardianDocumentNumber" type="text" inputmode="text" autocomplete="off" maxlength="18" placeholder="请输入监护人证件号码" /></label>
               <div class="form-row"><span class="form-label">病例信息</span><span class="form-value select-value">上传相关图片 ›</span></div>
             </div>
           </section>
@@ -4092,18 +4138,18 @@
               <div class="fast-section-title">病史信息</div>
               <div class="upload-proof">
                 <p class="proof-note">复诊凭证（最多上传5张；支持jpg、png格式，单张大小 不超过5M 图片示例）</p>
-                <div class="upload-box"></div>
+                <label class="upload-box" aria-label="上传复诊凭证"><input id="proofUpload" type="file" accept="image/jpeg,image/png" multiple /></label>
               </div>
-              <div class="form-row"><span class="form-label">过敏史</span><span class="yes-no"><span class="small-pill active">无</span><span class="small-pill">有</span></span></div>
-              <div class="form-row"><span class="form-label">肝功能异常</span><span class="yes-no"><span class="small-pill active">无</span><span class="small-pill">有</span></span></div>
-              <div class="form-row"><span class="form-label">肾功能异常</span><span class="yes-no"><span class="small-pill active">无</span><span class="small-pill">有</span></span></div>
+              <div class="form-row"><span class="form-label">过敏史</span><span class="yes-no"><button class="small-pill active" type="button">无</button><button class="small-pill" type="button">有</button></span></div>
+              <div class="form-row"><span class="form-label">肝功能异常</span><span class="yes-no"><button class="small-pill active" type="button">无</button><button class="small-pill" type="button">有</button></span></div>
+              <div class="form-row"><span class="form-label">肾功能异常</span><span class="yes-no"><button class="small-pill active" type="button">无</button><button class="small-pill" type="button">有</button></span></div>
               <div class="form-row pregnancy-row">
                 <span class="form-label">妊娠哺乳</span>
-                <span class="pregnancy-options"><span class="small-pill active">无</span><span class="small-pill">备孕中</span><span class="small-pill">怀孕中</span><span class="small-pill">哺乳期</span></span>
+                <span class="pregnancy-options"><button class="small-pill active" type="button">无</button><button class="small-pill" type="button">备孕中</button><button class="small-pill" type="button">怀孕中</button><button class="small-pill" type="button">哺乳期</button></span>
               </div>
               <div class="remark-block">
                 <p class="remark-label">备注(选填)</p>
-                <div class="textarea-box">请输入备注信息，最多30字<span class="counter">0/30</span></div>
+                <div class="textarea-box"><textarea class="remark-input" id="medicalRemark" maxlength="30" placeholder="请输入备注信息，最多30字"></textarea><span class="counter" id="remarkCounter">0/30</span></div>
               </div>
             </div>
           </section>
@@ -4448,7 +4494,10 @@
       const westernInquiry = document.getElementById("westernInquiry");
       const chineseInquiry = document.getElementById("chineseInquiry");
       const patientAge = document.getElementById("patientAge");
+      const patientAgeUnit = document.getElementById("patientAgeUnit");
       const guardianSection = document.getElementById("guardianSection");
+      const medicalRemark = document.getElementById("medicalRemark");
+      const remarkCounter = document.getElementById("remarkCounter");
       const fastBack = document.getElementById("fastBack");
       const diseaseSearchTrigger = document.getElementById("diseaseSearchTrigger");
       const diseaseBack = document.getElementById("diseaseBack");
@@ -4554,7 +4603,8 @@
       const syncGuardianByAge = () => {
         const rawAge = patientAge?.value.trim() || "";
         const age = Number(rawAge);
-        const needsGuardian = rawAge !== "" && Number.isFinite(age) && age >= 0 && age <= 6;
+        const ageInYears = patientAgeUnit?.value === "month" ? age / 12 : age;
+        const needsGuardian = rawAge !== "" && Number.isFinite(ageInYears) && ageInYears >= 0 && ageInYears <= 6;
         phoneScreen?.classList.toggle("child-inquiry", needsGuardian);
         guardianSection?.setAttribute("aria-hidden", String(!needsGuardian));
       };
@@ -4710,6 +4760,21 @@
       westernInquiry?.addEventListener("click", showFastInquiry);
       chineseInquiry?.addEventListener("click", showFastInquiry);
       patientAge?.addEventListener("input", syncGuardianByAge);
+      patientAgeUnit?.addEventListener("change", syncGuardianByAge);
+      document.querySelectorAll(".radio-group, .yes-no, .pregnancy-options").forEach((group) => {
+        group.addEventListener("click", (event) => {
+          const option = event.target.closest("button");
+          if (!option || !group.contains(option)) return;
+          group.querySelectorAll("button").forEach((button) => {
+            const selected = button === option;
+            button.classList.toggle("active", selected);
+            if (button.hasAttribute("aria-checked")) button.setAttribute("aria-checked", String(selected));
+          });
+        });
+      });
+      medicalRemark?.addEventListener("input", () => {
+        if (remarkCounter) remarkCounter.textContent = `${medicalRemark.value.length}/30`;
+      });
       requiredDrugTrigger?.addEventListener("click", showDrugSearch);
       diseaseSearchTrigger?.addEventListener("click", showDiseaseSearch);
       diseaseBack?.addEventListener("click", closeDiseaseSearch);
