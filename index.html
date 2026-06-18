@@ -1001,6 +1001,20 @@
         display: block;
       }
 
+      .phone-screen.view-consult .app-page,
+      .phone-screen.view-consult .mine-page,
+      .phone-screen.view-consult .fast-page,
+      .phone-screen.view-consult .scan-page,
+      .phone-screen.view-consult .drug-search-page,
+      .phone-screen.view-consult .disease-page,
+      .phone-screen.view-consult .tabbar {
+        display: none;
+      }
+
+      .phone-screen.view-consult .consult-page {
+        display: block;
+      }
+
       .phone-screen.child-inquiry .guardian-wrap {
         display: block;
       }
@@ -1281,6 +1295,27 @@
         text-align: right;
       }
 
+      .age-input {
+        min-width: 0;
+        padding: 0;
+        border: 0;
+        outline: 0;
+        background: transparent;
+        appearance: textfield;
+        font: inherit;
+      }
+
+      .age-input::-webkit-inner-spin-button,
+      .age-input::-webkit-outer-spin-button {
+        margin: 0;
+        appearance: none;
+      }
+
+      .age-input::placeholder {
+        color: rgba(0, 0, 0, 0.26);
+        opacity: 1;
+      }
+
       .select-value {
         color: rgba(0, 0, 0, 0.6);
       }
@@ -1552,9 +1587,80 @@
       }
 
       .scan-status-icons {
-        color: #fff;
-        font-size: calc(14 * var(--px));
-        font-weight: 400;
+        display: flex;
+        align-items: center;
+        gap: calc(4 * var(--px));
+        width: calc(68 * var(--px));
+        height: calc(14 * var(--px));
+      }
+
+      .scan-signal {
+        width: calc(18 * var(--px));
+        height: calc(12 * var(--px));
+        background: linear-gradient(to top, #fff 0 100%) left bottom / calc(3 * var(--px)) 25% no-repeat,
+          linear-gradient(to top, #fff 0 100%) calc(5 * var(--px)) bottom / calc(3 * var(--px)) 50% no-repeat,
+          linear-gradient(to top, #fff 0 100%) calc(10 * var(--px)) bottom / calc(3 * var(--px)) 75% no-repeat,
+          linear-gradient(to top, #fff 0 100%) right bottom / calc(3 * var(--px)) 100% no-repeat;
+        border-radius: calc(1 * var(--px));
+      }
+
+      .scan-wifi {
+        position: relative;
+        width: calc(14 * var(--px));
+        height: calc(12 * var(--px));
+        overflow: hidden;
+      }
+
+      .scan-wifi::before,
+      .scan-wifi::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        border: calc(1.5 * var(--px)) solid #fff;
+        border-bottom: 0;
+        border-left-color: transparent;
+        border-right-color: transparent;
+        border-radius: 50% 50% 0 0;
+        transform: translateX(-50%);
+      }
+
+      .scan-wifi::before {
+        top: calc(1 * var(--px));
+        width: calc(13 * var(--px));
+        height: calc(8 * var(--px));
+      }
+
+      .scan-wifi::after {
+        top: calc(6 * var(--px));
+        width: calc(6 * var(--px));
+        height: calc(4 * var(--px));
+      }
+
+      .scan-battery {
+        position: relative;
+        width: calc(22 * var(--px));
+        height: calc(10 * var(--px));
+        border: calc(1 * var(--px)) solid rgba(255, 255, 255, 0.75);
+        border-radius: calc(3 * var(--px));
+      }
+
+      .scan-battery::before {
+        content: "";
+        position: absolute;
+        inset: calc(1 * var(--px)) calc(2 * var(--px));
+        border-radius: calc(1 * var(--px));
+        background: #fff;
+      }
+
+      .scan-battery::after {
+        content: "";
+        position: absolute;
+        right: calc(-3 * var(--px));
+        top: calc(3 * var(--px));
+        width: calc(2 * var(--px));
+        height: calc(4 * var(--px));
+        border-radius: 0 calc(1 * var(--px)) calc(1 * var(--px)) 0;
+        background: rgba(255, 255, 255, 0.75);
       }
 
       .scan-nav {
@@ -1589,17 +1695,6 @@
         transform: rotate(45deg);
       }
 
-      .scan-nav-action::before {
-        content: "";
-        position: absolute;
-        left: calc(3 * var(--px));
-        right: calc(3 * var(--px));
-        top: calc(4 * var(--px));
-        height: calc(14 * var(--px));
-        border: calc(1.6 * var(--px)) solid #fff;
-        border-radius: calc(2 * var(--px));
-      }
-
       .scan-nav-title {
         margin: 0;
         color: #fff;
@@ -1612,13 +1707,13 @@
         position: relative;
         width: 100%;
         height: calc(100% - calc(88 * var(--px)));
-        background: linear-gradient(180deg, rgba(10, 10, 10, 0.5) 0%, rgba(17, 17, 17, 0.5) 40%, rgba(13, 26, 26, 0.5) 100%);
+        background: #929694;
       }
 
       .scan-box {
         position: absolute;
         left: calc(35 * var(--px));
-        top: calc(117 * var(--px));
+        top: calc(205 * var(--px));
         width: calc(305 * var(--px));
         height: calc(220 * var(--px));
         border-radius: calc(2 * var(--px));
@@ -1635,28 +1730,28 @@
 
       .scan-corner.tl {
         left: calc(35 * var(--px));
-        top: calc(117 * var(--px));
+        top: calc(205 * var(--px));
         border-width: calc(2.6 * var(--px)) 0 0 calc(2.6 * var(--px));
         border-radius: calc(4 * var(--px)) 0 0 0;
       }
 
       .scan-corner.tr {
         left: calc(316 * var(--px));
-        top: calc(117 * var(--px));
+        top: calc(205 * var(--px));
         border-width: calc(2.6 * var(--px)) calc(2.6 * var(--px)) 0 0;
         border-radius: 0 calc(4 * var(--px)) 0 0;
       }
 
       .scan-corner.bl {
         left: calc(35 * var(--px));
-        top: calc(313 * var(--px));
+        top: calc(401 * var(--px));
         border-width: 0 0 calc(2.6 * var(--px)) calc(2.6 * var(--px));
         border-radius: 0 0 0 calc(4 * var(--px));
       }
 
       .scan-corner.br {
         left: calc(316 * var(--px));
-        top: calc(313 * var(--px));
+        top: calc(401 * var(--px));
         border-width: 0 calc(2.6 * var(--px)) calc(2.6 * var(--px)) 0;
         border-radius: 0 0 calc(4 * var(--px)) 0;
       }
@@ -1664,7 +1759,7 @@
       .scan-line-light {
         position: absolute;
         left: 0;
-        top: calc(231 * var(--px));
+        top: calc(319 * var(--px));
         width: 100%;
         height: calc(2 * var(--px));
         border-radius: 999px;
@@ -1684,37 +1779,13 @@
         filter: blur(calc(12.75 * var(--px)));
       }
 
-      .scan-id-mark {
+      .scan-person-mark {
         position: absolute;
-        left: calc(137 * var(--px));
-        top: calc(170 * var(--px));
-        width: calc(102 * var(--px));
-        height: calc(78 * var(--px));
-        border: calc(3 * var(--px)) solid rgba(255, 255, 255, 0.96);
-        border-radius: calc(8 * var(--px));
-      }
-
-      .scan-id-mark::before {
-        content: "";
-        position: absolute;
-        left: calc(11 * var(--px));
-        top: calc(14 * var(--px));
-        width: calc(26 * var(--px));
-        height: calc(26 * var(--px));
-        border: calc(3 * var(--px)) solid #fff;
-        border-radius: 50%;
-      }
-
-      .scan-id-mark::after {
-        content: "";
-        position: absolute;
-        left: calc(50 * var(--px));
-        top: calc(18 * var(--px));
-        width: calc(36 * var(--px));
-        height: calc(7 * var(--px));
-        border-radius: 999px;
-        background: #fff;
-        box-shadow: 0 calc(17 * var(--px)) 0 #fff, calc(-39 * var(--px)) calc(36 * var(--px)) 0 calc(2 * var(--px)) #fff;
+        left: calc(209 * var(--px));
+        top: calc(259 * var(--px));
+        width: calc(103 * var(--px));
+        height: calc(108 * var(--px));
+        overflow: visible;
       }
 
       .scan-bottom-tools {
@@ -1795,7 +1866,7 @@
       .torch-tool {
         position: absolute;
         left: calc(151 * var(--px));
-        top: calc(425 * var(--px));
+        top: calc(513 * var(--px));
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -1808,23 +1879,10 @@
       }
 
       .torch-button {
-        position: relative;
         width: calc(74 * var(--px));
         height: calc(74 * var(--px));
         border-radius: 50%;
         background: rgba(255, 255, 255, 0.3);
-      }
-
-      .torch-button::before {
-        content: "";
-        position: absolute;
-        left: calc(27 * var(--px));
-        top: calc(13 * var(--px));
-        width: calc(20 * var(--px));
-        height: calc(38 * var(--px));
-        border-radius: calc(4 * var(--px)) calc(4 * var(--px)) calc(9 * var(--px)) calc(9 * var(--px));
-        background: #fff;
-        clip-path: polygon(22% 0, 78% 0, 78% 38%, 65% 38%, 65% 100%, 35% 100%, 35% 38%, 22% 38%);
       }
 
       .drug-search-page {
@@ -2526,6 +2584,467 @@
 
       .disease-chip.emphasis {
         background: #bec5cd;
+      }
+
+      .consult-page {
+        display: none;
+        position: absolute;
+        inset: 0;
+        z-index: 6;
+        overflow: hidden;
+        background: #f8f8f9;
+        color: rgba(0, 0, 0, 0.9);
+        font-family: "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      }
+
+      .consult-header {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        height: calc(154 * var(--px));
+        background: #fff;
+        box-shadow: 0 calc(1 * var(--px)) calc(2 * var(--px)) rgba(16, 42, 67, 0.04);
+        border-radius: 0 0 calc(12 * var(--px)) calc(12 * var(--px));
+      }
+
+      .consult-ios {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        height: calc(44 * var(--px));
+        padding: calc(13 * var(--px)) calc(14 * var(--px)) 0 calc(20 * var(--px));
+        background: #fff;
+        color: #1f2024;
+        font-family: "SF Pro Text", "Microsoft YaHei", Arial, sans-serif;
+        font-size: calc(15 * var(--px));
+        font-weight: 600;
+        line-height: calc(18 * var(--px));
+      }
+
+      .consult-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        height: calc(46 * var(--px));
+        padding: calc(10 * var(--px)) calc(16 * var(--px));
+        background: #fff;
+      }
+
+      .consult-back {
+        position: relative;
+        width: calc(22 * var(--px));
+        height: calc(22 * var(--px));
+        padding: 0;
+        border: 0;
+        background: transparent;
+      }
+
+      .consult-back::before {
+        content: "";
+        position: absolute;
+        left: calc(8 * var(--px));
+        top: calc(5 * var(--px));
+        width: calc(9 * var(--px));
+        height: calc(9 * var(--px));
+        border-left: calc(1.83333 * var(--px)) solid #333;
+        border-bottom: calc(1.83333 * var(--px)) solid #333;
+        transform: rotate(45deg);
+      }
+
+      .consult-title {
+        margin: 0;
+        font-size: calc(16 * var(--px));
+        font-weight: 400;
+        line-height: calc(24 * var(--px));
+      }
+
+      .consult-cancel {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: calc(24 * var(--px));
+        padding: calc(5 * var(--px)) calc(12 * var(--px));
+        border: calc(1 * var(--px)) solid #d8dde1;
+        border-radius: calc(8 * var(--px));
+        background: #fff;
+        color: rgba(0, 0, 0, 0.6);
+        font-size: calc(12 * var(--px));
+        line-height: calc(20 * var(--px));
+      }
+
+      .consult-source {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: calc(40 * var(--px));
+        padding: 0 calc(16 * var(--px));
+        gap: calc(10 * var(--px));
+        border-top: calc(1 * var(--px)) solid #e5e8eb;
+        background: #fff;
+      }
+
+      .consult-source-badge {
+        display: inline-grid;
+        height: calc(26 * var(--px));
+        place-items: center;
+        padding: calc(5 * var(--px)) calc(12 * var(--px));
+        border-radius: calc(4 * var(--px));
+        background: #d1e5fe;
+        color: #006ef9;
+        font-size: calc(12 * var(--px));
+        line-height: calc(20 * var(--px));
+      }
+
+      .consult-source-name {
+        color: rgba(0, 0, 0, 0.9);
+        font-size: calc(14 * var(--px));
+        line-height: calc(22 * var(--px));
+      }
+
+      .consult-guide {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: calc(24 * var(--px));
+        gap: calc(4 * var(--px));
+        color: rgba(0, 0, 0, 0.6);
+        font-size: calc(12 * var(--px));
+        line-height: calc(20 * var(--px));
+      }
+
+      .consult-guide::before {
+        content: "⌄";
+        color: #338bfa;
+        font-size: calc(16 * var(--px));
+        line-height: 1;
+      }
+
+      .consult-body {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: calc(154 * var(--px));
+        bottom: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+        padding: calc(16 * var(--px)) calc(8 * var(--px)) 0;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .consult-body::-webkit-scrollbar {
+        display: none;
+      }
+
+      .doctor-message {
+        display: flex;
+        align-items: flex-start;
+        gap: calc(5 * var(--px));
+        margin-bottom: calc(20 * var(--px));
+      }
+
+      .doctor-avatar {
+        width: calc(40 * var(--px));
+        height: calc(40 * var(--px));
+        flex: 0 0 calc(40 * var(--px));
+        border-radius: 50%;
+        background: linear-gradient(180deg, #d9d9d9 0%, #c9d8ec 100%);
+      }
+
+      .doctor-content {
+        display: flex;
+        flex-direction: column;
+        gap: calc(5 * var(--px));
+      }
+
+      .doctor-name {
+        color: rgba(0, 0, 0, 0.6);
+        font-family: Inter, "Microsoft YaHei", Arial, sans-serif;
+        font-size: calc(12 * var(--px));
+        line-height: calc(15 * var(--px));
+        letter-spacing: 0;
+      }
+
+      .doctor-bubble {
+        width: calc(272 * var(--px));
+        min-height: calc(80 * var(--px));
+        padding: calc(10 * var(--px));
+        border-radius: calc(14 * var(--px));
+        background: #fff;
+        color: rgba(0, 0, 0, 0.9);
+        font-size: calc(12 * var(--px));
+        line-height: calc(20 * var(--px));
+      }
+
+      .visit-card-wrap {
+        display: flex;
+        justify-content: flex-end;
+        margin: calc(8 * var(--px)) 0 calc(18 * var(--px));
+        padding-right: calc(43 * var(--px));
+      }
+
+      .visit-card {
+        width: calc(272 * var(--px));
+        height: calc(193 * var(--px));
+        padding: calc(22 * var(--px)) calc(27 * var(--px));
+        border-radius: calc(6 * var(--px));
+        background: linear-gradient(145.89deg, rgba(0, 111, 255, 0.04) 6.11%, rgba(0, 111, 255, 0) 28.73%), #fff;
+        box-shadow: 0 calc(6 * var(--px)) calc(16 * var(--px)) calc(-8 * var(--px)) rgba(16, 42, 67, 0.08), 0 calc(1 * var(--px)) calc(3 * var(--px)) rgba(16, 42, 67, 0.05);
+      }
+
+      .visit-card-title {
+        display: flex;
+        align-items: center;
+        gap: calc(8 * var(--px));
+        margin-bottom: calc(8 * var(--px));
+        color: #000;
+        font-size: calc(16 * var(--px));
+        line-height: calc(24 * var(--px));
+      }
+
+      .visit-card-icon {
+        width: calc(24 * var(--px));
+        height: calc(24 * var(--px));
+        border-radius: calc(5 * var(--px));
+        background: linear-gradient(270deg, #3b92ff 0%, #006ef9 100%);
+      }
+
+      .visit-card-section {
+        margin-top: calc(8 * var(--px));
+      }
+
+      .visit-label {
+        color: rgba(0, 0, 0, 0.4);
+        font-size: calc(12 * var(--px));
+        line-height: calc(20 * var(--px));
+      }
+
+      .visit-value {
+        color: rgba(0, 0, 0, 0.9);
+        font-size: calc(12 * var(--px));
+        line-height: calc(20 * var(--px));
+      }
+
+      .consult-choice {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: calc(42 * var(--px));
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: calc(12 * var(--px));
+      }
+
+      .consult-divider {
+        display: flex;
+        align-items: center;
+        gap: calc(12 * var(--px));
+        color: rgba(0, 0, 0, 0.6);
+        font-size: calc(14 * var(--px));
+        line-height: calc(22 * var(--px));
+      }
+
+      .consult-divider::before,
+      .consult-divider::after {
+        content: "";
+        width: calc(142 * var(--px));
+        height: calc(1 * var(--px));
+        background: #d8dde1;
+      }
+
+      .consult-action {
+        display: grid;
+        width: calc(204 * var(--px));
+        height: calc(56 * var(--px));
+        place-items: center;
+        border-radius: calc(8 * var(--px));
+        font-size: calc(16 * var(--px));
+        line-height: calc(24 * var(--px));
+      }
+
+      .consult-action.secondary {
+        border: calc(1 * var(--px)) solid #99a4b1;
+        background: transparent;
+        color: rgba(0, 0, 0, 0.6);
+        font-weight: 400;
+      }
+
+      .consult-action.primary {
+        border: 0;
+        background: linear-gradient(270deg, #3b92ff 0%, #006ef9 100%);
+        color: #fff;
+        font-weight: 700;
+      }
+
+      .patient-message,
+      .consult-complete-message,
+      .consult-finish-card,
+      .consult-input-box {
+        display: none;
+      }
+
+      .consult-page.is-complete .consult-body {
+        padding-bottom: calc(120 * var(--px));
+      }
+
+      .consult-page.is-complete .consult-choice {
+        display: none;
+      }
+
+      .consult-page.is-complete .patient-message {
+        display: flex;
+      }
+
+      .consult-page.is-complete .consult-complete-message {
+        display: flex;
+      }
+
+      .consult-page.is-complete .consult-finish-card,
+      .consult-page.is-complete .consult-input-box {
+        display: flex;
+      }
+
+      .patient-message {
+        align-items: center;
+        justify-content: flex-end;
+        gap: calc(4 * var(--px));
+        margin: calc(4 * var(--px)) 0 calc(20 * var(--px));
+        padding-right: calc(8 * var(--px));
+      }
+
+      .patient-bubble {
+        display: grid;
+        width: calc(139 * var(--px));
+        height: calc(41 * var(--px));
+        place-items: center;
+        border-radius: calc(8 * var(--px));
+        background: #ebf3ff;
+        color: #000;
+        font-size: calc(12 * var(--px));
+        line-height: calc(20 * var(--px));
+      }
+
+      .patient-avatar {
+        width: calc(40 * var(--px));
+        height: calc(40 * var(--px));
+        border-radius: 50%;
+        background: #d9d9d9;
+      }
+
+      .doctor-bubble.short {
+        min-height: calc(60 * var(--px));
+      }
+
+      .consult-finish-card {
+        position: relative;
+        width: calc(272 * var(--px));
+        height: calc(78 * var(--px));
+        margin: calc(10 * var(--px)) 0 calc(18 * var(--px)) calc(45 * var(--px));
+        flex-direction: column;
+        justify-content: center;
+        padding-left: calc(4 * var(--px));
+        border: calc(1 * var(--px)) solid #d8dde1;
+        border-radius: calc(14 * var(--px));
+        background: linear-gradient(180deg, rgba(199, 231, 255, 0.2) 0%, rgba(255, 255, 255, 0.2) 70%), #fff;
+      }
+
+      .consult-finish-title {
+        color: #344054;
+        font-family: Inter, "Microsoft YaHei", Arial, sans-serif;
+        font-size: calc(20 * var(--px));
+        line-height: calc(24 * var(--px));
+        letter-spacing: 0;
+      }
+
+      .consult-finish-subtitle {
+        margin-top: calc(4 * var(--px));
+        color: rgba(52, 64, 84, 0.56);
+        font-family: Inter, "Microsoft YaHei", Arial, sans-serif;
+        font-size: calc(12 * var(--px));
+        font-weight: 100;
+        line-height: calc(15 * var(--px));
+        letter-spacing: 0;
+      }
+
+      .consult-finish-icon {
+        position: absolute;
+        right: calc(26 * var(--px));
+        top: calc(15 * var(--px));
+        width: calc(51 * var(--px));
+        height: calc(53 * var(--px));
+        border-radius: calc(14 * var(--px));
+        background: linear-gradient(180deg, #dff0ff 0%, #fff 55%, #e7f2ff 100%);
+        box-shadow: inset 0 0 0 calc(1 * var(--px)) rgba(0, 110, 249, 0.18);
+      }
+
+      .consult-finish-icon::before {
+        content: "";
+        position: absolute;
+        left: calc(12 * var(--px));
+        top: calc(15 * var(--px));
+        width: calc(27 * var(--px));
+        height: calc(20 * var(--px));
+        border-left: calc(5 * var(--px)) solid #006ef9;
+        border-bottom: calc(5 * var(--px)) solid #006ef9;
+        transform: rotate(-45deg);
+      }
+
+      .consult-input-box {
+        position: relative;
+        width: calc(350 * var(--px));
+        min-height: calc(96 * var(--px));
+        margin: calc(12 * var(--px)) auto calc(12 * var(--px));
+        flex-direction: column;
+        justify-content: space-between;
+        gap: calc(8 * var(--px));
+        padding: calc(8 * var(--px)) calc(12 * var(--px)) calc(12 * var(--px)) calc(8 * var(--px));
+        border: calc(1 * var(--px)) solid #eceef0;
+        border-radius: calc(8 * var(--px));
+        background: rgba(255, 255, 255, 0.8);
+      }
+
+      .consult-input-actions {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        height: calc(24 * var(--px));
+      }
+
+      .consult-outline-action,
+      .consult-send-action {
+        display: grid;
+        height: calc(24 * var(--px));
+        place-items: center;
+        border-radius: calc(6 * var(--px));
+        font-size: calc(12 * var(--px));
+        font-weight: 700;
+        line-height: calc(20 * var(--px));
+      }
+
+      .consult-outline-action {
+        width: calc(62 * var(--px));
+        border: calc(1 * var(--px)) solid #006ef9;
+        background: #fff;
+        color: #006ef9;
+      }
+
+      .consult-send-action {
+        width: calc(54 * var(--px));
+        border: 0;
+        background: linear-gradient(270deg, #3b92ff 0%, #006ef9 100%);
+        color: #fff;
+      }
+
+      .consult-input-placeholder {
+        width: 100%;
+        padding-left: calc(4 * var(--px));
+        color: rgba(0, 0, 0, 0.26);
+        font-size: calc(12 * var(--px));
+        line-height: calc(20 * var(--px));
       }
 
       .bottom-submit {
@@ -3484,11 +4003,15 @@
               <div class="form-row">
                 <span class="form-label">性别</span>
                 <span class="radio-group">
-                  <span class="radio-item"><i class="radio-dot"></i>男</span>
                   <span class="radio-item"><i class="radio-dot"></i>女</span>
+                  <span class="radio-item"><i class="radio-dot"></i>男</span>
                 </span>
               </div>
-              <div class="form-row"><span class="form-label">年龄</span><span class="form-value">请输入用药人年龄</span><span class="unit-select">岁⌄</span></div>
+              <label class="form-row" for="patientAge">
+                <span class="form-label">年龄</span>
+                <input class="form-value age-input" id="patientAge" type="number" min="0" max="120" inputmode="decimal" placeholder="请输入用药人年龄" aria-describedby="guardianAgeRule" />
+                <span class="unit-select">岁⌄</span>
+              </label>
               <div class="form-row"><span class="form-label">证件类型</span><span class="form-value select-value">身份证 ›</span></div>
               <div class="form-row"><span class="form-label">身份证号</span><span class="form-value">请输入用药人身份证号</span></div>
               <div class="form-row">
@@ -3501,9 +4024,9 @@
             </div>
           </section>
 
-          <section class="guardian-wrap">
+          <section class="guardian-wrap" id="guardianSection" aria-hidden="true">
             <div class="guardian-card">
-              <div class="guardian-title">为保证用药安全，请登记监护人信息并确保在监护下用药</div>
+              <div class="guardian-title" id="guardianAgeRule">为保证用药安全，请登记监护人信息并确保在监护下用药</div>
               <div class="form-row"><span class="form-label">监护人姓名</span><span class="form-value">请输入姓名或手机号搜索用药人</span></div>
               <div class="form-row"><span class="form-label">证件类型</span><span class="form-value select-value">身份证 ›</span></div>
               <div class="form-row"><span class="form-label">身份证号</span><span class="form-value">请输入用药人身份证号</span></div>
@@ -3569,18 +4092,18 @@
 
           <section class="bottom-submit">
             <div class="agree-row"><span class="checkbox"></span><span>我已阅读并同意</span><span class="link-text">《知情同意书》</span></div>
-            <button class="primary-submit" type="button">提交</button>
+            <button class="primary-submit" id="fastSubmit" type="button">提交</button>
           </section>
         </div>
         <section class="scan-page" id="certificateScanPage" aria-label="扫描证件信息">
           <div class="scan-status">
             <span>9:41</span>
-            <span class="scan-status-icons">⌁  Wi-Fi  ▭</span>
+            <span class="scan-status-icons" aria-hidden="true"><i class="scan-signal"></i><i class="scan-wifi"></i><i class="scan-battery"></i></span>
           </div>
           <div class="scan-nav">
             <button class="scan-back" type="button" aria-label="返回问诊表单"></button>
             <h1 class="scan-nav-title">扫描证件信息</h1>
-            <button class="scan-nav-action" type="button" aria-label="扫码记录"></button>
+            <span class="scan-nav-action" aria-hidden="true"></span>
           </div>
           <div class="scan-viewport">
             <div class="scan-box"></div>
@@ -3588,7 +4111,9 @@
             <span class="scan-corner tr"></span>
             <span class="scan-corner bl"></span>
             <span class="scan-corner br"></span>
-            <span class="scan-id-mark" aria-hidden="true"></span>
+            <svg class="scan-person-mark" viewBox="0 0 103 108" fill="none" aria-hidden="true">
+              <path d="M51.5 2C35.2 2 27 14.5 27 31.5c0 8.3-4.5 9.2-4.5 15.5 0 6.1 4.7 10 10.5 11.8-.8 7.5-6.3 10.8-15.4 14.2C7.6 76.7 2 84.5 2 96.5c13.2 7.5 32 9.5 49.5 9.5s36.3-2 49.5-9.5c0-12-5.6-19.8-15.6-23.5-9.1-3.4-14.6-6.7-15.4-14.2 5.8-1.8 10.5-5.7 10.5-11.8 0-6.3-4.5-7.2-4.5-15.5C76 14.5 67.8 2 51.5 2Z" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
             <span class="scan-line-light"></span>
             <div class="scan-bottom-tools">
               <span class="scan-shutter" aria-hidden="true"></span>
@@ -3599,12 +4124,12 @@
         <section class="scan-page" id="drugScanPage" aria-label="扫描药品信息">
           <div class="scan-status">
             <span>9:41</span>
-            <span class="scan-status-icons">⌁  Wi-Fi  ▭</span>
+            <span class="scan-status-icons" aria-hidden="true"><i class="scan-signal"></i><i class="scan-wifi"></i><i class="scan-battery"></i></span>
           </div>
           <div class="scan-nav">
             <button class="scan-back" type="button" aria-label="返回问诊表单"></button>
             <h1 class="scan-nav-title">扫描药品信息</h1>
-            <button class="scan-nav-action" type="button" aria-label="扫码记录"></button>
+            <span class="scan-nav-action" aria-hidden="true"></span>
           </div>
           <div class="scan-viewport">
             <div class="scan-box"></div>
@@ -3613,7 +4138,13 @@
             <span class="scan-corner bl"></span>
             <span class="scan-corner br"></span>
             <span class="scan-line-light"></span>
-            <span class="torch-tool"><i class="torch-button"></i><span>轻触点亮</span></span>
+            <span class="torch-tool">
+              <svg class="torch-button" viewBox="0 0 74 74" fill="none" aria-hidden="true">
+                <path d="M22 13.5h30c1.8 0 2.9 1.9 2 3.5l-9.5 17.2v21.3c0 2-1.6 3.6-3.6 3.6h-7.8c-2 0-3.6-1.6-3.6-3.6V34.2L20 17c-.9-1.6.2-3.5 2-3.5Z" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M37 39v6" stroke="white" stroke-width="4" stroke-linecap="round" />
+              </svg>
+              <span>轻触点亮</span>
+            </span>
           </div>
         </section>
         <section class="drug-search-page" id="drugSearchPage" aria-label="搜索所需药品">
@@ -3783,6 +4314,76 @@
             </div>
           </section>
         </section>
+        <section class="consult-page" id="consultPage" aria-label="图文问诊">
+          <header class="consult-header">
+            <div class="consult-ios">
+              <span>9:41</span>
+              <span>⌁ Wi-Fi ▭</span>
+            </div>
+            <div class="consult-nav">
+              <button class="consult-back" id="consultBack" type="button" aria-label="返回"></button>
+              <h1 class="consult-title">图文问诊</h1>
+              <button class="consult-cancel" id="consultCancel" type="button">取消问诊</button>
+            </div>
+            <div class="consult-source">
+              <span class="consult-source-badge">处方来源</span>
+              <span class="consult-source-name">武汉好药师大药房南岸店</span>
+            </div>
+            <div class="consult-guide">下拉查看用药指导</div>
+          </header>
+          <main class="consult-body">
+            <section class="doctor-message">
+              <span class="doctor-avatar"></span>
+              <div class="doctor-content">
+                <span class="doctor-name">蒲测试 医生</span>
+                <div class="doctor-bubble">您好，我是蒲测试医生，很高兴为您提供在线问诊及用药咨询服务。我将根据您的病情进一步提供诊疗意见，感谢您的配合。</div>
+              </div>
+            </section>
+            <section class="visit-card-wrap">
+              <div class="visit-card">
+                <div class="visit-card-title"><span class="visit-card-icon"></span><span>就诊信息</span></div>
+                <div class="visit-card-section"><div class="visit-label">患者信息</div><div class="visit-value">黄黄，女，23岁</div></div>
+                <div class="visit-card-section"><div class="visit-label">咨询药品</div><div class="visit-value">草酸艾司西酞普兰片，10mg*7片，2盒 感冒片，0.5g*24片，1盒</div></div>
+                <div class="visit-card-section"><div class="visit-label">是否有过敏史</div><div class="visit-value">无</div></div>
+              </div>
+            </section>
+            <section class="doctor-message">
+              <span class="doctor-avatar"></span>
+              <div class="doctor-content">
+                <span class="doctor-name">蒲测试 医生</span>
+                <div class="doctor-bubble">您已确诊过此疾病并使用过该药品，且无相关禁忌症和不良反应。请问您是否还有信息需要补充?如无，我将依据病情为您开具处方。</div>
+              </div>
+            </section>
+            <section class="consult-choice">
+              <div class="consult-divider">请选择</div>
+              <button class="consult-action secondary" type="button">有信息需要补充</button>
+              <button class="consult-action primary" id="consultNoSupplement" type="button">无信息需要补充</button>
+            </section>
+            <section class="patient-message" aria-label="用户回复">
+              <div class="patient-bubble">无需补充，立即开方</div>
+              <span class="patient-avatar"></span>
+            </section>
+            <section class="doctor-message consult-complete-message">
+              <span class="doctor-avatar"></span>
+              <div class="doctor-content">
+                <span class="doctor-name">蒲测试 医生</span>
+                <div class="doctor-bubble short">您的处方已开出，本次诊疗已结束，请移步收款台购药</div>
+              </div>
+            </section>
+            <section class="consult-finish-card" aria-label="问诊完成">
+              <div class="consult-finish-title">问诊完成</div>
+              <div class="consult-finish-subtitle">点击打印处方</div>
+              <span class="consult-finish-icon"></span>
+            </section>
+            <section class="consult-input-box" aria-label="聊天输入框">
+              <div class="consult-input-actions">
+                <button class="consult-outline-action" type="button">快捷回复</button>
+                <button class="consult-send-action" type="button">发送</button>
+              </div>
+              <div class="consult-input-placeholder">输入回复内容，或点击上方AI推荐快速填充...</div>
+            </section>
+          </main>
+        </section>
         <nav class="tabbar" aria-label="底部导航">
           <div class="tabbar-item active" id="homeTab" role="button" tabindex="0">
             <span class="tabbar-icon home"></span>
@@ -3803,12 +4404,19 @@
       const drugTypeClose = document.getElementById("drugTypeClose");
       const westernInquiry = document.getElementById("westernInquiry");
       const chineseInquiry = document.getElementById("chineseInquiry");
+      const patientAge = document.getElementById("patientAge");
+      const guardianSection = document.getElementById("guardianSection");
       const fastBack = document.getElementById("fastBack");
       const diseaseSearchTrigger = document.getElementById("diseaseSearchTrigger");
       const diseaseBack = document.getElementById("diseaseBack");
       const diseaseSearchInput = document.getElementById("diseaseSearchInput");
       const diseaseSearchClear = document.getElementById("diseaseSearchClear");
       const diseaseSearchSubmit = document.getElementById("diseaseSearchSubmit");
+      const fastSubmit = document.getElementById("fastSubmit");
+      const consultPage = document.getElementById("consultPage");
+      const consultBack = document.getElementById("consultBack");
+      const consultCancel = document.getElementById("consultCancel");
+      const consultNoSupplement = document.getElementById("consultNoSupplement");
       const requiredDrugTrigger = document.getElementById("requiredDrugTrigger");
       const fastDrugCard = document.getElementById("fastDrugCard");
       const certificateScanTrigger = document.getElementById("certificateScanTrigger");
@@ -3847,6 +4455,11 @@
         phoneScreen?.classList.remove("view-disease");
       };
 
+      const closeConsult = () => {
+        phoneScreen?.classList.remove("view-consult");
+        consultPage?.classList.remove("is-complete");
+      };
+
       const resetDrugSearch = () => {
         drugSearchPage?.classList.remove("has-results", "has-product-list", "has-selected", "has-no-results");
         if (drugSearchInput) drugSearchInput.value = "";
@@ -3857,6 +4470,7 @@
         closeScan();
         closeDrugSearch();
         closeDiseaseSearch();
+        closeConsult();
         phoneScreen?.classList.remove("view-mine", "view-fast", "child-inquiry");
         homeTab?.classList.add("active");
         mineTab?.classList.remove("active");
@@ -3867,22 +4481,32 @@
         closeScan();
         closeDrugSearch();
         closeDiseaseSearch();
+        closeConsult();
         phoneScreen?.classList.remove("view-fast", "child-inquiry");
         phoneScreen?.classList.add("view-mine");
         mineTab?.classList.add("active");
         homeTab?.classList.remove("active");
       };
 
-      const showFastInquiry = (isChild = false) => {
+      const showFastInquiry = () => {
         closeDrugType();
         closeScan();
         closeDrugSearch();
         closeDiseaseSearch();
+        closeConsult();
         phoneScreen?.classList.remove("view-mine");
         phoneScreen?.classList.add("view-fast");
-        phoneScreen?.classList.toggle("child-inquiry", isChild);
+        syncGuardianByAge();
         homeTab?.classList.remove("active");
         mineTab?.classList.remove("active");
+      };
+
+      const syncGuardianByAge = () => {
+        const rawAge = patientAge?.value.trim() || "";
+        const age = Number(rawAge);
+        const needsGuardian = rawAge !== "" && Number.isFinite(age) && age >= 0 && age <= 6;
+        phoneScreen?.classList.toggle("child-inquiry", needsGuardian);
+        guardianSection?.setAttribute("aria-hidden", String(!needsGuardian));
       };
 
       const showScan = (page) => {
@@ -3890,6 +4514,7 @@
         closeScan();
         closeDrugSearch();
         closeDiseaseSearch();
+        closeConsult();
         phoneScreen?.classList.add("view-fast", "view-scan");
         page?.classList.add("is-active");
       };
@@ -3898,6 +4523,7 @@
         closeDrugType();
         closeScan();
         closeDiseaseSearch();
+        closeConsult();
         resetDrugSearch();
         phoneScreen?.classList.add("view-fast", "view-drug-search");
       };
@@ -3906,7 +4532,24 @@
         closeDrugType();
         closeScan();
         closeDrugSearch();
+        closeConsult();
         phoneScreen?.classList.add("view-fast", "view-disease");
+      };
+
+      const showConsult = () => {
+        closeDrugType();
+        closeScan();
+        closeDrugSearch();
+        closeDiseaseSearch();
+        consultPage?.classList.remove("is-complete");
+        const consultBody = consultPage?.querySelector(".consult-body");
+        if (consultBody) consultBody.scrollTop = 0;
+        phoneScreen?.classList.remove("view-mine");
+        phoneScreen?.classList.add("view-fast", "view-consult");
+      };
+
+      const showConsultComplete = () => {
+        consultPage?.classList.add("is-complete");
       };
 
       const showIbuprofenResults = () => {
@@ -3965,8 +4608,9 @@
       mineTab?.addEventListener("click", showMine);
 
       drugTypeClose?.addEventListener("click", closeDrugType);
-      westernInquiry?.addEventListener("click", () => showFastInquiry(false));
-      chineseInquiry?.addEventListener("click", () => showFastInquiry(true));
+      westernInquiry?.addEventListener("click", showFastInquiry);
+      chineseInquiry?.addEventListener("click", showFastInquiry);
+      patientAge?.addEventListener("input", syncGuardianByAge);
       requiredDrugTrigger?.addEventListener("click", showDrugSearch);
       diseaseSearchTrigger?.addEventListener("click", showDiseaseSearch);
       diseaseBack?.addEventListener("click", closeDiseaseSearch);
@@ -3982,6 +4626,13 @@
       diseaseSearchClear?.addEventListener("click", () => {
         if (diseaseSearchInput) diseaseSearchInput.value = "";
       });
+      fastSubmit?.addEventListener("click", showConsult);
+      consultNoSupplement?.addEventListener("click", showConsultComplete);
+      consultBack?.addEventListener("click", () => {
+        phoneScreen?.classList.remove("view-consult");
+        consultPage?.classList.remove("is-complete");
+      });
+      consultCancel?.addEventListener("click", showHome);
       certificateScanTrigger?.addEventListener("click", () => showScan(certificateScanPage));
       drugScanTrigger?.addEventListener("click", () => showScan(drugScanPage));
       drugSearchScanTrigger?.addEventListener("click", () => showScan(drugScanPage));
