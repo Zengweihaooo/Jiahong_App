@@ -3386,6 +3386,16 @@
         border-radius: calc(4 * var(--px));
       }
 
+      .checkbox.is-checked {
+        display: grid;
+        place-items: center;
+        border-color: #006ef9;
+        background: #006ef9;
+        color: #fff;
+      }
+
+      .checkbox.is-checked::after { content: "✓"; font-size: calc(11 * var(--px)); }
+
       .link-text {
         color: #006ef9;
       }
@@ -3850,7 +3860,7 @@
       .drug-type-page {
         position: absolute;
         inset: 0;
-        z-index: 6;
+        z-index: 40;
         display: none;
         background: rgba(0, 0, 0, 0.45);
       }
@@ -3877,6 +3887,7 @@
         height: calc(22 * var(--px));
         margin: 0;
         color: #1f2329;
+        font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
         font-size: calc(16 * var(--px));
         font-weight: 400;
         line-height: calc(22 * var(--px));
@@ -3892,7 +3903,9 @@
         border-radius: calc(4 * var(--px));
         background: #fff;
         color: #1f2329;
+        font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
         text-align: left;
+        cursor: pointer;
       }
 
       .drug-type-card.western {
@@ -3912,6 +3925,7 @@
         font-size: calc(16 * var(--px));
         font-weight: 700;
         line-height: calc(22 * var(--px));
+        z-index: 1;
       }
 
       .drug-type-desc {
@@ -3921,6 +3935,7 @@
         color: #969696;
         font-size: calc(12 * var(--px));
         line-height: calc(22 * var(--px));
+        z-index: 1;
       }
 
       .drug-type-sub {
@@ -3930,60 +3945,32 @@
         color: #969696;
         font-size: calc(12 * var(--px));
         line-height: calc(22 * var(--px));
+        z-index: 1;
       }
 
       .drug-illu {
         position: absolute;
-        right: calc(12 * var(--px));
-        top: calc(20 * var(--px));
-        width: calc(74 * var(--px));
-        height: calc(50 * var(--px));
+        left: calc(8 * var(--px));
+        top: calc(-1 * var(--px));
+        width: calc(243 * var(--px));
+        height: calc(89 * var(--px));
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        pointer-events: none;
       }
 
       .drug-illu::before,
       .drug-illu::after {
-        content: "";
-        position: absolute;
+        content: none;
       }
 
-      .drug-illu.western::before {
-        left: calc(6 * var(--px));
-        top: calc(2 * var(--px));
-        width: calc(61 * var(--px));
-        height: calc(25 * var(--px));
-        background: linear-gradient(180deg, #b7e7fc 0%, #148ffe 100%);
-        border-radius: calc(18 * var(--px));
-        transform: rotate(9deg);
+      .drug-illu.western {
+        background-image: url("assets/figma-consult-type/western-consult.png");
       }
 
-      .drug-illu.western::after {
-        right: calc(9 * var(--px));
-        bottom: calc(4 * var(--px));
-        width: calc(6 * var(--px));
-        height: calc(6 * var(--px));
-        background: #fff;
-        border-radius: 50%;
-        box-shadow: calc(-14 * var(--px)) calc(-11 * var(--px)) 0 rgba(89, 170, 255, 0.22);
-      }
-
-      .drug-illu.chinese::before {
-        right: calc(8 * var(--px));
-        top: calc(5 * var(--px));
-        width: calc(58 * var(--px));
-        height: calc(20 * var(--px));
-        background: linear-gradient(180deg, rgba(199, 254, 231, 0.85) 0%, rgba(24, 204, 113, 0.85) 100%);
-        border-radius: calc(16 * var(--px));
-        transform: rotate(-7deg);
-      }
-
-      .drug-illu.chinese::after {
-        right: calc(8 * var(--px));
-        bottom: calc(0 * var(--px));
-        width: calc(22 * var(--px));
-        height: calc(22 * var(--px));
-        background: rgba(217, 217, 217, 0.2);
-        border-radius: 50%;
-        box-shadow: inset calc(4 * var(--px)) calc(-5 * var(--px)) 0 calc(-3 * var(--px)) #fff;
+      .drug-illu.chinese {
+        background-image: url("assets/figma-consult-type/chinese-consult.png");
       }
 
       .drug-type-close {
@@ -3994,35 +3981,546 @@
         height: calc(32 * var(--px));
         padding: 0;
         border: 0;
-        background: transparent;
+        background: transparent url("assets/figma-consult-type/close.svg") center / 100% 100% no-repeat;
         cursor: pointer;
       }
 
       .drug-type-close::before,
       .drug-type-close::after {
-        content: "";
+        content: none;
+      }
+
+      /* Shared APP chrome and interaction states */
+      .global-status-bar {
+        position: absolute;
+        inset: 0 0 auto;
+        z-index: 30;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: calc(32 * var(--px));
+        padding: calc(10 * var(--px)) calc(18 * var(--px)) 0;
+        background: rgba(255, 255, 255, 0.94);
+        color: #16181d;
+        font-family: "SF Pro Text", "PingFang SC", sans-serif;
+        font-size: calc(13 * var(--px));
+        font-weight: 700;
+        line-height: calc(18 * var(--px));
+        backdrop-filter: blur(calc(12 * var(--px)));
+        box-shadow: 0 calc(1 * var(--px)) 0 rgba(16, 42, 67, 0.05);
+      }
+
+      .app-page > .status-bar,
+      .mine-page .status-bar,
+      .fast-ios,
+      .scan-status,
+      .disease-ios,
+      .consult-ios {
+        display: none !important;
+      }
+
+      .app-page,
+      .mine-page,
+      .fast-page,
+      .scan-page,
+      .disease-page,
+      .consult-page {
+        padding-top: calc(32 * var(--px));
+      }
+
+      .drug-search-page {
+        top: calc(32 * var(--px));
+      }
+
+      .form-row {
+        position: relative;
+        min-width: 0;
+      }
+
+      .form-row.is-invalid {
+        background: #fff6f5;
+      }
+
+      .form-row.is-invalid::after {
+        content: attr(data-error);
+        position: absolute;
+        right: calc(16 * var(--px));
+        bottom: calc(1 * var(--px));
+        color: #e23d32;
+        font-size: calc(9 * var(--px));
+        line-height: calc(12 * var(--px));
+      }
+
+      .form-row.is-invalid .form-input,
+      .form-row.is-invalid .patient-selector {
+        color: #d92d20;
+      }
+
+      .patient-selector {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow: hidden;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: rgba(0, 0, 0, 0.32);
+        font: inherit;
+        font-size: calc(14 * var(--px));
+        line-height: calc(22 * var(--px));
+        text-align: right;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .patient-selector.has-value { color: rgba(0, 0, 0, 0.9); }
+      .selection-summary { margin-left: auto; color: #7b8491; font-size: calc(12 * var(--px)); font-weight: 400; }
+      .fast-line-card.is-invalid { box-shadow: inset 0 0 0 calc(1 * var(--px)) #e23d32; }
+      button.link-text { padding: 0; border: 0; background: transparent; font: inherit; }
+      .drug-tag, .clear-history, .link-text, button, label[for] { cursor: pointer; }
+
+      .picker-overlay {
+        display: none;
+        position: absolute;
+        inset: calc(32 * var(--px)) 0 0;
+        z-index: 28;
+        align-items: flex-end;
+        background: rgba(25, 35, 48, 0.46);
+      }
+
+      .picker-overlay.is-open { display: flex; }
+
+      .picker-sheet {
+        width: 100%;
+        max-height: 72%;
+        overflow-y: auto;
+        padding: calc(10 * var(--px)) calc(16 * var(--px)) calc(22 * var(--px));
+        border-radius: calc(16 * var(--px)) calc(16 * var(--px)) 0 0;
+        background: #fff;
+      }
+
+      .picker-handle {
+        display: block;
+        width: calc(40 * var(--px));
+        height: calc(4 * var(--px));
+        margin: 0 auto calc(14 * var(--px));
+        border-radius: 99px;
+        background: #d8dde5;
+      }
+
+      .picker-title { margin: 0 0 calc(12 * var(--px)); font-size: calc(17 * var(--px)); }
+
+      .patient-option {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        padding: calc(13 * var(--px)) 0;
+        border: 0;
+        border-bottom: calc(1 * var(--px)) solid #eef1f4;
+        background: #fff;
+        color: #222;
+        text-align: left;
+      }
+
+      .patient-option strong { display: block; font-size: calc(14 * var(--px)); }
+      .patient-option small { display: block; margin-top: calc(4 * var(--px)); color: #7b8491; font-size: calc(11 * var(--px)); }
+      .patient-option::after { content: "›"; color: #9aa3af; font-size: calc(22 * var(--px)); }
+
+      .upload-proof { height: auto; min-height: calc(142 * var(--px)); }
+      .upload-box input {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        pointer-events: auto;
+        cursor: pointer;
+      }
+
+      .upload-grid { display: flex; flex-wrap: wrap; gap: calc(8 * var(--px)); margin-top: calc(10 * var(--px)); }
+      .upload-grid .upload-box { flex: 0 0 auto; margin-top: 0; }
+      .upload-preview {
+        position: relative;
+        width: calc(80 * var(--px));
+        height: calc(80 * var(--px));
+        overflow: hidden;
+        border-radius: calc(5 * var(--px));
+        background: #eef2f6;
+      }
+      .upload-preview img { width: 100%; height: 100%; object-fit: cover; }
+      .upload-remove {
+        position: absolute;
+        right: calc(3 * var(--px));
+        top: calc(3 * var(--px));
+        z-index: 3;
+        display: grid;
+        width: calc(18 * var(--px));
+        height: calc(18 * var(--px));
+        place-items: center;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: rgba(18, 24, 33, 0.75);
+        color: #fff;
+        font-size: calc(12 * var(--px));
+      }
+      .upload-status { width: 100%; color: #617080; font-size: calc(10 * var(--px)); line-height: calc(16 * var(--px)); }
+
+      .pregnancy-row[hidden] { display: none !important; }
+      .fast-history { height: auto; min-height: calc(479 * var(--px)); }
+
+      .disease-result-section[hidden] { display: none; }
+      .disease-chip[aria-pressed="true"] { background: #d9ebff; color: #006ef9; }
+
+      .toast {
         position: absolute;
         left: 50%;
-        top: 50%;
-        width: calc(24 * var(--px));
-        height: calc(2 * var(--px));
-        background: #fff;
-        border-radius: calc(2 * var(--px));
-        transform-origin: center;
+        bottom: calc(82 * var(--px));
+        z-index: 40;
+        max-width: 82%;
+        padding: calc(10 * var(--px)) calc(14 * var(--px));
+        border-radius: calc(8 * var(--px));
+        background: rgba(22, 27, 34, 0.9);
+        color: #fff;
+        font-size: calc(12 * var(--px));
+        line-height: calc(18 * var(--px));
+        text-align: center;
+        opacity: 0;
+        pointer-events: none;
+        transform: translate(-50%, calc(8 * var(--px)));
+        transition: 0.18s ease;
+      }
+      .toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
+
+      .consult-header { height: calc(122 * var(--px)); }
+      .consult-body {
+        top: calc(154 * var(--px));
+        bottom: calc(94 * var(--px));
+        padding-bottom: calc(20 * var(--px)) !important;
+      }
+      .consult-choice { position: relative; bottom: auto; margin: calc(12 * var(--px)) 0 calc(20 * var(--px)); }
+      .consult-input-box,
+      .consult-page.is-replied .consult-input-box,
+      .consult-page.is-complete .consult-input-box {
+        position: absolute;
+        left: calc(8 * var(--px));
+        right: calc(8 * var(--px));
+        bottom: 0;
+        z-index: 4;
+        display: flex;
+        width: auto;
+        min-height: calc(82 * var(--px));
+        margin: 0 0 calc(8 * var(--px));
+        padding: calc(8 * var(--px));
+        background: rgba(255, 255, 255, 0.96);
+        box-shadow: 0 calc(-6 * var(--px)) calc(20 * var(--px)) rgba(24, 45, 75, 0.08);
+        backdrop-filter: blur(calc(10 * var(--px)));
+      }
+      .consult-message-input {
+        width: 100%;
+        min-height: calc(34 * var(--px));
+        max-height: calc(60 * var(--px));
+        resize: none;
+        overflow-y: auto;
+        padding: calc(7 * var(--px)) calc(9 * var(--px));
+        border: calc(1 * var(--px)) solid #e4e8ee;
+        border-radius: calc(7 * var(--px));
+        outline: 0;
+        background: #f7f8fa;
+        color: #222;
+        font: inherit;
+        font-size: calc(12 * var(--px));
+        line-height: calc(18 * var(--px));
+      }
+      .consult-input-actions { height: calc(26 * var(--px)); }
+      .consult-send-action:disabled { background: #c8d0da; cursor: default; }
+      .patient-bubble { width: auto; max-width: calc(255 * var(--px)); height: auto; min-height: calc(41 * var(--px)); padding: calc(9 * var(--px)) calc(12 * var(--px)); overflow-wrap: anywhere; }
+      .doctor-content { min-width: 0; }
+      .doctor-bubble { width: min(calc(272 * var(--px)), calc(100cqw - calc(61 * var(--px)))); overflow-wrap: anywhere; word-break: break-word; }
+      .visit-card { height: auto; min-height: calc(193 * var(--px)); }
+      .visit-card-wrap { align-items: flex-start; }
+      .visit-value, .consult-source-name, .form-value, .proof-note { overflow-wrap: anywhere; word-break: break-word; }
+
+      /* Figma 1566:17499 — home screen fidelity layer */
+      .phone-screen:not(.view-mine):not(.view-fast) .global-status-bar {
+        background: linear-gradient(180deg, rgba(214, 234, 255, 0.98), rgba(220, 237, 255, 0.94));
+        box-shadow: none;
+        backdrop-filter: none;
       }
 
-      .drug-type-close::before {
-        transform: translate(-50%, -50%) rotate(45deg);
+      .app-page {
+        background: linear-gradient(180deg, #d6eaff 0%, #edf5ff 8%, #f5f8ff 23%, #f7faff 100%);
       }
 
-      .drug-type-close::after {
-        transform: translate(-50%, -50%) rotate(-45deg);
+      .quick {
+        background-color: rgba(255, 255, 255, 0.72);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        box-shadow: 0 calc(2 * var(--px)) calc(8 * var(--px)) rgba(42, 100, 200, 0.06);
       }
+
+      .quick:nth-child(1) { background-image: url("./assets/figma-home-v2/quick-bell.png"); }
+      .quick:nth-child(2) { background-image: url("./assets/figma-home-v2/quick-people.png"); }
+      .quick:nth-child(3) { background-image: url("./assets/figma-home-v2/quick-qr.png"); }
+      .quick .line-icon { display: none; }
+
+      .entry-card.video { background: linear-gradient(135deg, #4558f2 0%, #4c61f8 100%); }
+      .entry-card.text { background: linear-gradient(135deg, #55cda8 0%, #32bc90 100%); }
+
+      .round-icon {
+        background-color: transparent !important;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+
+      .round-icon::before,
+      .round-icon::after { display: none; }
+      .round-icon.gynecology { background-image: url("./assets/figma-home-v2/dept-gynecology.png"); }
+      .round-icon.pediatrics { background-image: url("./assets/figma-home-v2/dept-pediatrics.png"); }
+      .round-icon.chinese { background-image: url("./assets/figma-home-v2/dept-chinese.png"); }
+      .round-icon.surgery { background-image: url("./assets/figma-home-v2/dept-surgery.png"); }
+
+      .illu {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+      .illu::before,
+      .illu::after { display: none; }
+      .illu.doctor { background-image: url("./assets/figma-home-v2/feature-doctor.png"); }
+      .illu.prescription { background-image: url("./assets/figma-home-v2/feature-prescription.png"); }
+      .illu.dispatch { background-image: url("./assets/figma-home-v2/feature-dispatch.png"); }
+
+      .avatar.has-photo {
+        background-color: #e9eef4;
+        background-image: var(--avatar-image);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      .avatar.has-photo::before,
+      .avatar.has-photo::after { display: none; }
+
+      .doctor-item,
+      .pharmacist-item {
+        background: #f9fbff;
+        border-color: #e9edf3;
+        box-shadow: 0 calc(2 * var(--px)) calc(8 * var(--px)) rgba(42, 100, 200, 0.035);
+      }
+
+      .stats strong { color: #2a9df8; font-weight: 700; }
+
+      /* Figma 1566:17847 — mine screen fidelity layer */
+      .phone-screen.view-mine .global-status-bar {
+        height: calc(31.5 * var(--px));
+        padding: calc(12 * var(--px)) calc(20 * var(--px)) 0;
+        background: #d6eaff;
+        box-shadow: none;
+        backdrop-filter: none;
+        font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+        font-size: calc(13 * var(--px));
+        line-height: calc(19.5 * var(--px));
+      }
+
+      .phone-screen.view-mine .global-status-bar .signal,
+      .phone-screen.view-mine .global-status-bar .wifi,
+      .phone-screen.view-mine .global-status-bar .battery {
+        border: 0;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+      }
+
+      .phone-screen.view-mine .global-status-bar .signal {
+        background-image: url("./assets/figma-mine/status-signal.svg");
+      }
+
+      .phone-screen.view-mine .global-status-bar .wifi {
+        background-image: url("./assets/figma-mine/status-wifi.svg");
+      }
+
+      .phone-screen.view-mine .global-status-bar .battery {
+        background-image: url("./assets/figma-mine/status-battery.svg");
+      }
+
+      .phone-screen.view-mine .global-status-bar .signal span,
+      .phone-screen.view-mine .global-status-bar .wifi::before,
+      .phone-screen.view-mine .global-status-bar .wifi::after,
+      .phone-screen.view-mine .global-status-bar .battery::before,
+      .phone-screen.view-mine .global-status-bar .battery::after {
+        display: none;
+      }
+
+      .mine-page,
+      .mine-main {
+        background: linear-gradient(180deg, #d6eaff 0%, #eef5ff 8.6831%, #f4f8ff 19.296%, #f7faff 100%);
+        font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+      }
+
+      .mine-avatar {
+        background-color: #d8ecff;
+        background-image: url("./assets/figma-mine/avatar.png");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        box-shadow: 0 calc(2 * var(--px)) calc(4 * var(--px)) rgba(42, 100, 200, 0.15);
+      }
+
+      .mine-avatar::before,
+      .mine-avatar::after {
+        display: none;
+      }
+
+      .mine-action {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+      }
+
+      .mine-action::before,
+      .mine-action::after {
+        display: none;
+      }
+
+      .mine-action.bell { background-image: url("./assets/figma-mine/action-headset.svg"); }
+      .mine-action.message { background-image: url("./assets/figma-mine/action-message.svg"); }
+      .mine-action.settings { background-image: url("./assets/figma-mine/action-settings.svg"); }
+
+      .mine-card {
+        box-shadow: 0 calc(2 * var(--px)) calc(6 * var(--px)) rgba(42, 100, 200, 0.07);
+      }
+
+      .service-icon {
+        background-color: #fff;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+
+      .service-icon::before,
+      .service-icon::after {
+        display: none;
+      }
+
+      .service-icon.record {
+        background-image: url("./assets/figma-mine/service-record.svg");
+        background-size: calc(33 * var(--px)) calc(28 * var(--px));
+      }
+
+      .service-icon.print {
+        background-image: url("./assets/figma-mine/service-print.svg");
+        background-size: calc(38 * var(--px)) calc(30 * var(--px));
+      }
+
+      .service-icon.chat {
+        background-image: url("./assets/figma-mine/service-chat.svg");
+        background-size: calc(35 * var(--px)) calc(27.61 * var(--px));
+      }
+
+      .service-icon.alert {
+        background-image: url("./assets/figma-mine/service-alert.svg");
+        background-size: calc(32.44 * var(--px)) calc(28 * var(--px));
+      }
+
+      .service-icon.pharmacist {
+        background-image: url("./assets/figma-mine/service-pharmacist.svg");
+        background-size: calc(32.79 * var(--px)) calc(31 * var(--px));
+      }
+
+      .service-icon.new {
+        background-image: url("./assets/figma-mine/service-new.svg");
+        background-size: calc(41 * var(--px)) calc(27 * var(--px));
+      }
+
+      .more-card {
+        box-shadow: 0 calc(2 * var(--px)) calc(6 * var(--px)) rgba(42, 100, 200, 0.07);
+      }
+
+      .more-row {
+        position: relative;
+      }
+
+      .more-row + .more-row {
+        border-top: 0;
+      }
+
+      .more-row + .more-row::before {
+        content: "";
+        position: absolute;
+        left: calc(52 * var(--px));
+        right: 0;
+        top: 0;
+        height: calc(1 * var(--px));
+        background: #eef6ff;
+      }
+
+      .more-icon {
+        background-color: #eef6ff;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: calc(19 * var(--px)) calc(19 * var(--px));
+      }
+
+      .more-icon::before,
+      .more-icon::after {
+        display: none;
+      }
+
+      .more-icon.order { background-image: url("./assets/figma-mine/more-order.svg"); }
+      .more-icon.setting { background-image: url("./assets/figma-mine/more-setting.svg"); }
+      .more-icon.info { background-image: url("./assets/figma-mine/more-info.svg"); }
+      .more-icon.register { background-image: url("./assets/figma-mine/more-register.svg"); }
+      .more-icon.service { background-image: url("./assets/figma-mine/more-service.svg"); }
+      .more-icon.flow { background-image: url("./assets/figma-mine/more-flow.svg"); }
+      .more-icon.erp { background-image: url("./assets/figma-mine/more-erp.svg"); }
+
+      .chevron {
+        align-self: stretch;
+        background: url("./assets/figma-mine/more-chevron.svg") center / calc(16 * var(--px)) calc(16 * var(--px)) no-repeat;
+        color: transparent;
+        font-size: 0;
+      }
+
+      .phone-screen.view-mine .tabbar {
+        border-top-width: calc(0.8 * var(--px));
+        box-shadow: 0 calc(1 * var(--px)) calc(3 * var(--px)) rgba(16, 42, 67, 0.05),
+          0 calc(6 * var(--px)) calc(16 * var(--px)) calc(-8 * var(--px)) rgba(16, 42, 67, 0.08);
+      }
+
+      .phone-screen.view-mine .tabbar-item {
+        gap: calc(3 * var(--px));
+        font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+        font-size: calc(12 * var(--px));
+        line-height: calc(20 * var(--px));
+      }
+
+      .phone-screen.view-mine .tabbar-icon {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+      }
+
+      .phone-screen.view-mine .tabbar-icon::before,
+      .phone-screen.view-mine .tabbar-icon::after {
+        display: none;
+      }
+
+      .phone-screen.view-mine .tabbar-icon.home { background-image: url("./assets/figma-mine/nav-home.svg"); }
+      .phone-screen.view-mine .tabbar-icon.me { background-image: url("./assets/figma-mine/nav-mine.svg"); }
     </style>
   </head>
   <body>
     <main class="phone-stage" aria-label="嘉虹健康手机页面展示">
       <div class="phone-screen">
+        <section class="global-status-bar" aria-label="系统状态栏">
+          <span id="globalClock">9:41</span>
+          <span class="status-icons" aria-hidden="true">
+            <span class="signal"><span></span><span></span><span></span><span></span></span>
+            <span class="wifi"></span><span class="battery"></span>
+          </span>
+        </section>
         <div class="app-page">
           <section class="status-bar">
             <div>9:41</div>
@@ -4127,34 +4625,28 @@
               </div>
               <div class="doctor-list">
                 <article class="doctor-item">
-                  <span class="avatar" style="--avatar-bg: #60a5fa"><i class="online"></i></span>
+                  <span class="avatar has-photo" style="--avatar-image: url('./assets/figma-home-v2/doctor-zhang.png')"><i class="online"></i></span>
                   <strong class="person-name">张医生</strong>
                   <span class="person-role">主治医师</span>
                   <span class="person-year">12年</span>
                 </article>
                 <article class="doctor-item">
-                  <span class="avatar" style="--avatar-bg: #34d399"><i class="online"></i></span>
+                  <span class="avatar has-photo" style="--avatar-image: url('./assets/figma-home-v2/doctor-li.png')"><i class="online"></i></span>
                   <strong class="person-name">李医生</strong>
                   <span class="person-role">副主任医师</span>
                   <span class="person-year">18年</span>
                 </article>
                 <article class="doctor-item">
-                  <span class="avatar" style="--avatar-bg: #f97316"></span>
+                  <span class="avatar has-photo" style="--avatar-image: url('./assets/figma-home-v2/doctor-wang.png')"></span>
                   <strong class="person-name">王医生</strong>
                   <span class="person-role">主任医师</span>
                   <span class="person-year">25年</span>
                 </article>
                 <article class="doctor-item">
-                  <span class="avatar" style="--avatar-bg: #a78bfa"><i class="online"></i></span>
+                  <span class="avatar has-photo" style="--avatar-image: url('./assets/figma-home-v2/doctor-chen.png')"><i class="online"></i></span>
                   <strong class="person-name">陈医生</strong>
                   <span class="person-role">主治医师</span>
                   <span class="person-year">8年</span>
-                </article>
-                <article class="doctor-item">
-                  <span class="avatar" style="--avatar-bg: #fb7185"><i class="online"></i></span>
-                  <strong class="person-name">刘医生</strong>
-                  <span class="person-role">副主任医师</span>
-                  <span class="person-year">15年</span>
                 </article>
               </div>
             </div>
@@ -4168,17 +4660,17 @@
               </div>
               <div class="pharmacist-list">
                 <article class="pharmacist-item">
-                  <span class="avatar large" style="--avatar-bg: #2a9df8"></span>
+                  <span class="avatar large has-photo" style="--avatar-image: url('./assets/figma-home-v2/pharmacist-zhao.png')"></span>
                   <strong class="person-name">赵药师</strong>
                   <span class="person-role">执业药师</span>
                 </article>
                 <article class="pharmacist-item">
-                  <span class="avatar large" style="--avatar-bg: #06c895"></span>
+                  <span class="avatar large has-photo" style="--avatar-image: url('./assets/figma-home-v2/pharmacist-sun.png')"></span>
                   <strong class="person-name">孙药师</strong>
                   <span class="person-role">主管药师</span>
                 </article>
                 <article class="pharmacist-item">
-                  <span class="avatar large" style="--avatar-bg: #ff9a16"></span>
+                  <span class="avatar large has-photo" style="--avatar-image: url('./assets/figma-home-v2/pharmacist-zhou.png')"></span>
                   <strong class="person-name">周药师</strong>
                   <span class="person-role">执业药师</span>
                 </article>
@@ -4188,13 +4680,13 @@
 
           <section class="stats-wrap">
             <div class="stats">
-              <div>累计开具 317,942,739 张处方</div>
-              <div>总共服务 317,819,395 位患者</div>
+              <div>累计开具 <strong>317,942,739</strong> 张处方</div>
+              <div>总共服务 <strong>317,819,395</strong> 位患者</div>
               <div class="copyright">嘉虹健康 copyright © 2018-2026 鄂ICP备2024037712号-2A</div>
             </div>
           </section>
         </div>
-        <div class="mine-page" id="minePage">
+        <div class="mine-page" id="minePage" data-node-id="1566:17847">
           <section class="status-bar">
             <div>9:41</div>
             <div class="status-icons" aria-hidden="true">
@@ -4271,23 +4763,23 @@
             </section>
           </main>
         </div>
-        <section class="drug-type-page" id="drugTypePage" aria-label="请选择问诊药品类型">
-          <div class="drug-type-panel">
-            <h2 class="drug-type-title">请选择问诊药品类型</h2>
-            <button class="drug-type-card western" id="westernInquiry" type="button">
+        <section class="drug-type-page" id="drugTypePage" role="dialog" aria-modal="true" aria-label="请选择问诊药品类型">
+          <div class="drug-type-panel" data-node-id="1622:5073">
+            <h2 class="drug-type-title" data-node-id="1622:5075">请选择问诊药品类型</h2>
+            <button class="drug-type-card western" id="westernInquiry" type="button" data-node-id="1622:5076">
               <span class="drug-type-name">西药问诊</span>
               <span class="drug-type-desc">为您匹配专业西医</span>
               <span class="drug-type-sub">开具中西成药</span>
-              <span class="drug-illu western" aria-hidden="true"></span>
+              <span class="drug-illu western" aria-hidden="true" data-node-id="1622:5099"></span>
             </button>
-            <button class="drug-type-card chinese" id="chineseInquiry" type="button">
+            <button class="drug-type-card chinese" id="chineseInquiry" type="button" data-node-id="1622:5077">
               <span class="drug-type-name">中药问诊</span>
               <span class="drug-type-desc">为您匹配专业中医</span>
               <span class="drug-type-sub">开具中药饮片</span>
-              <span class="drug-illu chinese" aria-hidden="true"></span>
+              <span class="drug-illu chinese" aria-hidden="true" data-node-id="1622:5110"></span>
             </button>
           </div>
-          <button class="drug-type-close" id="drugTypeClose" type="button" aria-label="关闭"></button>
+          <button class="drug-type-close" id="drugTypeClose" type="button" aria-label="关闭" data-node-id="1624:5470"></button>
         </section>
         <div class="fast-page" id="fastPage">
           <section class="fast-ios">
@@ -4311,13 +4803,13 @@
           <section class="fast-section-wrap">
             <div class="fast-card">
               <div class="fast-section-title">基础信息</div>
-              <label class="form-row" for="patientName"><span class="form-label">姓名</span><input class="form-value form-input" id="patientName" type="text" autocomplete="name" placeholder="请输入姓名或手机号搜索用药人" /></label>
+              <div class="form-row" id="patientSelectorRow"><span class="form-label">用药人</span><button class="patient-selector" id="patientSelector" type="button">请选择用药人</button><input id="patientName" type="hidden" /></div>
               <label class="form-row" for="patientPhone"><span class="form-label">手机号</span><input class="form-value form-input" id="patientPhone" type="tel" inputmode="tel" autocomplete="tel" maxlength="11" placeholder="请输入用药人手机号" /></label>
               <div class="form-row">
                 <span class="form-label">性别</span>
-                <span class="radio-group" role="radiogroup" aria-label="性别">
-                  <button class="radio-item" type="button" role="radio" aria-checked="false"><i class="radio-dot"></i>女</button>
-                  <button class="radio-item" type="button" role="radio" aria-checked="false"><i class="radio-dot"></i>男</button>
+                <span class="radio-group" id="genderGroup" role="radiogroup" aria-label="性别">
+                  <button class="radio-item" data-value="female" type="button" role="radio" aria-checked="false"><i class="radio-dot"></i>女</button>
+                  <button class="radio-item" data-value="male" type="button" role="radio" aria-checked="false"><i class="radio-dot"></i>男</button>
                 </span>
               </div>
               <label class="form-row" for="patientAge">
@@ -4343,7 +4835,8 @@
               <label class="form-row" for="guardianName"><span class="form-label">监护人姓名</span><input class="form-value form-input" id="guardianName" type="text" autocomplete="name" placeholder="请输入监护人姓名" /></label>
               <label class="form-row" for="guardianDocumentType"><span class="form-label">证件类型</span><select class="form-value form-select" id="guardianDocumentType"><option>身份证</option><option>护照</option><option>港澳居民居住证</option><option>台湾居民居住证</option></select></label>
               <label class="form-row" for="guardianDocumentNumber"><span class="form-label">证件号码</span><input class="form-value form-input" id="guardianDocumentNumber" type="text" inputmode="text" autocomplete="off" maxlength="18" placeholder="请输入监护人证件号码" /></label>
-              <div class="form-row"><span class="form-label">病例信息</span><span class="form-value select-value">上传相关图片 ›</span></div>
+              <div class="form-row"><span class="form-label">病例信息</span><label class="form-value select-value" for="caseUpload">上传相关图片 ›</label></div>
+              <div class="upload-proof"><p class="proof-note">病例资料（最多5张，单张不超过5MB）</p><div class="upload-grid" id="caseUploadGrid"><label class="upload-box" aria-label="上传病例图片"><input id="caseUpload" type="file" accept="image/jpeg,image/png,image/webp" multiple /></label><span class="upload-status" id="caseUploadStatus">尚未上传</span></div></div>
             </div>
           </section>
 
@@ -4352,12 +4845,12 @@
               <div class="fast-section-title">病史信息</div>
               <div class="upload-proof">
                 <p class="proof-note">复诊凭证（最多上传5张；支持jpg、png格式，单张大小 不超过5M 图片示例）</p>
-                <label class="upload-box" aria-label="上传复诊凭证"><input id="proofUpload" type="file" accept="image/jpeg,image/png" multiple /></label>
+                <div class="upload-grid" id="proofUploadGrid"><label class="upload-box" aria-label="上传复诊凭证"><input id="proofUpload" type="file" accept="image/jpeg,image/png,image/webp" multiple /></label><span class="upload-status" id="proofUploadStatus">尚未上传</span></div>
               </div>
               <div class="form-row"><span class="form-label">过敏史</span><span class="yes-no"><button class="small-pill active" type="button">无</button><button class="small-pill" type="button">有</button></span></div>
               <div class="form-row"><span class="form-label">肝功能异常</span><span class="yes-no"><button class="small-pill active" type="button">无</button><button class="small-pill" type="button">有</button></span></div>
               <div class="form-row"><span class="form-label">肾功能异常</span><span class="yes-no"><button class="small-pill active" type="button">无</button><button class="small-pill" type="button">有</button></span></div>
-              <div class="form-row pregnancy-row">
+              <div class="form-row pregnancy-row" id="pregnancyRow" hidden>
                 <span class="form-label">妊娠哺乳</span>
                 <span class="pregnancy-options"><button class="small-pill active" type="button">无</button><button class="small-pill" type="button">备孕中</button><button class="small-pill" type="button">怀孕中</button><button class="small-pill" type="button">哺乳期</button></span>
               </div>
@@ -4389,7 +4882,7 @@
           </section>
 
           <section class="bottom-submit">
-            <div class="agree-row"><span class="checkbox"></span><span>我已阅读并同意</span><span class="link-text">《知情同意书》</span></div>
+            <div class="agree-row"><button class="checkbox" id="consentCheckbox" type="button" aria-label="同意知情同意书" aria-pressed="false"></button><span>我已阅读并同意</span><button class="link-text" id="consentLink" type="button">《知情同意书》</button></div>
             <button class="primary-submit" id="fastSubmit" type="button">提交</button>
           </section>
         </div>
@@ -4575,6 +5068,11 @@
             <div class="disease-chip-list" id="selectedDiseaseList" aria-live="polite"></div>
             <span class="disease-empty">暂未选择疾病</span>
           </section>
+          <section class="disease-section disease-result-section" id="diseaseResultSection" data-disease-group="search" hidden>
+            <div class="disease-section-title">搜索结果</div>
+            <div class="disease-chip-list" id="diseaseResultList"></div>
+            <span class="disease-empty">疾病库中暂无匹配项</span>
+          </section>
           <section class="disease-section" data-disease-group="available">
             <div class="disease-section-title">可选疾病</div>
             <div class="disease-chip-list">
@@ -4648,9 +5146,9 @@
             <section class="visit-card-wrap">
               <div class="visit-card">
                 <div class="visit-card-title"><span class="visit-card-icon"></span><span>就诊信息</span></div>
-                <div class="visit-card-section"><div class="visit-label">患者信息</div><div class="visit-value">黄黄，女，23岁</div></div>
-                <div class="visit-card-section"><div class="visit-label">咨询药品</div><div class="visit-value">草酸艾司西酞普兰片，10mg*7片，2盒 感冒片，0.5g*24片，1盒</div></div>
-                <div class="visit-card-section"><div class="visit-label">是否有过敏史</div><div class="visit-value">无</div></div>
+                <div class="visit-card-section"><div class="visit-label">患者信息</div><div class="visit-value" id="visitPatientValue">待填写</div></div>
+                <div class="visit-card-section"><div class="visit-label">咨询药品</div><div class="visit-value" id="visitMedicineValue">待选择</div></div>
+                <div class="visit-card-section"><div class="visit-label">线下确诊</div><div class="visit-value" id="visitDiseaseValue">待选择</div></div>
               </div>
             </section>
             <section class="doctor-message">
@@ -4681,14 +5179,14 @@
               <div class="consult-finish-subtitle">点击打印处方</div>
               <span class="consult-finish-icon"></span>
             </section>
-            <section class="consult-input-box" aria-label="聊天输入框">
-              <div class="consult-input-actions">
-                <button class="consult-outline-action" type="button">快捷回复</button>
-                <button class="consult-send-action" type="button">发送</button>
-              </div>
-              <div class="consult-input-placeholder">输入回复内容，或点击上方AI推荐快速填充...</div>
-            </section>
           </main>
+          <section class="consult-input-box" aria-label="聊天输入框">
+            <textarea class="consult-message-input" id="consultMessageInput" rows="1" maxlength="300" placeholder="输入回复内容..."></textarea>
+            <div class="consult-input-actions">
+              <button class="consult-outline-action" id="quickReplyButton" type="button">快捷回复</button>
+              <button class="consult-send-action" id="consultSendButton" type="button" disabled>发送</button>
+            </div>
+          </section>
           <div class="medication-guide-overlay" id="medicationGuideOverlay">
             <section class="medication-guide-panel" aria-label="草酸艾司西酞普兰片用药指导">
               <div class="medication-guide-title-row">
@@ -4721,6 +5219,15 @@
             <span>我的</span>
           </div>
         </nav>
+        <section class="picker-overlay" id="patientPicker" role="dialog" aria-modal="true" aria-label="选择用药人">
+          <div class="picker-sheet">
+            <span class="picker-handle"></span><h2 class="picker-title">选择用药人</h2>
+            <button class="patient-option" type="button" data-patient="0"><span><strong>黄黄（本人）</strong><small>女 · 23岁 · 138****8001</small></span></button>
+            <button class="patient-option" type="button" data-patient="1"><span><strong>陈立（家人）</strong><small>男 · 46岁 · 139****6628</small></span></button>
+            <button class="patient-option" type="button" data-patient="2"><span><strong>陈小满（子女）</strong><small>女 · 5岁 · 137****2190</small></span></button>
+          </div>
+        </section>
+        <div class="toast" id="appToast" role="status" aria-live="polite"></div>
       </div>
       <img class="phone-frame" src="./Picsew_20260616133535_transparent.png" alt="" />
     </main>
@@ -4731,13 +5238,27 @@
       const drugTypeClose = document.getElementById("drugTypeClose");
       const westernInquiry = document.getElementById("westernInquiry");
       const chineseInquiry = document.getElementById("chineseInquiry");
+      const patientSelector = document.getElementById("patientSelector");
+      const patientPicker = document.getElementById("patientPicker");
+      const patientName = document.getElementById("patientName");
+      const patientPhone = document.getElementById("patientPhone");
+      const genderGroup = document.getElementById("genderGroup");
       const patientAge = document.getElementById("patientAge");
       const patientAgeUnit = document.getElementById("patientAgeUnit");
+      const patientDocumentType = document.getElementById("patientDocumentType");
+      const patientDocumentNumber = document.getElementById("patientDocumentNumber");
       const guardianSection = document.getElementById("guardianSection");
+      const guardianName = document.getElementById("guardianName");
+      const guardianDocumentType = document.getElementById("guardianDocumentType");
+      const guardianDocumentNumber = document.getElementById("guardianDocumentNumber");
+      const pregnancyRow = document.getElementById("pregnancyRow");
+      const proofUpload = document.getElementById("proofUpload");
+      const caseUpload = document.getElementById("caseUpload");
       const medicalRemark = document.getElementById("medicalRemark");
       const remarkCounter = document.getElementById("remarkCounter");
       const fastBack = document.getElementById("fastBack");
       const diseaseSearchTrigger = document.getElementById("diseaseSearchTrigger");
+      const diseasePage = document.getElementById("diseasePage");
       const diseaseBack = document.getElementById("diseaseBack");
       const diseaseSearchInput = document.getElementById("diseaseSearchInput");
       const diseaseSearchClear = document.getElementById("diseaseSearchClear");
@@ -4745,7 +5266,10 @@
       const selectedDiseaseList = document.getElementById("selectedDiseaseList");
       const diseaseHistoryList = document.getElementById("diseaseHistoryList");
       const diseaseHistoryClear = document.getElementById("diseaseHistoryClear");
+      const diseaseResultSection = document.getElementById("diseaseResultSection");
+      const diseaseResultList = document.getElementById("diseaseResultList");
       const fastSubmit = document.getElementById("fastSubmit");
+      const consentCheckbox = document.getElementById("consentCheckbox");
       const consultPage = document.getElementById("consultPage");
       const consultBack = document.getElementById("consultBack");
       const consultCancel = document.getElementById("consultCancel");
@@ -4754,6 +5278,12 @@
       const consultGuideToggle = document.getElementById("consultGuideToggle");
       const medicationGuideOverlay = document.getElementById("medicationGuideOverlay");
       const medicationGuideClose = document.getElementById("medicationGuideClose");
+      const consultMessageInput = document.getElementById("consultMessageInput");
+      const consultSendButton = document.getElementById("consultSendButton");
+      const quickReplyButton = document.getElementById("quickReplyButton");
+      const visitPatientValue = document.getElementById("visitPatientValue");
+      const visitMedicineValue = document.getElementById("visitMedicineValue");
+      const visitDiseaseValue = document.getElementById("visitDiseaseValue");
       const requiredDrugTrigger = document.getElementById("requiredDrugTrigger");
       const fastDrugCard = document.getElementById("fastDrugCard");
       const certificateScanTrigger = document.getElementById("certificateScanTrigger");
@@ -4770,13 +5300,40 @@
       const drugSheetConfirm = document.querySelector(".drug-sheet-confirm");
       const drugResultItems = document.querySelectorAll(".drug-result-item");
       const drugProductList = document.getElementById("drugProductList");
-      const drugProductCards = document.querySelectorAll("#drugProductList .drug-product-card");
+      let drugProductCards = document.querySelectorAll("#drugProductList .drug-product-card");
       const fastSelectedDrugList = document.getElementById("fastSelectedDrugList");
       const drugCart = document.getElementById("drugCart");
       const drugCartBadge = document.getElementById("drugCartBadge");
       const drugSheetTip = document.querySelector(".drug-sheet-tip");
       const homeTab = document.getElementById("homeTab");
       const mineTab = document.getElementById("mineTab");
+      const appToast = document.getElementById("appToast");
+      const globalClock = document.getElementById("globalClock");
+      const patients = [
+        { name: "黄黄", relation: "本人", phone: "13800138001", gender: "female", age: 23, id: "420106200303126726" },
+        { name: "陈立", relation: "家人", phone: "13928686628", gender: "male", age: 46, id: "420106198002204815" },
+        { name: "陈小满", relation: "子女", phone: "13799002190", gender: "female", age: 5, id: "420106202105184027" },
+      ];
+      const diseaseCatalog = [
+        "急性上呼吸道感染", "流行性感冒", "扁桃体炎", "咽炎", "慢性咳嗽", "过敏性鼻炎", "支气管炎", "哮喘",
+        "口腔溃疡", "牙龈炎", "口角炎", "腮腺炎", "疖肿", "湿疹", "荨麻疹", "带状疱疹",
+        "高血压", "高脂血症", "2型糖尿病", "低血糖症", "冠心病", "甲状腺结节", "甲状腺功能减退",
+        "胃食管反流", "慢性胃炎", "肠胃炎", "腹泻", "便秘", "痛风", "类风湿关节炎", "静脉曲张", "腱鞘炎", "手足口病"
+      ];
+      const medicineCatalog = [
+        { id: "ibu-tablet", type: "西药", name: "布洛芬缓释片", spec: "0.3g*20片", keywords: "布洛芬 退烧药 止痛" },
+        { id: "ibu-capsule", type: "西药", name: "布洛芬缓释胶囊", spec: "0.3g*24粒", keywords: "布洛芬 退烧药 止痛" },
+        { id: "acetaminophen", type: "西药", name: "对乙酰氨基酚片", spec: "0.5g*12片", keywords: "退烧药 感冒药 发热" },
+        { id: "amoxicillin", type: "西药", name: "阿莫西林胶囊", spec: "0.25g*24粒", keywords: "消炎药 抗生素" },
+        { id: "loratadine", type: "西药", name: "氯雷他定片", spec: "10mg*12片", keywords: "过敏 鼻炎" },
+        { id: "omeprazole", type: "西药", name: "奥美拉唑肠溶胶囊", spec: "20mg*14粒", keywords: "胃药 反酸" },
+        { id: "metformin", type: "西药", name: "盐酸二甲双胍片", spec: "0.5g*30片", keywords: "糖尿病 降糖" },
+        { id: "amlodipine", type: "西药", name: "苯磺酸氨氯地平片", spec: "5mg*14片", keywords: "高血压 降压" },
+        { id: "vitamin-c", type: "西药", name: "维生素C片", spec: "0.1g*100片", keywords: "维生素C 补充" },
+        { id: "ganmao", type: "中成药", name: "感冒灵颗粒", spec: "10g*9袋", keywords: "感冒药 鼻塞 头痛" },
+        { id: "lianhua", type: "中成药", name: "连花清瘟胶囊", spec: "0.35g*24粒", keywords: "感冒药 咳嗽" },
+        { id: "cough", type: "中成药", name: "川贝枇杷膏", spec: "150ml", keywords: "止咳糖浆 咳嗽" },
+      ];
       const selectedProducts = new Map();
       const selectedDiseases = new Set([
         "急性上呼吸道感染",
@@ -4787,6 +5344,131 @@
         "扁桃体炎",
       ]);
       const consultProgressTimers = new Set();
+      let toastTimer = 0;
+
+      const showToast = (message) => {
+        if (!appToast) return;
+        window.clearTimeout(toastTimer);
+        appToast.textContent = message;
+        appToast.classList.add("is-visible");
+        toastTimer = window.setTimeout(() => appToast.classList.remove("is-visible"), 2200);
+      };
+
+      const syncClock = () => {
+        if (!globalClock) return;
+        globalClock.textContent = new Intl.DateTimeFormat("zh-CN", { hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date());
+      };
+      syncClock();
+      window.setInterval(syncClock, 30000);
+
+      const setFieldError = (control, message = "") => {
+        const row = control?.closest?.(".form-row");
+        if (!row) return !message;
+        row.classList.toggle("is-invalid", Boolean(message));
+        if (message) row.dataset.error = message;
+        else delete row.dataset.error;
+        control?.setAttribute?.("aria-invalid", String(Boolean(message)));
+        return !message;
+      };
+
+      const validatePhone = () => {
+        const value = patientPhone?.value.trim() || "";
+        return setFieldError(patientPhone, /^1[3-9]\d{9}$/.test(value) ? "" : "请输入11位有效手机号");
+      };
+
+      const isValidMainlandId = (value) => {
+        const id = value.toUpperCase();
+        if (!/^\d{17}[\dX]$/.test(id)) return false;
+        const birth = `${id.slice(6, 10)}-${id.slice(10, 12)}-${id.slice(12, 14)}`;
+        const date = new Date(Date.UTC(Number(id.slice(6, 10)), Number(id.slice(10, 12)) - 1, Number(id.slice(12, 14))));
+        if (Number.isNaN(date.getTime()) || date.toISOString().slice(0, 10) !== birth) return false;
+        const weights = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
+        const checks = ["1", "0", "X", "9", "8", "7", "6", "5", "4", "3", "2"];
+        const sum = id.slice(0, 17).split("").reduce((total, digit, index) => total + Number(digit) * weights[index], 0);
+        return checks[sum % 11] === id[17];
+      };
+
+      const validateDocument = (typeControl, numberControl) => {
+        const value = numberControl?.value.trim() || "";
+        let valid = false;
+        if (typeControl?.value === "身份证") valid = isValidMainlandId(value);
+        else if (typeControl?.value === "护照") valid = /^[A-Z0-9]{5,17}$/i.test(value);
+        else valid = /^[A-Z0-9]{8,18}$/i.test(value);
+        return setFieldError(numberControl, valid ? "" : `请输入有效${typeControl?.value || "证件"}号码`);
+      };
+
+      const getSelectedGender = () => genderGroup?.querySelector(".radio-item.active")?.dataset.value || "";
+
+      const syncPregnancyVisibility = () => {
+        const isFemale = getSelectedGender() === "female";
+        if (pregnancyRow) pregnancyRow.hidden = !isFemale;
+        if (!isFemale) {
+          pregnancyRow?.querySelectorAll("button").forEach((button, index) => button.classList.toggle("active", index === 0));
+        }
+      };
+
+      const selectPatient = (patient) => {
+        if (!patient) return;
+        patientName.value = patient.name;
+        patientSelector.textContent = `${patient.name}（${patient.relation}）`;
+        patientSelector.classList.add("has-value");
+        patientPhone.value = patient.phone;
+        patientAge.value = patient.age;
+        patientAgeUnit.value = "year";
+        patientDocumentType.value = "身份证";
+        patientDocumentNumber.value = patient.id;
+        genderGroup?.querySelectorAll(".radio-item").forEach((button) => {
+          const selected = button.dataset.value === patient.gender;
+          button.classList.toggle("active", selected);
+          button.setAttribute("aria-checked", String(selected));
+        });
+        setFieldError(patientSelector);
+        setFieldError(patientPhone);
+        setFieldError(patientDocumentNumber);
+        syncPregnancyVisibility();
+        syncGuardianByAge();
+        patientPicker?.classList.remove("is-open");
+        showToast(`已选择用药人：${patient.name}`);
+      };
+
+      const setupUpload = (input, gridId, statusId) => {
+        const grid = document.getElementById(gridId);
+        const status = document.getElementById(statusId);
+        const files = [];
+        const render = () => {
+          grid?.querySelectorAll(".upload-preview").forEach((node) => node.remove());
+          files.forEach((file, index) => {
+            const preview = document.createElement("span");
+            preview.className = "upload-preview";
+            const image = document.createElement("img");
+            image.alt = file.name;
+            image.src = URL.createObjectURL(file);
+            image.addEventListener("load", () => URL.revokeObjectURL(image.src), { once: true });
+            const remove = document.createElement("button");
+            remove.className = "upload-remove";
+            remove.type = "button";
+            remove.textContent = "×";
+            remove.setAttribute("aria-label", `移除${file.name}`);
+            remove.addEventListener("click", () => { files.splice(index, 1); render(); });
+            preview.append(image, remove);
+            grid?.insertBefore(preview, grid.querySelector(".upload-box"));
+          });
+          if (status) status.textContent = files.length ? `已上传 ${files.length}/5 张，可点击图片右上角移除` : "尚未上传";
+          grid?.querySelector(".upload-box")?.toggleAttribute("hidden", files.length >= 5);
+        };
+        input?.addEventListener("change", () => {
+          const incoming = Array.from(input.files || []);
+          const invalid = incoming.find((file) => !/^image\/(jpeg|png|webp)$/.test(file.type) || file.size > 5 * 1024 * 1024);
+          if (invalid) showToast("仅支持 JPG、PNG、WebP，单张不超过5MB");
+          incoming.filter((file) => /^image\/(jpeg|png|webp)$/.test(file.type) && file.size <= 5 * 1024 * 1024).slice(0, 5 - files.length).forEach((file) => files.push(file));
+          input.value = "";
+          render();
+        });
+        return files;
+      };
+
+      const proofFiles = setupUpload(proofUpload, "proofUploadGrid", "proofUploadStatus");
+      const caseFiles = setupUpload(caseUpload, "caseUploadGrid", "caseUploadStatus");
 
       const clearConsultProgress = () => {
         consultProgressTimers.forEach((timer) => window.clearTimeout(timer));
@@ -4923,12 +5605,19 @@
         }
         document.querySelectorAll("[data-disease-group] [data-disease]").forEach((chip) => {
           const selected = selectedDiseases.has(chip.dataset.disease);
-          chip.setAttribute("aria-pressed", "false");
+          chip.setAttribute("aria-pressed", String(selected));
           chip.setAttribute("aria-label", selected ? `${chip.dataset.disease}已在已选疾病中` : `选择${chip.dataset.disease}`);
         });
         if (diseaseSearchTrigger) {
           const names = Array.from(selectedDiseases);
           diseaseSearchTrigger.setAttribute("aria-label", names.length ? `线下已确诊疾病，已选${names.join("、")}` : "线下已确诊疾病，暂未选择");
+          let summary = diseaseSearchTrigger.querySelector(".selection-summary");
+          if (!summary) {
+            summary = document.createElement("span");
+            summary.className = "selection-summary";
+            diseaseSearchTrigger.insertBefore(summary, diseaseSearchTrigger.querySelector(".chevron"));
+          }
+          summary.textContent = names.length ? `已选${names.length}项` : "请选择";
         }
       };
 
@@ -4950,12 +5639,11 @@
           diseaseSearchInput?.focus();
           return;
         }
-        selectedDiseases.add(keyword);
-        renderDiseaseSelection();
-        document.querySelectorAll("[data-disease-group] [data-disease]").forEach((chip) => {
-          chip.classList.toggle("is-match", chip.dataset.disease.includes(keyword));
-        });
-        selectedDiseaseList?.querySelector(`[data-disease="${CSS.escape(keyword)}"]`)?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+        const matches = diseaseCatalog.filter((name) => name.includes(keyword));
+        diseaseResultList?.replaceChildren(...matches.map((name) => createDiseaseChip(name, selectedDiseases.has(name))));
+        if (diseaseResultSection) diseaseResultSection.hidden = false;
+        diseaseResultSection?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+        if (!matches.length) showToast("疾病库中没有匹配项，请尝试更短的关键词");
       };
 
       const showConsult = () => {
@@ -4966,6 +5654,9 @@
         clearConsultProgress();
         consultPage?.classList.remove("is-replied", "is-complete", "is-guide-open");
         consultGuideToggle?.setAttribute("aria-expanded", "false");
+        if (visitPatientValue) visitPatientValue.textContent = `${patientName.value}，${getSelectedGender() === "female" ? "女" : "男"}，${patientAge.value}${patientAgeUnit.value === "month" ? "个月" : "岁"}`;
+        if (visitMedicineValue) visitMedicineValue.textContent = Array.from(selectedProducts.values(), (product) => `${product.name} ${product.spec} ×${product.quantity}`).join("；");
+        if (visitDiseaseValue) visitDiseaseValue.textContent = Array.from(selectedDiseases).join("、");
         const consultBody = consultPage?.querySelector(".consult-body");
         if (consultBody) consultBody.scrollTop = 0;
         phoneScreen?.classList.remove("view-mine");
@@ -5004,6 +5695,28 @@
         drugSearchPage?.classList.remove("has-results", "has-selected", "has-no-results");
         drugSearchPage?.classList.add("has-product-list");
         if (drugSearchInput) drugSearchInput.value = "布洛芬";
+        renderDrugSelection();
+      };
+
+      const renderMedicineResults = (matches) => {
+        drugProductList?.replaceChildren(...matches.map((medicine) => {
+          const card = document.createElement("div");
+          card.className = "drug-product-card";
+          card.dataset.productId = medicine.id;
+          card.dataset.type = medicine.type;
+          card.innerHTML = `
+            <div class="drug-product-main">
+              <span class="drug-type-ribbon${medicine.type === "中成药" ? " tcm" : ""}">${medicine.type}</span>
+              <span class="drug-product-info"><span class="drug-product-name">${medicine.name}</span><span class="drug-product-spec">${medicine.spec}</span></span>
+            </div>
+            <button class="drug-add-button" type="button" aria-label="加入${medicine.name}"></button>
+            <span class="drug-stepper"><button class="drug-step-minus" type="button" aria-label="减少"></button><span class="drug-quantity">1</span><button class="drug-step-plus" type="button" aria-label="增加"></button></span>`;
+          return card;
+        }));
+        drugProductCards = document.querySelectorAll("#drugProductList .drug-product-card");
+        drugSearchPage?.classList.remove("has-results", "has-selected", "has-no-results");
+        drugSearchPage?.classList.toggle("has-product-list", matches.length > 0);
+        drugSearchPage?.classList.toggle("has-no-results", matches.length === 0);
         renderDrugSelection();
       };
 
@@ -5081,13 +5794,77 @@
       };
 
       const handleDrugSearch = () => {
-        const keyword = drugSearchInput?.value.trim() || "布洛芬";
-        if (drugSearchInput) drugSearchInput.value = keyword;
-        if (keyword.includes("布洛芬")) {
-          showIbuprofenResults();
-        } else {
-          showDrugNoResults();
+        const keyword = drugSearchInput?.value.trim() || "";
+        if (!keyword) {
+          drugSearchInput?.focus();
+          showToast("请输入药品名或用途关键词");
+          return;
         }
+        if (drugSearchInput) drugSearchInput.value = keyword;
+        const normalized = keyword.toLowerCase().replace(/缓释|肠溶|片|胶囊|颗粒|糖浆|乳膏|凝胶|搽剂/g, "") || keyword.toLowerCase();
+        const matches = medicineCatalog.filter((medicine) => `${medicine.name} ${medicine.spec} ${medicine.keywords}`.toLowerCase().includes(normalized));
+        renderMedicineResults(matches);
+      };
+
+      const validateInquiryForm = () => {
+        const checks = [];
+        checks.push(setFieldError(patientSelector, patientName?.value ? "" : "请选择用药人"));
+        checks.push(validatePhone());
+        checks.push(setFieldError(genderGroup, getSelectedGender() ? "" : "请选择性别"));
+        const age = Number(patientAge?.value);
+        checks.push(setFieldError(patientAge, patientAge?.value !== "" && Number.isFinite(age) && age >= 0 && age <= 120 ? "" : "请输入有效年龄"));
+        checks.push(validateDocument(patientDocumentType, patientDocumentNumber));
+        if (phoneScreen?.classList.contains("child-inquiry")) {
+          checks.push(setFieldError(guardianName, guardianName?.value.trim() ? "" : "请输入监护人姓名"));
+          checks.push(validateDocument(guardianDocumentType, guardianDocumentNumber));
+        }
+        if (!selectedDiseases.size) {
+          checks.push(false);
+          diseaseSearchTrigger?.classList.add("is-invalid");
+        } else diseaseSearchTrigger?.classList.remove("is-invalid");
+        if (!selectedProducts.size) {
+          checks.push(false);
+          requiredDrugTrigger?.classList.add("is-invalid");
+        } else requiredDrugTrigger?.classList.remove("is-invalid");
+        const consented = consentCheckbox?.getAttribute("aria-pressed") === "true";
+        if (!consented) checks.push(false);
+        if (checks.every(Boolean)) return true;
+        const firstInvalid = document.querySelector("#fastPage .is-invalid");
+        firstInvalid?.scrollIntoView({ block: "center", behavior: "smooth" });
+        if (!appToast?.classList.contains("is-visible")) showToast(consented ? "请完善标红的问诊信息" : "请阅读并同意知情同意书");
+        return false;
+      };
+
+      const appendPatientMessage = (message) => {
+        const body = consultPage?.querySelector(".consult-body");
+        if (!body) return;
+        const section = document.createElement("section");
+        section.className = "patient-message";
+        section.style.display = "flex";
+        const bubble = document.createElement("div");
+        bubble.className = "patient-bubble";
+        bubble.textContent = message;
+        const avatar = document.createElement("span");
+        avatar.className = "patient-avatar";
+        section.append(bubble, avatar);
+        body.appendChild(section);
+        scrollConsultToLatest();
+      };
+
+      const sendConsultMessage = () => {
+        const message = consultMessageInput?.value.trim() || "";
+        if (!message) return;
+        appendPatientMessage(message);
+        consultMessageInput.value = "";
+        consultSendButton.disabled = true;
+        scheduleConsultProgress(() => {
+          const body = consultPage?.querySelector(".consult-body");
+          const reply = document.createElement("section");
+          reply.className = "doctor-message";
+          reply.innerHTML = '<span class="doctor-avatar"></span><div class="doctor-content"><span class="doctor-name">蒲测试 医生</span><div class="doctor-bubble short">已收到您的补充信息，我会结合病情为您评估，请稍候。</div></div>';
+          body?.appendChild(reply);
+          scrollConsultToLatest();
+        }, 800);
       };
 
       textInquiryEntry?.addEventListener("click", () => {
@@ -5101,6 +5878,12 @@
       drugTypeClose?.addEventListener("click", closeDrugType);
       westernInquiry?.addEventListener("click", showFastInquiry);
       chineseInquiry?.addEventListener("click", showFastInquiry);
+      patientSelector?.addEventListener("click", () => patientPicker?.classList.add("is-open"));
+      patientPicker?.addEventListener("click", (event) => {
+        const option = event.target.closest(".patient-option");
+        if (option) selectPatient(patients[Number(option.dataset.patient)]);
+        else if (event.target === patientPicker) patientPicker.classList.remove("is-open");
+      });
       patientAge?.addEventListener("input", syncGuardianByAge);
       patientAgeUnit?.addEventListener("change", syncGuardianByAge);
       document.querySelectorAll(".radio-group, .yes-no, .pregnancy-options").forEach((group) => {
@@ -5112,8 +5895,22 @@
             button.classList.toggle("active", selected);
             if (button.hasAttribute("aria-checked")) button.setAttribute("aria-checked", String(selected));
           });
+          if (group === genderGroup) {
+            setFieldError(genderGroup);
+            syncPregnancyVisibility();
+          }
         });
       });
+      patientPhone?.addEventListener("input", () => {
+        patientPhone.value = patientPhone.value.replace(/\D/g, "").slice(0, 11);
+        if (patientPhone.value.length === 11) validatePhone();
+        else setFieldError(patientPhone);
+      });
+      patientPhone?.addEventListener("blur", validatePhone);
+      patientDocumentNumber?.addEventListener("blur", () => validateDocument(patientDocumentType, patientDocumentNumber));
+      patientDocumentType?.addEventListener("change", () => { patientDocumentNumber.value = ""; setFieldError(patientDocumentNumber); });
+      guardianDocumentNumber?.addEventListener("blur", () => validateDocument(guardianDocumentType, guardianDocumentNumber));
+      guardianDocumentType?.addEventListener("change", () => { guardianDocumentNumber.value = ""; setFieldError(guardianDocumentNumber); });
       medicalRemark?.addEventListener("input", () => {
         if (remarkCounter) remarkCounter.textContent = `${medicalRemark.value.length}/30`;
       });
@@ -5126,6 +5923,7 @@
       });
       diseaseSearchInput?.addEventListener("input", () => {
         updateDiseaseSearchControl();
+        if (!diseaseSearchInput.value.trim() && diseaseResultSection) diseaseResultSection.hidden = true;
         document.querySelectorAll("[data-disease-group] [data-disease]").forEach((chip) => chip.classList.remove("is-match"));
       });
       diseaseSearchClear?.addEventListener("click", () => {
@@ -5136,17 +5934,30 @@
       diseasePage?.addEventListener("click", (event) => {
         const chip = event.target.closest(".disease-chip[data-disease]");
         if (!chip || !diseasePage.contains(chip)) return;
-        if (selectedDiseaseList?.contains(chip)) {
-          toggleDisease(chip.dataset.disease);
-          return;
-        }
-        selectedDiseases.add(chip.dataset.disease);
-        renderDiseaseSelection();
+        toggleDisease(chip.dataset.disease);
       });
       diseaseHistoryClear?.addEventListener("click", () => diseaseHistoryList?.replaceChildren());
       renderDiseaseSelection();
-      fastSubmit?.addEventListener("click", showConsult);
+      consentCheckbox?.addEventListener("click", () => {
+        const checked = consentCheckbox.getAttribute("aria-pressed") !== "true";
+        consentCheckbox.setAttribute("aria-pressed", String(checked));
+        consentCheckbox.classList.toggle("is-checked", checked);
+      });
+      fastSubmit?.addEventListener("click", () => { if (validateInquiryForm()) showConsult(); });
       consultNoSupplement?.addEventListener("click", showConsultReply);
+      consultMessageInput?.addEventListener("input", () => {
+        if (consultSendButton) consultSendButton.disabled = !consultMessageInput.value.trim();
+      });
+      consultMessageInput?.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" && !event.shiftKey) { event.preventDefault(); sendConsultMessage(); }
+      });
+      consultSendButton?.addEventListener("click", sendConsultMessage);
+      quickReplyButton?.addEventListener("click", () => {
+        if (!consultMessageInput) return;
+        consultMessageInput.value = "暂无其他不适，已按要求补充信息，谢谢医生。";
+        consultSendButton.disabled = false;
+        consultMessageInput.focus();
+      });
       consultCancelPrescription?.addEventListener("click", closeConsult);
       consultGuideToggle?.addEventListener("click", () => toggleMedicationGuide());
       medicationGuideClose?.addEventListener("click", () => toggleMedicationGuide(false));
@@ -5169,7 +5980,15 @@
       });
       drugSearchSubmit?.addEventListener("click", handleDrugSearch);
       drugSearchClear?.addEventListener("click", resetDrugSearch);
-      drugResultItems.forEach((item) => item.addEventListener("click", showDrugProductList));
+      drugResultItems.forEach((item) => item.addEventListener("click", () => {
+        if (drugSearchInput) drugSearchInput.value = item.textContent.trim();
+        handleDrugSearch();
+      }));
+      document.querySelectorAll(".drug-tag:not(.more)").forEach((tag) => tag.addEventListener("click", () => {
+        if (drugSearchInput) drugSearchInput.value = tag.textContent.trim();
+        handleDrugSearch();
+      }));
+      document.querySelectorAll(".clear-history").forEach((button) => button.addEventListener("click", () => button.closest(".drug-search-section")?.remove()));
       drugProductList?.addEventListener("click", (event) => {
         const button = event.target.closest("button");
         const card = button?.closest(".drug-product-card");
