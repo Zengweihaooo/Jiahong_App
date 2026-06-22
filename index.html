@@ -2723,7 +2723,8 @@
       }
 
       .disease-chip.emphasis {
-        background: #bec5cd;
+        background: #d9ebff;
+        color: #006ef9;
       }
 
       .consult-page {
@@ -4051,80 +4052,14 @@
         line-height: calc(12 * var(--px));
       }
 
-      .form-row.is-invalid .form-input,
-      .form-row.is-invalid .patient-selector {
+      .form-row.is-invalid .form-input {
         color: #d92d20;
       }
 
-      .patient-selector {
-        flex: 1 1 auto;
-        min-width: 0;
-        overflow: hidden;
-        padding: 0;
-        border: 0;
-        background: transparent;
-        color: rgba(0, 0, 0, 0.32);
-        font: inherit;
-        font-size: calc(14 * var(--px));
-        line-height: calc(22 * var(--px));
-        text-align: right;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      .patient-selector.has-value { color: rgba(0, 0, 0, 0.9); }
       .selection-summary { margin-left: auto; color: #7b8491; font-size: calc(12 * var(--px)); font-weight: 400; }
       .fast-line-card.is-invalid { box-shadow: inset 0 0 0 calc(1 * var(--px)) #e23d32; }
       button.link-text { padding: 0; border: 0; background: transparent; font: inherit; }
       .drug-tag, .clear-history, .link-text, button, label[for] { cursor: pointer; }
-
-      .picker-overlay {
-        display: none;
-        position: absolute;
-        inset: calc(32 * var(--px)) 0 0;
-        z-index: 28;
-        align-items: flex-end;
-        background: rgba(25, 35, 48, 0.46);
-      }
-
-      .picker-overlay.is-open { display: flex; }
-
-      .picker-sheet {
-        width: 100%;
-        max-height: 72%;
-        overflow-y: auto;
-        padding: calc(10 * var(--px)) calc(16 * var(--px)) calc(22 * var(--px));
-        border-radius: calc(16 * var(--px)) calc(16 * var(--px)) 0 0;
-        background: #fff;
-      }
-
-      .picker-handle {
-        display: block;
-        width: calc(40 * var(--px));
-        height: calc(4 * var(--px));
-        margin: 0 auto calc(14 * var(--px));
-        border-radius: 99px;
-        background: #d8dde5;
-      }
-
-      .picker-title { margin: 0 0 calc(12 * var(--px)); font-size: calc(17 * var(--px)); }
-
-      .patient-option {
-        display: flex;
-        width: 100%;
-        align-items: center;
-        justify-content: space-between;
-        padding: calc(13 * var(--px)) 0;
-        border: 0;
-        border-bottom: calc(1 * var(--px)) solid #eef1f4;
-        background: #fff;
-        color: #222;
-        text-align: left;
-      }
-
-      .patient-option strong { display: block; font-size: calc(14 * var(--px)); }
-      .patient-option small { display: block; margin-top: calc(4 * var(--px)); color: #7b8491; font-size: calc(11 * var(--px)); }
-      .patient-option::after { content: "›"; color: #9aa3af; font-size: calc(22 * var(--px)); }
 
       .upload-proof { height: auto; min-height: calc(142 * var(--px)); }
       .upload-box input {
@@ -4171,7 +4106,7 @@
       .fast-history { height: auto; min-height: calc(479 * var(--px)); }
 
       .disease-result-section[hidden] { display: none; }
-      .disease-chip[aria-pressed="true"] { background: #d9ebff; color: #006ef9; }
+      .disease-chip[aria-pressed="true"] { background: #2a9df8; color: #fff; }
 
       .toast {
         position: absolute;
@@ -4803,7 +4738,7 @@
           <section class="fast-section-wrap">
             <div class="fast-card">
               <div class="fast-section-title">基础信息</div>
-              <div class="form-row" id="patientSelectorRow"><span class="form-label">用药人</span><button class="patient-selector" id="patientSelector" type="button">请选择用药人</button><input id="patientName" type="hidden" /></div>
+              <label class="form-row" for="patientName"><span class="form-label">用药人</span><input class="form-value form-input" id="patientName" type="text" autocomplete="name" maxlength="20" placeholder="请输入用药人姓名" /></label>
               <label class="form-row" for="patientPhone"><span class="form-label">手机号</span><input class="form-value form-input" id="patientPhone" type="tel" inputmode="tel" autocomplete="tel" maxlength="11" placeholder="请输入用药人手机号" /></label>
               <div class="form-row">
                 <span class="form-label">性别</span>
@@ -5219,14 +5154,6 @@
             <span>我的</span>
           </div>
         </nav>
-        <section class="picker-overlay" id="patientPicker" role="dialog" aria-modal="true" aria-label="选择用药人">
-          <div class="picker-sheet">
-            <span class="picker-handle"></span><h2 class="picker-title">选择用药人</h2>
-            <button class="patient-option" type="button" data-patient="0"><span><strong>黄黄（本人）</strong><small>女 · 23岁 · 138****8001</small></span></button>
-            <button class="patient-option" type="button" data-patient="1"><span><strong>陈立（家人）</strong><small>男 · 46岁 · 139****6628</small></span></button>
-            <button class="patient-option" type="button" data-patient="2"><span><strong>陈小满（子女）</strong><small>女 · 5岁 · 137****2190</small></span></button>
-          </div>
-        </section>
         <div class="toast" id="appToast" role="status" aria-live="polite"></div>
       </div>
       <img class="phone-frame" src="./Picsew_20260616133535_transparent.png" alt="" />
@@ -5238,8 +5165,6 @@
       const drugTypeClose = document.getElementById("drugTypeClose");
       const westernInquiry = document.getElementById("westernInquiry");
       const chineseInquiry = document.getElementById("chineseInquiry");
-      const patientSelector = document.getElementById("patientSelector");
-      const patientPicker = document.getElementById("patientPicker");
       const patientName = document.getElementById("patientName");
       const patientPhone = document.getElementById("patientPhone");
       const genderGroup = document.getElementById("genderGroup");
@@ -5309,11 +5234,6 @@
       const mineTab = document.getElementById("mineTab");
       const appToast = document.getElementById("appToast");
       const globalClock = document.getElementById("globalClock");
-      const patients = [
-        { name: "黄黄", relation: "本人", phone: "13800138001", gender: "female", age: 23, id: "420106200303126726" },
-        { name: "陈立", relation: "家人", phone: "13928686628", gender: "male", age: 46, id: "420106198002204815" },
-        { name: "陈小满", relation: "子女", phone: "13799002190", gender: "female", age: 5, id: "420106202105184027" },
-      ];
       const diseaseCatalog = [
         "急性上呼吸道感染", "流行性感冒", "扁桃体炎", "咽炎", "慢性咳嗽", "过敏性鼻炎", "支气管炎", "哮喘",
         "口腔溃疡", "牙龈炎", "口角炎", "腮腺炎", "疖肿", "湿疹", "荨麻疹", "带状疱疹",
@@ -5335,14 +5255,7 @@
         { id: "cough", type: "中成药", name: "川贝枇杷膏", spec: "150ml", keywords: "止咳糖浆 咳嗽" },
       ];
       const selectedProducts = new Map();
-      const selectedDiseases = new Set([
-        "急性上呼吸道感染",
-        "静脉曲张",
-        "甲状腺结节",
-        "类风湿关节炎",
-        "低血糖症",
-        "扁桃体炎",
-      ]);
+      const selectedDiseases = new Set();
       const consultProgressTimers = new Set();
       let toastTimer = 0;
 
@@ -5405,30 +5318,6 @@
         if (!isFemale) {
           pregnancyRow?.querySelectorAll("button").forEach((button, index) => button.classList.toggle("active", index === 0));
         }
-      };
-
-      const selectPatient = (patient) => {
-        if (!patient) return;
-        patientName.value = patient.name;
-        patientSelector.textContent = `${patient.name}（${patient.relation}）`;
-        patientSelector.classList.add("has-value");
-        patientPhone.value = patient.phone;
-        patientAge.value = patient.age;
-        patientAgeUnit.value = "year";
-        patientDocumentType.value = "身份证";
-        patientDocumentNumber.value = patient.id;
-        genderGroup?.querySelectorAll(".radio-item").forEach((button) => {
-          const selected = button.dataset.value === patient.gender;
-          button.classList.toggle("active", selected);
-          button.setAttribute("aria-checked", String(selected));
-        });
-        setFieldError(patientSelector);
-        setFieldError(patientPhone);
-        setFieldError(patientDocumentNumber);
-        syncPregnancyVisibility();
-        syncGuardianByAge();
-        patientPicker?.classList.remove("is-open");
-        showToast(`已选择用药人：${patient.name}`);
       };
 
       const setupUpload = (input, gridId, statusId) => {
@@ -5808,7 +5697,7 @@
 
       const validateInquiryForm = () => {
         const checks = [];
-        checks.push(setFieldError(patientSelector, patientName?.value ? "" : "请选择用药人"));
+        checks.push(setFieldError(patientName, patientName?.value.trim() ? "" : "请输入用药人姓名"));
         checks.push(validatePhone());
         checks.push(setFieldError(genderGroup, getSelectedGender() ? "" : "请选择性别"));
         const age = Number(patientAge?.value);
@@ -5878,12 +5767,6 @@
       drugTypeClose?.addEventListener("click", closeDrugType);
       westernInquiry?.addEventListener("click", showFastInquiry);
       chineseInquiry?.addEventListener("click", showFastInquiry);
-      patientSelector?.addEventListener("click", () => patientPicker?.classList.add("is-open"));
-      patientPicker?.addEventListener("click", (event) => {
-        const option = event.target.closest(".patient-option");
-        if (option) selectPatient(patients[Number(option.dataset.patient)]);
-        else if (event.target === patientPicker) patientPicker.classList.remove("is-open");
-      });
       patientAge?.addEventListener("input", syncGuardianByAge);
       patientAgeUnit?.addEventListener("change", syncGuardianByAge);
       document.querySelectorAll(".radio-group, .yes-no, .pregnancy-options").forEach((group) => {
@@ -5906,6 +5789,8 @@
         if (patientPhone.value.length === 11) validatePhone();
         else setFieldError(patientPhone);
       });
+      patientName?.addEventListener("input", () => setFieldError(patientName, patientName.value.trim() ? "" : "请输入用药人姓名"));
+      patientName?.addEventListener("blur", () => setFieldError(patientName, patientName.value.trim() ? "" : "请输入用药人姓名"));
       patientPhone?.addEventListener("blur", validatePhone);
       patientDocumentNumber?.addEventListener("blur", () => validateDocument(patientDocumentType, patientDocumentNumber));
       patientDocumentType?.addEventListener("change", () => { patientDocumentNumber.value = ""; setFieldError(patientDocumentNumber); });
